@@ -165,4 +165,16 @@
   :config
   (yas-global-mode 1))
 
+(use-package move-dup
+  :bind
+  ([M-up] . md/move-lines-up)
+  ([M-down] . md/move-lines-down)
+  ("C-c d" . md/duplicate-down)
+  ("C-c D" . md/duplicate-up))
+
+(use-package default-text-scale
+  :bind
+  ("C-M-=" . default-text-scale-increase)
+  ("C-M--" . default-text-scale-decrease))
+
 (provide 'base-extensions)
