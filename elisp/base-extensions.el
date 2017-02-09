@@ -10,7 +10,10 @@
 
 (use-package dashboard
   :config
-  (dashboard-setup-startup-hook))
+  (dashboard-setup-startup-hook)
+  (setq dashboard-items '((recents  . 5)
+                        (bookmarks . 5)
+			(projects . 5))))
 
 (use-package ediff
   :config
@@ -49,7 +52,7 @@
 
 (use-package ivy
   :bind
-  ("C-x s" . swiper)
+  ("C-s" . swiper)
   ("C-x C-r" . ivy-resume)
   :config
   (ivy-mode 1)
@@ -91,12 +94,15 @@
   ("C-c C->" . mc/mark-all-like-this))
 
 (use-package neotree
+  :bind
+  ([f2]. neotree-toggle)
   :config
   (setq neo-theme 'arrow
-        neotree-smart-optn t
+        neo-smart-open t
         neo-window-fixed-size nil)
   ;; Disable linum for neotree
-  (add-hook 'neo-after-create-hook 'disable-neotree-hook))
+  ;; (add-hook 'neo-after-create-hook 'disable-neotree-hook)
+  )
 
 (use-package org
   :config
@@ -128,7 +134,9 @@
 
   (setq projectile-completion-system 'ivy)
 
-  (projectile-global-mode))
+  (projectile-global-mode)
+
+  (setq projectile-switch-project-action 'neotree-projectile-action))
 
 (use-package recentf
   :config
@@ -136,8 +144,6 @@
   (recentf-mode 1))
 
 (use-package smartparens)
-
-(use-package smex)
 
 (use-package undo-tree
   :config
@@ -157,7 +163,12 @@
   ("C-x <up>" . windmove-up)
   ("C-x <down>" . windmove-down)
   ("C-x <left>" . windmove-left)
-  ("C-x <right>" . windmove-right))
+  ("C-x <right>" . windmove-right)
+  ("C-S-K" . windmove-up)
+  ("C-S-J" . windmove-down)
+  ("C-S-H" . windmove-left)
+  ("C-S-L" . windmove-right)
+  )
 
 (use-package wgrep)
 
@@ -176,5 +187,16 @@
   :bind
   ("C-M-=" . default-text-scale-increase)
   ("C-M--" . default-text-scale-decrease))
+
+(use-package rainbow-delimiters
+  :config
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+(use-package highlight-symbol
+  :bind
+  ([(control f3)] . highlight-symbol)
+  ([f3] . highlight-symbol-next)
+  ([(shift f3)] . highlight-symbol-prev)
+  ([(meta f3)] . highlight-symbol-query-replace))
 
 (provide 'base-extensions)

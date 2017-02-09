@@ -1,6 +1,6 @@
-(use-package molokai-theme
+(use-package material-theme
   :defer t
   :init
-  (load-theme 'molokai t))
+  (load-theme 'material t))
 
 (provide 'base-theme)

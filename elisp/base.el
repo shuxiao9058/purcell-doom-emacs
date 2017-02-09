@@ -7,13 +7,13 @@
 	     ; '(("melpa" . "https://melpa.org/packages/")
 		 ; ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
          ; ("elpy" . "http://jorgenschaefer.github.io/packages/")))
-;; (add-to-list 'package-archives '("popkit" . "http://elpa.popkit.org/packages/")) 
+;; (add-to-list 'package-archives '("popkit" . "http://elpa.popkit.org/packages/"))
 (setq package-archives '(
       ("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
       ("org-cn"   . "http://elpa.zilongshanren.com/org/")
       ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")))
 
-			 
+
 (defun config-proxy()
 	"config proxy when you are using proxy to access internet"
 	(setq url-proxy-services '(("http" . "127.0.0.1:3128")
@@ -22,15 +22,29 @@
 		(list (list "127.0.0.1:3128"
 		(cons "Input your LDAP UID !"
 		(base64-encode-string "w00220012:naso#008"))))))
-		
-		
+
+
 (when (not package-archive-contents)
   (package-refresh-contents))
-  
-  
 
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
+(defun require-package (package &optional min-version no-refresh)
+  "Install given PACKAGE, optionally requiring MIN-VERSION.
+If NO-REFRESH is non-nil, the available package lists will not be
+re-downloaded in order to locate PACKAGE."
+  (if (package-installed-p package min-version)
+      t
+    (if (or (assoc package package-archive-contents) no-refresh)
+        (if (boundp 'package-selected-packages)
+            ;; Record this as a package the user installed explicitly
+            (package-install package nil)
+          (package-install package))
+      (progn
+        (package-refresh-contents)
+        (require-package package min-version t)))))
+
+;; (unless (package-installed-p 'use-package)
+;;   (package-install 'use-package))
+(require-package 'use-package)
 
 (defconst private-dir  (expand-file-name "private" user-emacs-directory))
 (defconst temp-dir (format "%s/cache" private-dir)
@@ -103,20 +117,31 @@
 ;; Delete trailing whitespace before save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+
+
+;; ============================================================
+;; Setting English Font
 (set-face-attribute
- 'default nil
- :font (font-spec :name "-outline-Ubuntu Mono-bold-italic-normal-mono-*-*-*-*-c-*-iso10646-1"
-                  :weight 'normal
-                  :slant 'normal
-                  :size 12.0))
+ 'default nil :font "Ubuntu Mono 12")
+;; Setting Chinese Font
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font
-   (frame-parameter nil 'font)
-   charset
-   (font-spec :name "-outline-微软雅黑-bold-normal-normal-sans-*-*-*-*-p-*-iso10646-1"
-              :weight 'normal
-              :slant 'normal
-              :size 12.0)))
+  (set-fontset-font (frame-parameter nil 'font)
+            charset
+            (font-spec :family "Microsoft Yahei" :size 16)))
+;; (set-face-attribute
+;;  'default nil
+;;  :font (font-spec :name "-outline-Ubuntu Mono-bold-italic-normal-mono-*-*-*-*-c-*-iso10646-1"
+;;                   :weight 'normal
+;;                   :slant 'normal
+;;                   :size 12.0))
+;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;;   (set-fontset-font
+;;    (frame-parameter nil 'font)
+;;    charset
+;;    (font-spec :name "-outline-微软雅黑-bold-normal-normal-sans-*-*-*-*-p-*-iso10646-1"
+;;               :weight 'normal
+;;               :slant 'normal
+;;               :size 12.0)))
 
 (provide 'base)
 ;;; base ends here
