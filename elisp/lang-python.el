@@ -4,6 +4,20 @@
 
 ;;; Code:
 
+;; (use-package elpy
+;;   :init
+;;   (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+;;   :bind (:map elpy-mode-map
+;; 	    ("M-." . elpy-goto-definition)
+;; 	    ("M-," . pop-tag-mark))
+;;   :config
+;;   ;; (setq elpy-rpc-backend "jedi")
+;;   (elpy-enable))
+
+;; (use-package company-jedi
+;;   :config
+;;   (add-to-list 'company-backends 'company-jedi))
+
 (use-package python
   :mode ("\\.py" . python-mode)
   :config
@@ -22,9 +36,6 @@
 (use-package pip-requirements
   :config
   (add-hook 'pip-requirements-mode-hook #'pip-requirements-auto-complete-setup))
-
-(use-package py-autopep8)
-
 
 ;; (use-package pyenv-mode
 ;;   :init

@@ -5,6 +5,7 @@
 
 
 (use-package company
+  :diminish company-mode
   :config
   (add-hook 'after-init-hook 'global-company-mode))
 
@@ -35,7 +36,7 @@
 
 (use-package flycheck)
 
-
+(use-package ag)
 (use-package counsel
   :bind
   ("M-x" . counsel-M-x)
@@ -99,10 +100,7 @@
   :config
   (setq neo-theme 'arrow
         neo-smart-open t
-        neo-window-fixed-size nil)
-  ;; Disable linum for neotree
-  ;; (add-hook 'neo-after-create-hook 'disable-neotree-hook)
-  )
+        neo-window-fixed-size nil))
 
 (use-package org
   :config
@@ -143,7 +141,63 @@
   (setq recentf-save-file (recentf-expand-file-name "~/.emacs.d/private/cache/recentf"))
   (recentf-mode 1))
 
-(use-package smartparens)
+(use-package smartparens-config
+  :ensure smartparens
+  :bind
+  (:map smartparens-mode-map
+  ("C-M-a" . sp-beginning-of-sexp)
+  ("C-M-e" . sp-end-of-sexp)
+
+  ("C-<down>" . sp-down-sexp)
+  ("C-<up>"   . sp-up-sexp)
+  ("M-<down>" . sp-backward-down-sexp)
+  ("M-<up>"   . sp-backward-up-sexp)
+
+  ("C-M-f" . sp-forward-sexp)
+  ("C-M-b" . sp-backward-sexp)
+
+  ("C-M-n" . sp-next-sexp)
+  ("C-M-p" . sp-previous-sexp)
+
+  ("C-S-f" . sp-forward-symbol)
+  ("C-S-b" . sp-backward-symbol)
+
+  ("C-<right>" . sp-forward-slurp-sexp)
+  ("M-<right>" . sp-forward-barf-sexp)
+  ("C-<left>"  . sp-backward-slurp-sexp)
+  ("M-<left>"  . sp-backward-barf-sexp)
+
+  ("C-M-t" . sp-transpose-sexp)
+  ("C-M-k" . sp-kill-sexp)
+  ("C-k"   . sp-kill-hybrid-sexp)
+  ("M-k"   . sp-backward-kill-sexp)
+  ("C-M-w" . sp-copy-sexp)
+
+  ("C-M-d" . delete-sexp)
+
+  ("M-<backspace>" . backward-kill-word)
+  ("C-<backspace>" . sp-backward-kill-word)
+  ([remap sp-backward-kill-word] . backward-kill-word)
+
+  ("M-[" . sp-backward-unwrap-sexp)
+  ("M-]" . sp-unwrap-sexp)
+
+  ("C-x C-t" . sp-transpose-hybrid-sexp)
+
+  ("C-c ("  . wrap-with-parens)
+  ("C-c ["  . wrap-with-brackets)
+  ("C-c {"  . wrap-with-braces)
+  ("C-c '"  . wrap-with-single-quotes)
+  ("C-c \"" . wrap-with-double-quotes)
+  ("C-c _"  . wrap-with-underscores)
+  ("C-c `"  . wrap-with-back-quotes))
+  :config
+    (progn
+      (show-smartparens-global-mode t)
+      (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
+      (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)))
+
+
 
 (use-package undo-tree
   :config
@@ -155,19 +209,16 @@
   (diminish 'undo-tree-mode))
 
 (use-package which-key
+  :diminish which-key-mode
   :config
   (which-key-mode))
 
 (use-package windmove
   :bind
-  ("C-x <up>" . windmove-up)
-  ("C-x <down>" . windmove-down)
-  ("C-x <left>" . windmove-left)
-  ("C-x <right>" . windmove-right)
-  ("C-S-K" . windmove-up)
-  ("C-S-J" . windmove-down)
-  ("C-S-H" . windmove-left)
-  ("C-S-L" . windmove-right)
+  ("S-<up>" . windmove-up)
+  ("S-<down>" . windmove-down)
+  ("S-<left>" . windmove-left)
+  ("S-<right>" . windmove-right)
   )
 
 (use-package wgrep)
