@@ -12,7 +12,7 @@
 (use-package dashboard
   :config
   (dashboard-setup-startup-hook)
-  (setq dashboard-items '((recents  . 5)
+  (setq dashboard-items '((recents  . 7)
                         (bookmarks . 5)
 			(projects . 5))))
 
@@ -67,7 +67,7 @@
 
 (use-package linum
   :config
-  (setq linum-format " %3d ")
+  (setq linum-format " %2d ")
   (global-linum-mode nil))
 
 (use-package magit
@@ -191,11 +191,12 @@
   ("C-c \"" . wrap-with-double-quotes)
   ("C-c _"  . wrap-with-underscores)
   ("C-c `"  . wrap-with-back-quotes))
-  :config
+  :init
     (progn
       (show-smartparens-global-mode t)
       (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
       (add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)))
+
 
 
 

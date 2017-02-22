@@ -1,6 +1,6 @@
-;; (use-package molokai-theme
-;;   :defer t
-;;   :init
-;;   (load-theme 'molokai t))
+(use-package solarized-theme
+  :defer t
+  :init
+  (load-theme 'solarized-dark t))
 
 (provide 'base-theme)

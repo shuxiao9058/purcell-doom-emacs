@@ -122,26 +122,13 @@ re-downloaded in order to locate PACKAGE."
 ;; ============================================================
 ;; Setting English Font
 (set-face-attribute
- 'default nil :font "Monaco 10")
+ 'default nil :font "Inziu Iosevka SC 12")
 ;; Setting Chinese Font
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
   (set-fontset-font (frame-parameter nil 'font)
             charset
             (font-spec :family "Microsoft Yahei" :size 16)))
-;; (set-face-attribute
-;;  'default nil
-;;  :font (font-spec :name "-outline-Ubuntu Mono-bold-italic-normal-mono-*-*-*-*-c-*-iso10646-1"
-;;                   :weight 'normal
-;;                   :slant 'normal
-;;                   :size 12.0))
-;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
-;;   (set-fontset-font
-;;    (frame-parameter nil 'font)
-;;    charset
-;;    (font-spec :name "-outline-微软雅黑-bold-normal-normal-sans-*-*-*-*-p-*-iso10646-1"
-;;               :weight 'normal
-;;               :slant 'normal
-;;               :size 12.0)))
+
 
 (provide 'base)
 ;;; base ends here
