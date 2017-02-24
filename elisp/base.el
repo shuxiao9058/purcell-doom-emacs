@@ -124,10 +124,10 @@ re-downloaded in order to locate PACKAGE."
 (set-face-attribute
  'default nil :font "Inziu Iosevka SC 12")
 ;; Setting Chinese Font
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font (frame-parameter nil 'font)
-            charset
-            (font-spec :family "Microsoft Yahei" :size 16)))
+;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;;   (set-fontset-font (frame-parameter nil 'font)
+;;             charset
+;;             (font-spec :family "Microsoft Yahei" :size 16)))
 
 
 (provide 'base)

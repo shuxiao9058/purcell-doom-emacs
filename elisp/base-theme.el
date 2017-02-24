@@ -1,6 +1,6 @@
-(use-package solarized-theme
+(use-package gruber-darker-theme
   :defer t
   :init
-  (load-theme 'solarized-dark t))
+  (load-theme 'gruber-darker t))
 
 (provide 'base-theme)

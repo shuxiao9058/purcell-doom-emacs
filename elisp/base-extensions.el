@@ -30,6 +30,11 @@
     (exec-path-from-shell-copy-env "PYTHONPATH")
     (exec-path-from-shell-initialize)))
 
+(use-package switch-window
+  :bind
+  ("M-p" . switch-window))
+
+
 (use-package expand-region
   :bind
   ("C-=" . er/expand-region))
@@ -214,13 +219,6 @@
   :config
   (which-key-mode))
 
-(use-package windmove
-  :bind
-  ("S-<up>" . windmove-up)
-  ("S-<down>" . windmove-down)
-  ("S-<left>" . windmove-left)
-  ("S-<right>" . windmove-right)
-  )
 
 (use-package wgrep)
 
