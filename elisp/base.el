@@ -61,7 +61,7 @@ re-downloaded in order to locate PACKAGE."
 (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 
 ;; Emacs customizations
-(setq confirm-kill-emacs                  'y-or-n-p
+(setq ;; confirm-kill-emacs                  'y-or-n-p
       confirm-nonexistent-file-or-buffer  t
       save-interprogram-paste-before-kill t
       mouse-yank-at-point                 t
@@ -106,7 +106,7 @@ re-downloaded in order to locate PACKAGE."
 (global-auto-revert-mode t)
 
 ;; Disable toolbar & menubar
-(menu-bar-mode -1)
+;;(menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 (when (  fboundp 'scroll-bar-mode)
@@ -122,12 +122,12 @@ re-downloaded in order to locate PACKAGE."
 ;; ============================================================
 ;; Setting English Font
 (set-face-attribute
- 'default nil :font "Inziu Iosevka SC 12")
+ 'default nil :font "Envy Code R 11")
 ;; Setting Chinese Font
-;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
-;;   (set-fontset-font (frame-parameter nil 'font)
-;;             charset
-;;             (font-spec :family "Microsoft Yahei" :size 16)))
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font)
+            charset
+            (font-spec :family "Microsoft Yahei" :size 16)))
 
 
 (provide 'base)

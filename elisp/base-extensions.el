@@ -30,10 +30,10 @@
     (exec-path-from-shell-copy-env "PYTHONPATH")
     (exec-path-from-shell-initialize)))
 
-(use-package switch-window
-  :bind
-  ("M-p" . switch-window))
-
+(require 'golden-ratio)
+(golden-ratio-mode 1)
+(diminish 'golden-ratio-mode)
+(winner-mode 1)
 
 (use-package expand-region
   :bind
@@ -99,13 +99,6 @@
   ("C-<" . mc/mark-previous-like-this)
   ("C-c C->" . mc/mark-all-like-this))
 
-(use-package neotree
-  :bind
-  ([f2]. neotree-toggle)
-  :config
-  (setq neo-theme 'arrow
-        neo-smart-open t
-        neo-window-fixed-size nil))
 
 (use-package org
   :config
@@ -139,7 +132,8 @@
 
   (projectile-global-mode)
 
-  (setq projectile-switch-project-action 'neotree-projectile-action))
+;;  (setq projectile-switch-project-action 'neotree-projectile-action)
+  )
 
 (use-package recentf
   :config

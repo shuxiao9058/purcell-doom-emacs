@@ -12,6 +12,7 @@
 (package-initialize)
 
 (add-to-list 'load-path (concat user-emacs-directory "elisp"))
+(add-to-list 'load-path (concat user-emacs-directory "site-elisp"))
 
 (require 'base)
 (require 'base-theme)
