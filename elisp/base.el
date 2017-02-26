@@ -122,7 +122,7 @@ re-downloaded in order to locate PACKAGE."
 ;; ============================================================
 ;; Setting English Font
 (set-face-attribute
- 'default nil :font "Envy Code R 11")
+ 'default nil :font "Ubuntu Mono 12")
 ;; Setting Chinese Font
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
   (set-fontset-font (frame-parameter nil 'font)

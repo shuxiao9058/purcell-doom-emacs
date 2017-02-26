@@ -42,28 +42,29 @@
 (use-package flycheck)
 
 (use-package ag)
-(use-package counsel
-  :bind
-  ("M-x" . counsel-M-x)
-  ("C-x C-m" . counsel-M-x)
-  ("C-x C-f" . counsel-find-file)
-  ("C-x c k" . counsel-yank-pop))
+(use-package wgrep)
+;; (use-package counsel
+;;   :bind
+;;   ("M-x" . counsel-M-x)
+;;   ("C-x C-m" . counsel-M-x)
+;;   ("C-x C-f" . counsel-find-file)
+;;   ("C-x c k" . counsel-yank-pop))
 
-(use-package counsel-projectile
-  :bind
-  ("C-x v" . counsel-projectile)
-  ("C-x c p" . counsel-projectile-ag)
-  :config
-  (counsel-projectile-on))
+;; (use-package counsel-projectile
+;;   :bind
+;;   ("C-x v" . counsel-projectile)
+;;   ("C-x c p" . counsel-projectile-ag)
+;;   :config
+;;   (counsel-projectile-on))
 
-(use-package ivy
-  :bind
-  ("C-s" . swiper)
-  ("C-x C-r" . ivy-resume)
-  :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers nil)
-  (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
+;; (use-package ivy
+;;   :bind
+;;   ("C-s" . swiper)
+;;   ("C-x C-r" . ivy-resume)
+;;   :config
+;;   (ivy-mode 1)
+;;   (setq ivy-use-virtual-buffers nil)
+;;   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
 
 (use-package hlinum
@@ -114,12 +115,6 @@
   (setq org-projectile:per-repo-filename "todo.org"
 	org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
 
-(use-package org-bullets
-  :config
-  (setq org-hide-leading-stars t)
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (org-bullets-mode t))))
 
 (use-package page-break-lines)
 
