@@ -17,7 +17,6 @@
 (require 'base)
 (require 'base-theme)
 (require 'base-extensions)
-(require 'base-helm)
 (require 'base-functions)
 (require 'base-global-keys)
 
