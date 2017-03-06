@@ -72,8 +72,8 @@
  '(flyspell-incorrect-face ((t (:bold t :foreground "OrangeRed" :underline t :weight bold))))
 
  '(font-lock-builtin-face ((t (:foreground "#ffaa00"))))
- '(font-lock-comment-delimiter-face ((t (:foreground "Salmon"))))
- '(font-lock-comment-face ((t (:italic t :slant oblique :foreground "chocolate1"))))
+ '(font-lock-comment-delimiter-face ((t (:foreground "#465457"))))
+ '(font-lock-comment-face ((t (:italic t :slant oblique :foreground "#465457"))))
  '(font-lock-constant-face ((t (:foreground "#00ff00"))))
  '(font-lock-doc-face ((t (:foreground "#ffff00"))))
  '(font-lock-function-name-face ((t (:foreground "#4186be"))))
