@@ -1,13 +1,5 @@
 (package-initialize)
-; (setq package-archives
-    ; '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-      ; ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-      ; ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
-; (add-to-list 'package-archives
-	     ; '(("melpa" . "https://melpa.org/packages/")
-		 ; ("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-         ; ("elpy" . "http://jorgenschaefer.github.io/packages/")))
-;; (add-to-list 'package-archives '("popkit" . "http://elpa.popkit.org/packages/"))
+
 (setq package-archives '(
       ("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
       ("org-cn"   . "http://elpa.zilongshanren.com/org/")
@@ -121,13 +113,18 @@ re-downloaded in order to locate PACKAGE."
 
 ;; ============================================================
 ;; Setting English Font
-(set-face-attribute
- 'default nil :font "Ubuntu Mono 12")
+;; (set-face-attribute
+;;  'default nil :font "PragmataPro 12")
 ;; Setting Chinese Font
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font (frame-parameter nil 'font)
-            charset
-            (font-spec :family "Microsoft Yahei" :size 16)))
+;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;;   (set-fontset-font (frame-parameter nil 'font)
+;;             charset
+;;             (font-spec :family "Microsoft Yahei" :size 16)))
+
+(require-package 'chinese-fonts-setup)
+(require 'chinese-fonts-setup)
+(chinese-fonts-setup-enable)
+;; (cfs-set-spacemacs-fallback-fonts)
 
 
 (provide 'base)

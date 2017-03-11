@@ -1,4 +1,5 @@
-;;; hober-theme.el --- hober theme
+efault-text-scale
+  :bind;;; hober-theme.el --- hober theme
 
 ;; Copyright (C) 1999, 2000  Jonadab the Unsightly One <jonadab@bright.net>
 ;; Copyright (C) 2000, 2001, 2002, 2003  Alex Schroeder <alex@gnu.org>
