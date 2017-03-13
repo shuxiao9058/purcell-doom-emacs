@@ -113,18 +113,14 @@ re-downloaded in order to locate PACKAGE."
 
 ;; ============================================================
 ;; Setting English Font
-;; (set-face-attribute
-;;  'default nil :font "PragmataPro 12")
+(set-face-attribute
+ 'default nil :font "Monaco 10")
 ;; Setting Chinese Font
-;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
-;;   (set-fontset-font (frame-parameter nil 'font)
-;;             charset
-;;             (font-spec :family "Microsoft Yahei" :size 16)))
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font)
+            charset
+            (font-spec :family "Microsoft Yahei" :size 16)))
 
-(require-package 'chinese-fonts-setup)
-(require 'chinese-fonts-setup)
-(chinese-fonts-setup-enable)
-;; (cfs-set-spacemacs-fallback-fonts)
 
 
 (provide 'base)

@@ -1,12 +1,11 @@
-;; (use-package moe-theme
-;;   :defer t
-;;   :init
-;;   (require 'moe-theme)
-;;   (moe-light))
-;; (use-package gruvbox-theme
-;;   :defer t
-;;   :init
-;;   (load-theme 'gruvbox t))
+ ;; (use-package solarized-theme
+ ;;  :defer t
+ ;;  :init
+ ;;  (load-theme 'solarized-dark))
+(use-package gruvbox-theme
+  :defer t
+  :init
+  (load-theme 'gruvbox t))
 ;; (load-theme 'manoj-dark t)
 
 ;; (require 'hober-theme)
@@ -24,19 +23,19 @@
 ;;   :defer t
 ;;   :init
 ;;   (load-theme 'madhat2r t))
-;; (require-package 'powerline)
-;; (require 'powerline)
-;; (powerline-default-theme)
+(require-package 'powerline)
+(require 'powerline)
+(powerline-default-theme)
 
-(use-package spacemacs-theme
-  :defer t
-  :init
-  (load-theme 'spacemacs-dark t))
-(use-package spaceline
-  :defer t
-  :init
-  (require 'spaceline-config)
-  (spaceline-emacs-theme)
-  (spaceline-toggle-window-number-off)
-  (spaceline-toggle-buffer-size-off))
+;; (use-package spacemacs-theme
+;;   :defer t
+;;   :init
+;;   (load-theme 'spacemacs-dark t))
+;; (use-package spaceline
+;;   :defer t
+;;   :init
+;;   (require 'spaceline-config)
+;;   (spaceline-emacs-theme)
+;;   (spaceline-toggle-window-number-off)
+;;   (spaceline-toggle-buffer-size-off))
 (provide 'base-theme)
