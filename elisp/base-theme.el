@@ -2,10 +2,10 @@
  ;;  :defer t
  ;;  :init
  ;;  (load-theme 'solarized-dark))
-(use-package gruvbox-theme
-  :defer t
-  :init
-  (load-theme 'gruvbox t))
+;; (use-package gruvbox-theme
+;;   :defer t
+;;   :init
+;;   (load-theme 'gruvbox t))
 ;; (load-theme 'manoj-dark t)
 
 ;; (require 'hober-theme)
@@ -19,13 +19,14 @@
 ;;   :init
 ;;   (load-theme 'molokai t))
 
-;; (use-package madhat2r-theme
-;;   :defer t
-;;   :init
-;;   (load-theme 'madhat2r t))
-(require-package 'powerline)
-(require 'powerline)
-(powerline-default-theme)
+(use-package madhat2r-theme
+  :defer t
+  :init
+  (load-theme 'madhat2r t))
+;; (require-package 'powerline)
+;; (require 'powerline)
+;; ;; (powerline-default-theme)
+;; (powerline-center-evil-theme)
 
 ;; (use-package spacemacs-theme
 ;;   :defer t
@@ -35,7 +36,23 @@
 ;;   :defer t
 ;;   :init
 ;;   (require 'spaceline-config)
-;;   (spaceline-emacs-theme)
+;;   (spaceline-spacemacs-theme)
 ;;   (spaceline-toggle-window-number-off)
-;;   (spaceline-toggle-buffer-size-off))
+;;   ; (spaceline-toggle-buffer-size-off)
+;;   )
+(use-package telephone-line
+  :init
+  (setq telephone-line-lhs
+        '((evil   . (telephone-line-evil-tag-segment))
+          (accent . (telephone-line-vc-segment
+                     telephone-line-erc-modified-channels-segment
+                     telephone-line-process-segment))
+          (nil    . (telephone-line-minor-mode-segment
+                     telephone-line-buffer-segment))))
+  (setq telephone-line-rhs
+        '((nil    . (telephone-line-misc-info-segment))
+          (accent . (telephone-line-major-mode-segment))
+          (evil   . (telephone-line-airline-position-segment))))
+
+  (telephone-line-mode t))
 (provide 'base-theme)
