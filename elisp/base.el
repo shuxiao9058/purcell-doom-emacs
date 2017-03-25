@@ -86,10 +86,10 @@ re-downloaded in order to locate PACKAGE."
 (setq
  history-length                     1000
  backup-inhibited                   nil
- make-backup-files                  t
- auto-save-default                  t
+ make-backup-files                  nil
+ auto-save-default                  nil
  auto-save-list-file-name           (concat temp-dir "/autosave")
- make-backup-files                  t
+ make-backup-files                  nil
  create-lockfiles                   nil
  backup-directory-alist            `((".*" . ,(concat temp-dir "/backup/")))
  auto-save-file-name-transforms    `((".*" ,(concat temp-dir "/auto-save-list/") t)))
@@ -99,10 +99,10 @@ re-downloaded in order to locate PACKAGE."
 
 ;; Disable toolbar & menubar
 ;;(menu-bar-mode -1)
-;; (when (fboundp 'tool-bar-mode)
-;;   (tool-bar-mode -1))
-;; (when (  fboundp 'scroll-bar-mode)
-;;   (scroll-bar-mode -1))
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+(when (  fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
 
 (show-paren-mode 1)
 
