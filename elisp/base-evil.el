@@ -26,7 +26,7 @@
   "<SPC>" 'counsel-M-x
   "wd" 'delete-window
   "wm" 'delete-other-windows
-  "w/" 'split-window-horizontally-instead
+  "w\\" 'split-window-horizontally-instead
   "w-" 'split-window-vertically-instead
   "1" 'select-window-1
   "2" 'select-window-2
@@ -38,6 +38,13 @@
   "8" 'select-window-8
   "9" 'select-window-9
   )
+
+(define-key evil-normal-state-map (kbd "C-k") (lambda ()
+                                                (interactive)
+                                                (evil-scroll-up nil)))
+(define-key evil-normal-state-map (kbd "C-j") (lambda ()
+                                                (interactive)
+                                                (evil-scroll-down nil)))
 ;;=========================================================
 
 ;;evil-mode, https://bitbucket.org/lyro/evil

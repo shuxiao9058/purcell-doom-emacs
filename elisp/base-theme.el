@@ -1,7 +1,13 @@
  ;; (use-package solarized-theme
  ;;  :defer t
  ;;  :init
- ;;  (load-theme 'solarized-dark))
+ ;;  (load-theme 'solarized-light))
+(require-package 'color-theme-sanityinc-tomorrow)
+;; (color-theme-sanityinc-tomorrow-eighties)
+ ;; (use-package color-theme-sanityinc-tomorrow
+ ;;  :defer t
+ ;;  :init
+ ;;  (sanityinc-tomorrow-night-eighties))
 ;; (use-package gruvbox-theme
 ;;   :defer t
 ;;   :init
@@ -19,10 +25,10 @@
 ;;   :init
 ;;   (load-theme 'molokai t))
 
-(use-package madhat2r-theme
-  :defer t
-  :init
-  (load-theme 'madhat2r t))
+;; (use-package madhat2r-theme
+;;   :defer t
+;;   :init
+;;   (load-theme 'madhat2r t))
 ;; (require-package 'powerline)
 ;; (require 'powerline)
 ;; ;; (powerline-default-theme)
