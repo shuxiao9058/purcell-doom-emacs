@@ -1,8 +1,8 @@
- ;; (use-package solarized-theme
+ ;; (use-package material-theme
  ;;  :defer t
  ;;  :init
- ;;  (load-theme 'solarized-light))
-(require-package 'color-theme-sanityinc-tomorrow)
+ ;;  (load-theme 'material))
+;; (require-package 'color-theme-sanityinc-tomorrow)
 ;; (color-theme-sanityinc-tomorrow-eighties)
  ;; (use-package color-theme-sanityinc-tomorrow
  ;;  :defer t
@@ -24,6 +24,10 @@
 ;;   :defer t
 ;;   :init
 ;;   (load-theme 'molokai t))
+(use-package gruber-darker-theme
+  :defer t
+  :init
+  (load-theme 'gruber-darker t))
 
 ;; (use-package madhat2r-theme
 ;;   :defer t
