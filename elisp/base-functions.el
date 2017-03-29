@@ -1,8 +1,6 @@
 ;; Add your custom functions here
 (require-package 'cl-lib)
-(eval-when-compile (require 'cl-lib))
-;; (defun something
-;;    (do-something))
+(eval-when-compile (require 'cl))
 ;;----------------------------------------------------------------------------
 ;; Delete the current file
 ;;----------------------------------------------------------------------------
@@ -37,7 +35,6 @@
 ;;----------------------------------------------------------------------------
 ;; indent
 ;;----------------------------------------------------------------------------
-
 (defun indent-buffer()
   (interactive)
   (indent-region (point-min) (point-max)))

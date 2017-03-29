@@ -23,7 +23,7 @@
   "bp" 'previous-buffer
   "bn" 'next-buffer
   "bd" 'kill-this-buffer
-  "<SPC>" 'counsel-M-x
+  "<SPC>" 'smex
   "wd" 'delete-window
   "wm" 'delete-other-windows
   "w\\" 'split-window-horizontally-instead
@@ -45,6 +45,8 @@
 (define-key evil-normal-state-map (kbd "C-j") (lambda ()
                                                 (interactive)
                                                 (evil-scroll-down nil)))
+(define-key evil-normal-state-map (kbd "[b") 'previous-buffer)
+(define-key evil-normal-state-map (kbd "]b") 'next-buffer)
 ;;=========================================================
 
 ;;evil-mode, https://bitbucket.org/lyro/evil
