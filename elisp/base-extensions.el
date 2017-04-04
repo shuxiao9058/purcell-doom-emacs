@@ -1,5 +1,4 @@
 
-
 (use-package avy
   :bind
   ("C-;" . avy-goto-char))
@@ -239,7 +238,10 @@
 (use-package default-text-scale
   :bind
   ("C-M-=" . default-text-scale-increase)
-  ("C-M--" . default-text-scale-decrease))
+  ("C-M--" . default-text-scale-decrease)
+  ;; (<C-wheel-up>. default-text-scale-increase)
+  ;; (<C-wheel-down>. default-text-scale-increase)
+  )
 
 (use-package rainbow-delimiters
   :config
@@ -251,6 +253,11 @@
   ([f3] . highlight-symbol-next)
   ([(shift f3)] . highlight-symbol-prev)
   ([(meta f3)] . highlight-symbol-query-replace))
+
+(use-package indent-guide
+  :config
+  (indent-guide-global-mode)
+  )
 
 ;; (ido-mode t)
 ;; (ido-everywhere t)

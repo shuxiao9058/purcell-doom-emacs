@@ -31,7 +31,8 @@
     :bind (:map elpy-mode-map
 	      ("M-." . elpy-goto-definition)
 	      ("M-," . pop-tag-mark)))
-  (elpy-enable))
+  (elpy-enable)
+  (elpy-use-ipython))
 
 (use-package pip-requirements
   :config
