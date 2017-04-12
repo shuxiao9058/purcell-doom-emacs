@@ -116,7 +116,7 @@ re-downloaded in order to locate PACKAGE."
 ;; ============================================================
 ;; Setting English Font
 (set-face-attribute
- 'default nil :font "Source Code Pro 11")
+ 'default nil :font "Monaco 10")
 ;; Setting Chinese Font
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
   (set-fontset-font (frame-parameter nil 'font)
