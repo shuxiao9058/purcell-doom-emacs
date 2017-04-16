@@ -117,6 +117,9 @@
 (use-package f
   :ensure t
   :defer t)
+(use-package s
+  :ensure t
+  :defer t)
 ;; (require 'evil-unimpaired)
 ;;=========================================================
 

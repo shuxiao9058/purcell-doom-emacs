@@ -42,6 +42,10 @@
   :bind
   ("C-=" . er/expand-region))
 
+(use-package evil-surround
+  :config
+  (global-evil-surround-mode 1))
+
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode))

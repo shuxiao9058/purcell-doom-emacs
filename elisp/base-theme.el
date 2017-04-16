@@ -16,8 +16,8 @@
 
 ;; (require 'hober-theme)
 ;; (load-theme 'hober t)
-;; (require 'eclipse-theme)
-;; (load-theme 'eclipse t)
+(require 'eclipse-theme)
+(load-theme 'eclipse t)
 
 ;; (load-theme 'leuven t)
 ;; (use-package molokai-theme
