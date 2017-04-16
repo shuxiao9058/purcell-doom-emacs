@@ -26,11 +26,14 @@
     (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
     :config
     (setq elpy-rpc-backend "jedi")
+    ;; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    ;; (add-hook 'elpy-mode-hook 'flycheck-mode)
     ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
     ;;flycheck-python-flake8-executable "/usr/local/bin/flake8"
     :bind (:map elpy-mode-map
-	      ("M-." . elpy-goto-definition)
-	      ("M-," . pop-tag-mark)))
+		("M-." . elpy-goto-definition)
+		("M-," . pop-tag-mark)))
+  (setq elpy-rpc-python-command "python2")
   (elpy-enable)
   (elpy-use-ipython))
 

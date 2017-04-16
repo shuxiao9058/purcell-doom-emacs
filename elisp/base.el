@@ -116,12 +116,12 @@ re-downloaded in order to locate PACKAGE."
 ;; ============================================================
 ;; Setting English Font
 (set-face-attribute
- 'default nil :font "Monaco 10")
+ 'default nil :font "Inziu IosevkaCC Slab SC 11")
 ;; Setting Chinese Font
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font (frame-parameter nil 'font)
-            charset
-            (font-spec :family "Microsoft Yahei" :size 16)))
+;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;;   (set-fontset-font (frame-parameter nil 'font)
+;; 		    charset
+;; 		    (font-spec :family "Microsoft Yahei" :size 16)))
 
 
 

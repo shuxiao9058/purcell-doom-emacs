@@ -1,17 +1,17 @@
- ;; (use-package material-theme
- ;;  :defer t
- ;;  :init
- ;;  (load-theme 'material))
+;; (use-package material-theme
+;;  :defer t
+;;  :init
+;;  (load-theme 'material))
 ;; (require-package 'color-theme-sanityinc-tomorrow)
 ;; (color-theme-sanityinc-tomorrow-eighties)
- ;; (use-package color-theme-sanityinc-tomorrow
- ;;  :defer t
- ;;  :init
- ;;  (sanityinc-tomorrow-night-eighties))
-(use-package gruvbox-theme
-  :defer t
-  :init
-  (load-theme 'gruvbox t))
+;; (use-package color-theme-sanityinc-tomorrow
+;;  :defer t
+;;  :init
+;;  (sanityinc-tomorrow-night-eighties))
+;; (use-package gruvbox-theme
+;;   :defer t
+;;   :init
+;;   (load-theme 'gruvbox t))
 ;; (load-theme 'manoj-dark t)
 
 ;; (require 'hober-theme)

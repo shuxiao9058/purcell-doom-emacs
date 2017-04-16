@@ -1,4 +1,4 @@
-
+;; quick jump
 (use-package avy
   :bind
   ("C-;" . avy-goto-char))
@@ -35,7 +35,6 @@
 ;; (diminish 'golden-ratio-mode)
 (winner-mode 1)
 (require 'window-numbering)
-(require 'window-numbering)
 (window-numbering-mode t)
 (diminish 'window-numbering-mode)
 
@@ -43,7 +42,14 @@
   :bind
   ("C-=" . er/expand-region))
 
-(use-package flycheck)
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+(use-package aggressive-indent
+  :config
+  (global-aggressive-indent-mode 1)
+;; (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+)
 
 (use-package ag)
 (use-package wgrep)
@@ -257,6 +263,7 @@
 (use-package indent-guide
   :config
   (indent-guide-global-mode)
+  :diminish indent-guide-mode
   )
 
 ;; (ido-mode t)
