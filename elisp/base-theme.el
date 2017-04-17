@@ -1,7 +1,7 @@
 ;; (use-package material-theme
-;;  :defer t
-;;  :init
-;;  (load-theme 'material))
+;;   :defer t
+;;   :init
+;;   (load-theme 'material))
 ;; (require-package 'color-theme-sanityinc-tomorrow)
 ;; (color-theme-sanityinc-tomorrow-eighties)
 ;; (use-package color-theme-sanityinc-tomorrow
@@ -16,10 +16,10 @@
 
 ;; (require 'hober-theme)
 ;; (load-theme 'hober t)
-(require 'eclipse-theme)
-(load-theme 'eclipse t)
+;; (require 'eclipse-theme)
+;; (load-theme 'eclipse t)
 
-;; (load-theme 'leuven t)
+(load-theme 'leuven t)
 ;; (use-package molokai-theme
 ;;   :defer t
 ;;   :init

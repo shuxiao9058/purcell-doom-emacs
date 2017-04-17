@@ -4,20 +4,12 @@
 
 ;;; Code:
 
-;; (use-package elpy
-;;   :init
-;;   (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
-;;   :bind (:map elpy-mode-map
-;; 	    ("M-." . elpy-goto-definition)
-;; 	    ("M-," . pop-tag-mark))
-;;   :config
-;;   ;; (setq elpy-rpc-backend "jedi")
-;;   (elpy-enable))
-
 ;; (use-package company-jedi
 ;;   :config
 ;;   (add-to-list 'company-backends 'company-jedi))
 
+(use-package py-autopep8
+  :ensure t)
 (use-package python
   :mode ("\\.py" . python-mode)
   :config
@@ -28,7 +20,7 @@
     (setq elpy-rpc-backend "jedi")
     ;; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
     ;; (add-hook 'elpy-mode-hook 'flycheck-mode)
-    ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+    (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
     ;;flycheck-python-flake8-executable "/usr/local/bin/flake8"
     :bind (:map elpy-mode-map
 		("M-." . elpy-goto-definition)
@@ -74,4 +66,4 @@
 ;; (add-hook 'projectile-after-switch-project-hook 'pyenv-activate-current-project)
 
 (provide 'lang-python)
-;;; base-python.el ends here
+;;; lang-python.el ends here
