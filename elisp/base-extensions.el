@@ -48,7 +48,8 @@
 
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode))
+  ;; :init (global-flycheck-mode)
+  )
 (use-package aggressive-indent
   :config
   (global-aggressive-indent-mode 1)
@@ -161,57 +162,34 @@
   :ensure smartparens
   :bind
   (:map smartparens-mode-map
-  ("C-M-a" . sp-beginning-of-sexp)
-  ("C-M-e" . sp-end-of-sexp)
+	("C-M-a" . sp-beginning-of-sexp)
+	("C-M-e" . sp-end-of-sexp)
 
-  ("C-<down>" . sp-down-sexp)
-  ("C-<up>"   . sp-up-sexp)
-  ("M-<down>" . sp-backward-down-sexp)
-  ("M-<up>"   . sp-backward-up-sexp)
+	("C-M-f" . sp-forward-sexp)
+	("C-M-b" . sp-previous-sexp)
 
-  ("C-M-f" . sp-forward-sexp)
-  ("C-M-b" . sp-backward-sexp)
+	("C-M-n" . sp-next-sexp)
+	("C-M-p" . sp-backward-sexp)
 
-  ("C-M-n" . sp-next-sexp)
-  ("C-M-p" . sp-previous-sexp)
+	("C-S-f" . sp-forward-symbol)
+	("C-S-b" . sp-backward-symbol)
 
-  ("C-S-f" . sp-forward-symbol)
-  ("C-S-b" . sp-backward-symbol)
+	("C-<right>" . sp-forward-slurp-sexp)
+	("M-<right>" . sp-forward-barf-sexp)
+	("C-<left>"  . sp-backward-slurp-sexp)
+	("M-<left>"  . sp-backward-barf-sexp)
 
-  ("C-<right>" . sp-forward-slurp-sexp)
-  ("M-<right>" . sp-forward-barf-sexp)
-  ("C-<left>"  . sp-backward-slurp-sexp)
-  ("M-<left>"  . sp-backward-barf-sexp)
+	("C-M-d" . sp-kill-sexp)
+	("M-d"   . sp-backward-kill-sexp)
+	("C-M-w" . sp-copy-sexp)
 
-  ("C-M-t" . sp-transpose-sexp)
-  ("C-M-k" . sp-kill-sexp)
-  ("C-k"   . sp-kill-hybrid-sexp)
-  ("M-k"   . sp-backward-kill-sexp)
-  ("C-M-w" . sp-copy-sexp)
-
-  ("C-M-d" . delete-sexp)
-
-  ("M-<backspace>" . backward-kill-word)
-  ("C-<backspace>" . sp-backward-kill-word)
-  ([remap sp-backward-kill-word] . backward-kill-word)
-
-  ("M-[" . sp-backward-unwrap-sexp)
-  ("M-]" . sp-unwrap-sexp)
-
-  ("C-x C-t" . sp-transpose-hybrid-sexp)
-
-  ("C-c ("  . wrap-with-parens)
-  ("C-c ["  . wrap-with-brackets)
-  ("C-c {"  . wrap-with-braces)
-  ("C-c '"  . wrap-with-single-quotes)
-  ("C-c \"" . wrap-with-double-quotes)
-  ("C-c _"  . wrap-with-underscores)
-  ("C-c `"  . wrap-with-back-quotes))
+	("M-<backspace>" . backward-kill-word)
+	)
   :init
-    (progn
-      (show-smartparens-global-mode t)
-      (add-hook 'prog-mode-hook 'turn-on-smartparens-mode)
-      (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode)))
+  (progn
+    (show-smartparens-global-mode t)
+    (add-hook 'prog-mode-hook 'turn-on-smartparens-mode)
+    (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode)))
 
 
 
@@ -270,6 +248,11 @@
   :diminish indent-guide-mode
   )
 
+(use-package origami
+  :config
+  (global-origami-mode)
+  :diminish origami-mode)
+
 ;; (ido-mode t)
 ;; (ido-everywhere t)
 ;; (setq ido-enable-flex-matching t)
@@ -290,3 +273,4 @@
 (add-hook 'ido-setup-hook (lambda () (define-key ido-completion-map [up] 'previous-history-element)))
 
 (provide 'base-extensions)
+;;; base-extensions.el ends here
