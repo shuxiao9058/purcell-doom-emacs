@@ -111,6 +111,12 @@
   :config
   (diminish 'evil-escape-mode))
 ;;=========================================================
+;; evil-matchit
+(use-package evil-matchit
+  :ensure t
+  :config
+  (global-evil-matchit-mode 1))
+;;=========================================================
 (use-package dash
   :ensure t
   :defer t)
