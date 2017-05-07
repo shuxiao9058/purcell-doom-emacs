@@ -220,15 +220,13 @@
   :bind
   ([M-up] . md/move-lines-up)
   ([M-down] . md/move-lines-down)
-  ("C-c d" . md/duplicate-down)
-  ("C-c D" . md/duplicate-up))
+  ("M-S-<down>" . md/duplicate-down)
+  ("M-S-<up>" . md/duplicate-up))
 
 (use-package default-text-scale
   :bind
   ("C-M-=" . default-text-scale-increase)
   ("C-M--" . default-text-scale-decrease)
-  ;; (<C-wheel-up>. default-text-scale-increase)
-  ;; (<C-wheel-down>. default-text-scale-increase)
   )
 
 (use-package rainbow-delimiters
@@ -253,14 +251,7 @@
   (global-origami-mode)
   :diminish origami-mode)
 
-;; (ido-mode t)
-;; (ido-everywhere t)
-;; (setq ido-enable-flex-matching t)
-;; (setq ido-use-filename-at-point nil)
-;; (setq ido-auto-merge-work-directories-length -1)
-;; (setq ido-use-virtual-buffers t)
-;; (setq-default org-completion-use-ido t)
-;; (setq-default magit-completing-read-function 'magit-ido-completing-read)
+
 (require-package 'ido-vertical-mode)
 (require 'ido-vertical-mode)
 (ido-vertical-mode 1)
