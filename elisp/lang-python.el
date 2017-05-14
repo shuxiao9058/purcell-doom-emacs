@@ -25,7 +25,7 @@
     :bind (:map elpy-mode-map
 		("M-." . elpy-goto-definition)
 		("M-," . pop-tag-mark)))
-  (setq elpy-rpc-python-command "python2")
+  ;; (setq elpy-rpc-python-command "python3")
   (elpy-enable)
   (elpy-use-ipython))
 
