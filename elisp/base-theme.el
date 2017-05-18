@@ -20,10 +20,10 @@
 ;; (load-theme 'eclipse t)
 
 ;; (load-theme 'leuven t)
-(use-package molokai-theme
-  :defer t
-  :init
-  (load-theme 'molokai t))
+;; (use-package molokai-theme
+;;   :defer t
+;;   :init
+;;   (load-theme 'molokai t))
 ;; (use-package gruber-darker-theme
 ;;   :defer t
 ;;   :init
@@ -58,6 +58,7 @@
 ;;   (spaceline-toggle-window-number-off)
 ;;   ; (spaceline-toggle-buffer-size-off)
 ;;   )
+
 (use-package telephone-line
   :init
   (setq telephone-line-lhs
