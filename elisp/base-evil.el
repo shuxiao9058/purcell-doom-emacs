@@ -53,7 +53,8 @@
 (use-package evil
   :ensure t
   :config
-  (evil-mode 1))
+  (evil-mode 1)
+  (local-unset-key (kbd "M-.")))
 
 ;;=========================================================
 ;;evil-org-mode , git clone git://github.com/edwtjo/evil-org-mode.git

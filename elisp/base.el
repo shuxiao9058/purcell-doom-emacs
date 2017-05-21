@@ -34,21 +34,55 @@ re-downloaded in order to locate PACKAGE."
         (package-refresh-contents)
         (require-package package min-version t)))))
 
+
+(defun maybe-require-package (package &optional min-version no-refresh)
+  "Try to install PACKAGE, and return non-nil if successful.
+In the event of failure, return nil and print a warning message.
+Optionally require MIN-VERSION.  If NO-REFRESH is non-nil, the
+available package lists will not be re-downloaded in order to
+locate PACKAGE."
+  (condition-case err
+      (require-package package min-version no-refresh)
+    (error
+     (message "Couldn't install optional package `%s': %S" package err)
+     nil)))
+
 (require-package 'use-package)
 
 (defconst private-dir  (expand-file-name "private" user-emacs-directory))
 (defconst temp-dir (format "%s/cache" private-dir)
   "Hostname-based elisp temp directories")
 
+;; 设置编码
+(cond
+ ((eq system-type 'windows-nt)
+  (set-language-environment "chinese-gbk")
+  (prefer-coding-system 'utf-8)
+  (set-terminal-coding-system 'gbk)
+  (modify-coding-system-alist 'process "*" 'gbk)
+  (defun liu233w/windows-shell-mode-coding ()
+    (set-buffer-file-coding-system 'gbk)
+    (set-buffer-process-coding-system 'gbk 'gbk))
+  (add-hook 'shell-mode-hook #'liu233w/windows-shell-mode-coding)
+  (add-hook 'inferior-python-mode-hook #'liu233w/windows-shell-mode-coding)
+  (defun liu233w//python-encode-in-org-babel-execute (func body params)
+    (let ((coding-system-for-write 'utf-8))
+      (funcall func body params)))
+  (advice-add #'org-babel-execute:python :around
+ 	      #'liu233w//python-encode-in-org-babel-execute))
+ (t
+  (set-language-environment "UTF-8")
+  (prefer-coding-system 'utf-8)))
+
 ;; Core settings
 ;; UTF-8 please
-(set-charset-priority 'unicode)
-(setq locale-coding-system   'utf-8)   ; pretty
-(set-terminal-coding-system  'utf-8)   ; pretty
-(set-keyboard-coding-system  'utf-8)   ; pretty
-(set-selection-coding-system 'utf-8)   ; please
-(prefer-coding-system        'utf-8)   ; with sugar on top
-(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
+;; (set-charset-priority 'unicode)
+;; (setq locale-coding-system   'utf-8)   ; pretty
+;; (set-terminal-coding-system  'utf-8)   ; pretty
+;; (set-keyboard-coding-system  'utf-8)   ; pretty
+;; (set-selection-coding-system 'utf-8)   ; please
+;; (prefer-coding-system        'utf-8)   ; with sugar on top
+;; (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 
 ;; Emacs customizations
 (setq ;; confirm-kill-emacs                  'y-or-n-p
@@ -115,15 +149,30 @@ re-downloaded in order to locate PACKAGE."
 ;; Setting English Font
 ;; (set-face-attribute
 ;;  'default nil :font "Inziu IosevkaCC Slab SC 12")
-(set-face-attribute
- 'default nil :font "Monaco 10")
-;; Setting Chinese Font
+;; (set-face-attribute
+;;  'default nil :font "Monaco 10")
+;; ;; Setting Chinese Font
+;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;;   (set-fontset-font (frame-parameter nil 'font)
+;; 		    charset
+;; 		    (font-spec :family "Microsoft Yahei" :size 16)))
+
+;; (set-face-attribute
+;;  'default nil :font "Consolas 10")
+
+;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;;   (set-fontset-font (frame-parameter nil 'font)
+;; 		    charset
+;; 		    (font-spec :family "Microsoft Yahei" :size 14)))
+;; (setq face-font-rescale-alist '(("微软雅黑" . 1.2) ("Microsoft Yahei" . 1.2) ("WenQuanYi Zen Hei" . 1.2)))
+
+;;WIn7下使用Emacs-25会遇到卡顿，解决方法为使用 Microsoft YaHei Mono 字体。
+(custom-set-faces
+ '(default ((t (:family "Microsoft YaHei Mono" :foundry "outline" :slant normal :weight normal :height 110 :width normal)))))
+;;如使用Microsoft YaHei Mono，则可使用如下设置
+;; Chinese Font
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font (frame-parameter nil 'font)
-		    charset
-		    (font-spec :family "Microsoft Yahei" :size 16)))
-
-
+  (set-fontset-font (frame-parameter nil 'font) charset (font-spec :family "Microsoft YaHei" :size 14)))
 
 (provide 'base)
 ;;; base ends here

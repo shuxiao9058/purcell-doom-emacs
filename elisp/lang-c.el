@@ -50,8 +50,9 @@
 
 ;; company-c-headers
 (use-package company-c-headers
-  :init
-  (add-to-list 'company-backends 'company-c-headers))
+  :config
+  ;; (add-to-list 'company-backends 'company-c-headers)
+  (sanityinc/local-push-company-backend 'company-c-headers))
 
 (use-package cc-mode
   :init

@@ -1,20 +1,48 @@
 ;; quick jump
 (use-package avy
   :bind
-  ("C-;" . avy-goto-char))
+  ("C-;" . avy-goto-word-or-subword-1))
 
 
-(use-package company
-  :diminish company-mode
-  :config
-  (add-hook 'after-init-hook 'global-company-mode))
+;; (use-package company
+;;   :diminish company-mode
+;;   :config
+;;   (add-hook 'after-init-hook 'global-company-mode))
+
+(setq tab-always-indent 'complete)  ;; use 't when company is disabled
+(add-to-list 'completion-styles 'initials t)
+;; Stop completion-at-point from popping up completion buffers so eagerly
+(setq completion-cycle-threshold 5)
+
+
+(when (maybe-require-package 'company)
+  (add-hook 'after-init-hook 'global-company-mode)
+  (after-load 'company
+    (diminish 'company-mode "CMP")
+    (define-key company-mode-map (kbd "M-/") 'company-complete)
+    (define-key company-active-map (kbd "M-/") 'company-select-next)
+    (define-key company-active-map (kbd "C-n") 'company-select-next)
+    (define-key company-active-map (kbd "C-p") 'company-select-previous)
+    (setq-default company-backends '((company-capf company-dabbrev-code) company-dabbrev)
+                  company-dabbrev-other-buffers 'all))
+  (global-set-key (kbd "M-C-/") 'company-complete)
+  ;;makes completion start automatically rather than waiting for 3 chars / 0.5sec
+  (setq company-minimum-prefix-length 1)
+  (setq company-idle-delay 0)
+  (when (maybe-require-package 'company-quickhelp)
+    (add-hook 'after-init-hook 'company-quickhelp-mode))
+
+  (defun sanityinc/local-push-company-backend (backend)
+    "Add BACKEND to a buffer-local version of `company-backends'."
+    (set (make-local-variable 'company-backends)
+         (append (list backend) company-backends))))
 
 (use-package dashboard
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents  . 7)
-                        (bookmarks . 5)
-			(projects . 5))))
+			  (bookmarks . 5)
+			  (projects . 5))))
 
 (use-package ediff
   :config
@@ -48,7 +76,7 @@
 
 (use-package flycheck
   :ensure t
-  ;; :init (global-flycheck-mode)
+  :init (global-flycheck-mode)
   )
 (use-package aggressive-indent
   :config
@@ -115,12 +143,23 @@
 
 (use-package magit-popup)
 
-(use-package multiple-cursors
-  :bind
-  ("C-S-c C-S-c" . mc/edit-lines)
-  ("C->" . mc/mark-next-like-this)
-  ("C-<" . mc/mark-previous-like-this)
-  ("C-c C->" . mc/mark-all-like-this))
+;; (use-package multiple-cursors
+;;   :bind
+;;   ("C-S-c C-S-c" . mc/edit-lines)
+;;   ("C->" . mc/mark-next-like-this)
+;;   ("C-<" . mc/mark-previous-like-this)
+;;   ("C-c C->" . mc/mark-all-like-this))
+(require-package 'multiple-cursors)
+;; multiple-cursors
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-+") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+;; From active region to multiple cursors:
+(global-set-key (kbd "C-c m r") 'set-rectangular-region-anchor)
+(global-set-key (kbd "C-c m c") 'mc/edit-lines)
+(global-set-key (kbd "C-c m e") 'mc/edit-ends-of-lines)
+(global-set-key (kbd "C-c m a") 'mc/edit-beginnings-of-lines)
 
 
 (use-package org
@@ -192,8 +231,6 @@
     (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode)))
 
 
-
-
 (use-package undo-tree
   :config
   ;; Remember undo history
@@ -216,18 +253,24 @@
   :config
   (yas-global-mode 1))
 
-(use-package move-dup
-  :bind
-  ([M-up] . md/move-lines-up)
-  ([M-down] . md/move-lines-down)
-  ("M-S-<down>" . md/duplicate-down)
-  ("M-S-<up>" . md/duplicate-up))
+;; (use-package move-dup
+;;   :ensure t
+;;   :bind
+;;   ([M-up] . md/move-lines-up)
+;;   ([M-down] . md/move-lines-down)
+;;   ("M-S-<down>" . md/duplicate-down)
+;;   ("M-S-<up>" . md/duplicate-up))
+(require-package 'move-dup)
+(require 'move-dup)
+(global-set-key [M-up] 'md/move-lines-up)
+(global-set-key [M-down] 'md/move-lines-down)
+(global-set-key (kbd "C-M-<up>") 'md/duplicate-up)
+(global-set-key (kbd "C-M-<down>") 'md/duplicate-down)
 
 (use-package default-text-scale
   :bind
   ("C-M-=" . default-text-scale-increase)
-  ("C-M--" . default-text-scale-decrease)
-  )
+  ("C-M--" . default-text-scale-decrease))
 
 (use-package rainbow-delimiters
   :config

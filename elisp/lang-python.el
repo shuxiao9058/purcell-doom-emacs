@@ -3,35 +3,51 @@
 ;;; Contains my python configs
 
 ;;; Code:
+(setq auto-mode-alist
+      (append '(("SConstruct\\'" . python-mode)
+		("SConscript\\'" . python-mode))
+              auto-mode-alist))
+
+(require-package 'pip-requirements)
+
+(when (maybe-require-package 'anaconda-mode)
+  (after-load 'python
+    (add-hook 'python-mode-hook 'anaconda-mode)
+    (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+    ;;use IPython
+    (setq python-shell-interpreter "ipython"))
+  (when (maybe-require-package 'company-anaconda)
+    (after-load 'company
+      (add-hook 'python-mode-hook
+                (lambda () (sanityinc/local-push-company-backend 'company-anaconda))))))
+
 
 ;; (use-package company-jedi
 ;;   :config
 ;;   (add-to-list 'company-backends 'company-jedi))
 
-(use-package py-autopep8
-  :ensure t)
-(use-package python
-  :mode ("\\.py" . python-mode)
-  :config
-  (use-package elpy
-    :init
-    (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
-    :config
-    (setq elpy-rpc-backend "jedi")
-    ;; (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    ;; (add-hook 'elpy-mode-hook 'flycheck-mode)
-    (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-    ;;flycheck-python-flake8-executable "/usr/local/bin/flake8"
-    :bind (:map elpy-mode-map
-		("M-." . elpy-goto-definition)
-		("M-," . pop-tag-mark)))
-  ;; (setq elpy-rpc-python-command "python3")
-  (elpy-enable)
-  (elpy-use-ipython))
+;; (use-package py-autopep8
+;;   :ensure t)
+;; (use-package python
+;;   :mode ("\\.py" . python-mode)
+;;   :config
+;;   (use-package elpy
+;;     :init
+;;     (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+;;     :config
+;;     (setq elpy-rpc-backend "jedi")
+;;     (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+;;     :bind (:map elpy-mode-map
+;; 		("M-." . elpy-goto-definition)
+;; 		("M-," . pop-tag-mark)))
+;;   ;; (setq elpy-rpc-python-command "python3")
+;;   (elpy-enable)
+;;   (elpy-use-ipython))
 
-(use-package pip-requirements
-  :config
-  (add-hook 'pip-requirements-mode-hook #'pip-requirements-auto-complete-setup))
+
+;; (use-package pip-requirements
+;;   :config
+;;   (add-hook 'pip-requirements-mode-hook #'pip-requirements-auto-complete-setup))
 
 ;; (use-package pyenv-mode
 ;;   :init

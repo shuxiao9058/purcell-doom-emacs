@@ -15,10 +15,11 @@
 (add-to-list 'load-path (concat user-emacs-directory "site-elisp"))
 
 (require 'base)
+(require 'base-functions)
+
 (require 'base-theme)
 (require 'base-extensions)
-(require 'base-evil)
-(require 'base-functions)
+;; (require 'base-evil)
 (require 'base-global-keys)
 
 (require 'lang-python)
