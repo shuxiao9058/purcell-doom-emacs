@@ -143,5 +143,12 @@ Call a second time to restore the original window configuration."
 
 (global-set-key (kbd "C-c <down>") 'sanityinc/toggle-current-window-dedication)
 
+(defun beginning-of-line-or-indentation ()
+  "Move to beginning of line, or indentation"
+  (interactive)
+  (if (bolp)
+      (back-to-indentation)
+    (beginning-of-line)))
+(global-set-key (kbd "C-a") 'beginning-of-line-or-indentation)
 
 (provide 'base-functions)

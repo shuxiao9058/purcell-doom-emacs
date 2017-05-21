@@ -276,6 +276,10 @@
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
+(require-package 'rainbow-mode)
+(require 'rainbow-mode)
+(add-hook 'after-init-hook 'rainbow-mode)
+
 (use-package highlight-symbol
   :bind
   ([(control f3)] . highlight-symbol)
