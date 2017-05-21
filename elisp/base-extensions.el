@@ -176,6 +176,9 @@
   (setq org-projectile:per-repo-filename "todo.org"
 	org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
 
+(require-package 'org-bullets)
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 (use-package page-break-lines)
 
@@ -188,7 +191,7 @@
 
   (projectile-global-mode)
 
-;;  (setq projectile-switch-project-action 'neotree-projectile-action)
+  ;;  (setq projectile-switch-project-action 'neotree-projectile-action)
   )
 
 (use-package recentf
@@ -219,7 +222,6 @@
 	("M-<left>"  . sp-backward-barf-sexp)
 
 	("C-M-d" . sp-kill-sexp)
-	("M-d"   . sp-backward-kill-sexp)
 	("C-M-w" . sp-copy-sexp)
 
 	("M-<backspace>" . backward-kill-word)
