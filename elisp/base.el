@@ -145,6 +145,10 @@ locate PACKAGE."
 (custom-set-variables
  '(initial-frame-alist (quote ((fullscreen . maximized))))) ;; start maximized
 
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
 ;; ============================================================
 ;; Setting English Font
 ;; (set-face-attribute

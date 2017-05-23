@@ -170,15 +170,20 @@
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda))
 
+(require-package 'neotree)
+(require 'neotree)
+(global-set-key [f2] 'neotree-toggle)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+
 (use-package org-projectile
   :config
   (org-projectile:per-repo)
   (setq org-projectile:per-repo-filename "todo.org"
 	org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
 
-(require-package 'org-bullets)
-(require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;; (require-package 'org-bullets)
+;; (require 'org-bullets)
+;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 (use-package page-break-lines)
 
@@ -191,7 +196,7 @@
 
   (projectile-global-mode)
 
-  ;;  (setq projectile-switch-project-action 'neotree-projectile-action)
+  (setq projectile-switch-project-action 'neotree-projectile-action)
   )
 
 (use-package recentf
@@ -299,6 +304,9 @@
   :config
   (global-origami-mode)
   :diminish origami-mode)
+
+(require-package 'all-the-icons)
+(require 'all-the-icons)
 
 
 (require-package 'ido-vertical-mode)
