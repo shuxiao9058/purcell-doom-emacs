@@ -14,6 +14,7 @@
   (after-load 'python
     (add-hook 'python-mode-hook 'anaconda-mode)
     (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+    (add-hook 'python-mode-hook 'flycheck-mode)
     ;;use IPython
     (setq python-shell-interpreter "ipython"))
   (when (maybe-require-package 'company-anaconda)

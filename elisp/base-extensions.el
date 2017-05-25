@@ -76,13 +76,18 @@
 
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode)
+  ;; :init (global-flycheck-mode)
   )
+
+(require-package 'hungry-delete)
+(require 'hungry-delete)
+(global-hungry-delete-mode)
+
 (use-package aggressive-indent
   :config
   (global-aggressive-indent-mode 1)
-;; (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
-)
+  ;; (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+  )
 
 (use-package ag)
 (use-package wgrep)

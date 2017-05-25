@@ -171,12 +171,22 @@ locate PACKAGE."
 ;; (setq face-font-rescale-alist '(("微软雅黑" . 1.2) ("Microsoft Yahei" . 1.2) ("WenQuanYi Zen Hei" . 1.2)))
 
 ;;WIn7下使用Emacs-25会遇到卡顿，解决方法为使用 Microsoft YaHei Mono 字体。
-(custom-set-faces
- '(default ((t (:family "Microsoft YaHei Mono" :foundry "outline" :slant normal :weight normal :height 98 :width normal)))))
-;;如使用Microsoft YaHei Mono，则可使用如下设置
-;; Chinese Font
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font (frame-parameter nil 'font) charset (font-spec :family "Microsoft YaHei" :size 14)))
+;; (custom-set-faces
+;;  '(default ((t (:family "Microsoft YaHei Mono" :foundry "outline" :slant normal :weight normal :height 98 :width normal)))))
+;; ;;如使用Microsoft YaHei Mono，则可使用如下设置
+;; ;; Chinese Font
+;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;;   (set-fontset-font (frame-parameter nil 'font) charset (font-spec :family "Microsoft YaHei" :size 14)))
+
+;;中文与外文字体设置
+(defun set-font (english chinese english-size chinese-size)
+  (set-face-attribute 'default nil :font
+                      (format   "%s %d"  english english-size))
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font) charset
+                      (font-spec :family chinese :size chinese-size))))
+
+(set-font   "Ubuntu Mono" "Microsoft Yahei" 12 16)
 
 (provide 'base)
 ;;; base ends here
