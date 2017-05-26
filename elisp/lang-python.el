@@ -15,12 +15,21 @@
     (add-hook 'python-mode-hook 'anaconda-mode)
     (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
     (add-hook 'python-mode-hook 'flycheck-mode)
-    ;;use IPython
-    (setq python-shell-interpreter "ipython"))
-  (when (maybe-require-package 'company-anaconda)
-    (after-load 'company
-      (add-hook 'python-mode-hook
-                (lambda () (sanityinc/local-push-company-backend 'company-anaconda))))))
+    (when (executable-find "ipython")
+      (setq python-shell-interpreter "ipython"))
+
+    (setq
+     python-shell-interpreter-args "-i C:\\Python27\\Scripts\\ipython-script.py --pylab=qt"
+     python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+     python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+     python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
+     python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
+     python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+
+    (when (maybe-require-package 'company-anaconda)
+      (after-load 'company
+	(add-hook 'python-mode-hook
+		  (lambda () (sanityinc/local-push-company-backend 'company-anaconda)))))))
 
 
 ;; (use-package company-jedi
