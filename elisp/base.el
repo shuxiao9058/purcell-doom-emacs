@@ -1,3 +1,4 @@
+(require 'hober-theme)
 (package-initialize)
 
 (setq package-archives '(
@@ -163,7 +164,7 @@ locate PACKAGE."
 
 ;;WIn7下使用Emacs-25会遇到卡顿，解决方法为使用 Microsoft YaHei Mono 字体。
 (custom-set-faces
- '(default ((t (:family "Microsoft YaHei Mono" :foundry "outline" :slant normal :weight normal :height 108 :width normal)))))
+ '(default ((t (:family "Microsoft YaHei Mono" :foundry "outline" :slant normal :weight normal :size 17)))))
 ;;如使用Microsoft YaHei Mono，则可使用如下设置
 ;; Chinese Font
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
