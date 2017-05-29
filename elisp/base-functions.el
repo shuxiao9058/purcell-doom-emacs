@@ -151,4 +151,6 @@ Call a second time to restore the original window configuration."
     (beginning-of-line)))
 (global-set-key (kbd "C-a") 'beginning-of-line-or-indentation)
 
+
+
 (provide 'base-functions)

@@ -1,17 +1,12 @@
-;; (use-package material-theme
-;;   :defer t
-;;   :init
-;;   (load-theme 'material))
-;; (require-package 'color-theme-sanityinc-tomorrow)
-;; (require 'color-theme-sanityinc-tomorrow)
+
 ;; (use-package gruvbox-theme
 ;;   :defer t
 ;;   :init
 ;;   (load-theme 'gruvbox t))
 ;; (load-theme 'manoj-dark t)
 
-;; (require 'hober-theme)
-;; (load-theme 'hober t)
+(require 'hober-theme)
+(load-theme 'hober t)
 ;; (require 'eclipse-theme)
 ;; (load-theme 'eclipse t)
 
@@ -30,32 +25,6 @@
 ;;   :defer t
 ;;   :init
 ;;   (load-theme 'zenburn t))
-;; (use-package github-theme
-;;   :defer t
-;;   :init
-;;   (load-theme 'github))
-
-;; (use-package madhat2r-theme
-;;   :defer t
-;;   :init
-;;   (load-theme 'madhat2r t))
-;; (require-package 'powerline)
-;; (require 'powerline)
-;; ;; (powerline-default-theme)
-;; (powerline-center-evil-theme)
-
-;; (use-package spacemacs-theme
-;;   :defer t
-;;   :init
-;;   (load-theme 'spacemacs-dark t))
-;; (use-package spaceline
-;;   :defer t
-;;   :init
-;;   (require 'spaceline-config)
-;;   (spaceline-spacemacs-theme)
-;;   (spaceline-toggle-window-number-off)
-;;   ; (spaceline-toggle-buffer-size-off)
-;;   )
 
 ;; (use-package telephone-line
 ;;   :init

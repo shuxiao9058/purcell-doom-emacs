@@ -175,6 +175,23 @@
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda))
 
+
+;; plantuml
+;; active Org-babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(;; other Babel languages
+   (plantuml . t)))
+
+(setq org-plantuml-jar-path
+      (expand-file-name "~/.emacs.d/extra-bin/plantuml.jar"))
+
+;; Enable plantuml-mode for PlantUML files
+(add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+
+;; Integration with org-mode
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+
 (require-package 'neotree)
 (require 'neotree)
 (global-set-key [f2] 'neotree-toggle)

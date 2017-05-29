@@ -50,9 +50,40 @@ locate PACKAGE."
 
 (require-package 'use-package)
 
-(defconst private-dir  (expand-file-name "private" user-emacs-directory))
+;; ----------------------------------
+(defun prepend-to-exec-path (path)
+  "prepend the path to the emacs intenral `exec-path' and \"PATH\" env variable.
+Return the updated `exec-path'"
+  (setenv "PATH" (concat (expand-file-name path)
+                         path-separator
+                         (getenv "PATH")))
+  (setq exec-path
+        (cons (expand-file-name path)
+              exec-path)))
+
+
+;; Prepend a path to the begin of the `load-path'
+(defun prepend-to-load-path (path)
+  "prepend the PATH to the head of the `load-path', return updated load-path."
+  (add-to-list 'load-path path))
+
+;; ----------------------------------
+
+
+(defconst private-dir  (expand-file-name "private" user-emacs-directory)
+  "pvrivate dir")
 (defconst temp-dir (format "%s/cache" private-dir)
   "Hostname-based elisp temp directories")
+(defconst os:windowsp (eq system-type 'windows-nt)
+  "if current operation system is windows system")
+(defconst os:linuxp (eq system-type 'gnu/linux)
+  "if current operation system is linux")
+(defconst os:win32p (and os:windowsp
+			 (not (getenv "PROGRAMW6432")))
+  "if current operation system is windows 32bit version")
+(defconst os:win64p (and os:windowsp
+			 (getenv "PROGRAMW6432"))
+  "if current operation system is windows 64bit verison.")
 
 ;; 设置编码
 (cond
@@ -61,19 +92,42 @@ locate PACKAGE."
   (prefer-coding-system 'utf-8)
   (set-terminal-coding-system 'gbk)
   (modify-coding-system-alist 'process "*" 'gbk)
-  (defun liu233w/windows-shell-mode-coding ()
+  (defun windows-shell-mode-coding ()
     (set-buffer-file-coding-system 'gbk)
     (set-buffer-process-coding-system 'gbk 'gbk))
-  (add-hook 'shell-mode-hook #'liu233w/windows-shell-mode-coding)
-  (add-hook 'inferior-python-mode-hook #'liu233w/windows-shell-mode-coding)
-  (defun liu233w//python-encode-in-org-babel-execute (func body params)
+  (add-hook 'shell-mode-hook #'windows-shell-mode-coding)
+  (add-hook 'inferior-python-mode-hook #'windows-shell-mode-coding)
+  (defun python-encode-in-org-babel-execute (func body params)
     (let ((coding-system-for-write 'utf-8))
       (funcall func body params)))
   (advice-add #'org-babel-execute:python :around
- 	      #'liu233w//python-encode-in-org-babel-execute))
+ 	      #'python-encode-in-org-babel-execute))
  (t
   (set-language-environment "UTF-8")
   (prefer-coding-system 'utf-8)))
+
+;; 设置path
+;; there are difference between exec-path and PATH.
+;; The value of environment variable “PATH” is used by emacs when you are running a shell in emacs, similar to when you are using a shell in a terminal.
+;; The exec-path is used by emacs itself to find programs it needs for its features, such as spell checking, file compression, compiling, grep, diff, etc. Original from http://ergoemacs.org/emacs/emacs_env_var_paths.html
+;; (cond
+;;  ((eq system-type 'windows-nt)
+;;   (setenv "PATH" (concat (getenv "PATH") ":/sw/bin"))
+;;   (setq exec-path (append exec-path '("/sw/bin")))))
+;; add extra binary path
+;; it seems the "find" in "unix-utils-bin" works better and the
+;; on in the "etc", so we put "ect" after "unix-utils-bin"
+(when os:windowsp
+  (mapc #'prepend-to-exec-path
+        (reverse
+         (list
+          (if os:win64p
+              "C:/Program Files (x86)/Git/bin"
+            "C:/Program Files/Git/bin")
+          "~/.emacs.d/extra-bin/gnuwin32"
+          "~/.emacs.d/extra-bin/unix-utils-bin"
+          "~/bin"))))
+
 
 ;; Core settings
 ;; UTF-8 please
@@ -152,8 +206,8 @@ locate PACKAGE."
 
 ;; ============================================================
 ;; Setting English Font
-;; (set-face-attribute
-;;  'default nil :font "Inziu IosevkaCC Slab SC 12")
+(set-face-attribute
+ 'default nil :font "Inziu Iosevka CL 12")
 ;; (set-face-attribute
 ;;  'default nil :font "Monaco 10")
 ;; ;; Setting Chinese Font
@@ -162,13 +216,13 @@ locate PACKAGE."
 ;; 		    charset
 ;; 		    (font-spec :family "Microsoft Yahei" :size 16)))
 
-;;WIn7下使用Emacs-25会遇到卡顿，解决方法为使用 Microsoft YaHei Mono 字体。
-(custom-set-faces
- '(default ((t (:family "Microsoft YaHei Mono" :foundry "outline" :slant normal :weight normal :size 17)))))
-;;如使用Microsoft YaHei Mono，则可使用如下设置
-;; Chinese Font
-(dolist (charset '(kana han symbol cjk-misc bopomofo))
-  (set-fontset-font (frame-parameter nil 'font) charset (font-spec :family "Microsoft YaHei" :size 14)))
+;; ;;WIn7下使用Emacs-25会遇到卡顿，解决方法为使用 Microsoft YaHei Mono 字体。
+;; (custom-set-faces
+;;  '(default ((t (:family "Microsoft YaHei Mono" :foundry "outline" :slant normal :weight normal :size 17)))))
+;; ;;如使用Microsoft YaHei Mono，则可使用如下设置
+;; ;; Chinese Font
+;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;;   (set-fontset-font (frame-parameter nil 'font) charset (font-spec :family "Microsoft YaHei" :size 14)))
 
 (provide 'base)
 ;;; base ends here
