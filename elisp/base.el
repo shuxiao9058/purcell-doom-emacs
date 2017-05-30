@@ -1,4 +1,4 @@
-(require 'hober-theme)
+(setq package-enable-at-startup nil)
 (package-initialize)
 
 (setq package-archives '(
@@ -124,9 +124,11 @@ Return the updated `exec-path'"
           (if os:win64p
               "C:/Program Files (x86)/Git/bin"
             "C:/Program Files/Git/bin")
-          "~/.emacs.d/extra-bin/gnuwin32"
-          "~/.emacs.d/extra-bin/unix-utils-bin"
-          "~/bin"))))
+
+	  "~/.emacs.d/extra-bin/dlls"
+	  "~/.emacs.d/extra-bin/gnuwin32"
+	  "~/.emacs.d/extra-bin/unix-utils-bin"
+	  "~/.emacs.d/extra-bin/bin"))))
 
 
 ;; Core settings
@@ -163,6 +165,7 @@ Return the updated `exec-path'"
  x-select-enable-clipboard          t
  use-package-always-ensure          t)
 
+(auto-image-file-mode)
 ;; Bookmarks
 (setq
  ;; persistent bookmarks
