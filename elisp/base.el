@@ -209,8 +209,8 @@ Return the updated `exec-path'"
 
 ;; ============================================================
 ;; Setting English Font
-(set-face-attribute
- 'default nil :font "Inziu Iosevka CL 12")
+;; (set-face-attribute
+;;  'default nil :font "Inziu Iosevka CL 12")
 ;; (set-face-attribute
 ;;  'default nil :font "Monaco 10")
 ;; ;; Setting Chinese Font
@@ -226,6 +226,11 @@ Return the updated `exec-path'"
 ;; ;; Chinese Font
 ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
 ;;   (set-fontset-font (frame-parameter nil 'font) charset (font-spec :family "Microsoft YaHei" :size 14)))
+(require-package 'chinese-fonts-setup)
+(require 'chinese-fonts-setup)
+(setq cfs-profiles
+      '("profile1"))
+(chinese-fonts-setup-enable)
 
-(provide 'base)
+ (provide 'base)
 ;;; base ends here
