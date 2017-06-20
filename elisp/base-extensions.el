@@ -308,7 +308,15 @@
 (use-package yasnippet
   :diminish (yas-minor-mode . "")
   :config
-  (yas-global-mode 1))
+  (setq yas-snippet-dirs
+	'("~/.emacs.d/snippets"                 ;; personal snippets
+	  ;; "/path/to/yasnippet/yasmate/snippets" ;; the yasmate collection
+	  ;; "/path/to/yasnippet/snippets"         ;; the default collection
+	  "~/yasnippet-snippets"	;git clone https://github.com/AndreaCrotti/yasnippet-snippets.git
+	  ))
+
+  (yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.
+  )
 
 ;; (use-package move-dup
 ;;   :ensure t

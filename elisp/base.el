@@ -228,9 +228,9 @@ Return the updated `exec-path'"
 ;;   (set-fontset-font (frame-parameter nil 'font) charset (font-spec :family "Microsoft YaHei" :size 14)))
 (require-package 'chinese-fonts-setup)
 (require 'chinese-fonts-setup)
+(chinese-fonts-setup-enable)
 (setq cfs-profiles
       '("profile1"))
-(chinese-fonts-setup-enable)
 
- (provide 'base)
+(provide 'base)
 ;;; base ends here
