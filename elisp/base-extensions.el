@@ -209,21 +209,13 @@
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
 (add-hook 'org-babel-after-execute-hook 'naso/display-inline-images 'append)
-
-					; Make babel results blocks lowercase
+;; Make babel results blocks lowercase
 (setq org-babel-results-keyword "results")
 
 (defun naso/display-inline-images ()
   (condition-case nil
       (org-display-inline-images)
     (error nil)))
-
-;; -----------------------------------------------------------
-
-(require-package 'neotree)
-(require 'neotree)
-(global-set-key [f2] 'neotree-toggle)
-(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
 (use-package org-projectile
   :config
@@ -234,6 +226,14 @@
 ;; (require-package 'org-bullets)
 ;; (require 'org-bullets)
 ;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+
+;; -----------------------------------------------------------
+
+(require-package 'neotree)
+(require 'neotree)
+(global-set-key [f2] 'neotree-toggle)
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
 (use-package page-break-lines)
 
