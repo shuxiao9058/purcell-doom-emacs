@@ -1,8 +1,11 @@
 (require-package 'color-theme-sanityinc-solarized)
 (require-package 'color-theme-sanityinc-tomorrow)
+(require-package 'molokai-theme)
+(require-package 'zenburn-theme)
+(require-package 'github-theme)
 
 ;; If you don't customize it, this is the theme you get.
-(setq-default custom-enabled-themes '(sanityinc-solarized-light))
+(setq-default custom-enabled-themes '(github))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -28,6 +31,24 @@
   "Activate a dark color theme."
   (interactive)
   (setq custom-enabled-themes '(sanityinc-solarized-dark))
+  (reapply-themes))
+
+(defun molokai ()
+  "Activate molokai theme."
+  (interactive)
+  (setq custom-enabled-themes '(molokai))
+  (reapply-themes))
+
+(defun zenburn ()
+  "Activate zenburn theme."
+  (interactive)
+  (setq custom-enabled-themes '(zenburn))
+  (reapply-themes))
+
+(defun github ()
+  "Activate github theme."
+  (interactive)
+  (setq custom-enabled-themes '(github))
   (reapply-themes))
 ;; (use-package gruvbox-theme
 ;;   :defer t
