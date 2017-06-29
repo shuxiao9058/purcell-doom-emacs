@@ -1,11 +1,12 @@
 (require-package 'color-theme-sanityinc-solarized)
 (require-package 'color-theme-sanityinc-tomorrow)
+(require-package 'solarized-theme)
 (require-package 'molokai-theme)
 (require-package 'zenburn-theme)
 (require-package 'github-theme)
 
 ;; If you don't customize it, this is the theme you get.
-(setq-default custom-enabled-themes '(github))
+(setq-default custom-enabled-themes '(solarized-dark))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -24,13 +25,13 @@
 (defun light ()
   "Activate a light color theme."
   (interactive)
-  (setq custom-enabled-themes '(sanityinc-solarized-light))
+  (setq custom-enabled-themes '(solarized-light))
   (reapply-themes))
 
 (defun dark ()
   "Activate a dark color theme."
   (interactive)
-  (setq custom-enabled-themes '(sanityinc-solarized-dark))
+  (setq custom-enabled-themes '(solarized-dark))
   (reapply-themes))
 
 (defun molokai ()
