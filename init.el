@@ -19,7 +19,7 @@
 
 (require 'base-theme)
 (require 'base-extensions)
-;; (require 'base-evil)
+(require 'base-evil)
 (require 'base-global-keys)
 
 (require 'lang-python)

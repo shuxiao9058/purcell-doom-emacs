@@ -1,4 +1,4 @@
-
+
 ;; quick jump
 (use-package avy
   :bind
@@ -9,7 +9,7 @@
 ;;   :diminish company-mode
 ;;   :config
 ;;   (add-hook 'after-init-hook 'global-company-mode))
-
+
 (setq tab-always-indent 'complete)  ;; use 't when company is disabled
 (add-to-list 'completion-styles 'initials t)
 ;; Stop completion-at-point from popping up completion buffers so eagerly
@@ -37,20 +37,20 @@
     "Add BACKEND to a buffer-local version of `company-backends'."
     (set (make-local-variable 'company-backends)
          (append (list backend) company-backends))))
-
+
 (use-package dashboard
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents  . 7)
 			  (bookmarks . 5)
 			  (projects . 5))))
-
+
 (use-package ediff
   :config
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq-default ediff-highlight-all-diffs 'nil)
   (setq ediff-diff-options "-w"))
-
+
 (use-package exec-path-from-shell
   :config
   ;; Add GOPATH to shell
@@ -58,7 +58,7 @@
     (exec-path-from-shell-copy-env "GOPATH")
     (exec-path-from-shell-copy-env "PYTHONPATH")
     (exec-path-from-shell-initialize)))
-
+
 ;; (require 'golden-ratio)
 ;; (golden-ratio-mode 1)
 ;; (diminish 'golden-ratio-mode)
@@ -66,7 +66,7 @@
 (require 'window-numbering)
 (window-numbering-mode t)
 (diminish 'window-numbering-mode)
-
+
 (use-package expand-region
   :bind
   ("C-=" . er/expand-region))
@@ -89,7 +89,7 @@
   (global-aggressive-indent-mode 1)
   ;; (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
   )
-
+
 (use-package ag)
 (use-package wgrep)
 (use-package counsel
@@ -131,7 +131,7 @@
   :config
   (setq linum-format " %2d ")
   (global-linum-mode nil))
-
+
 (use-package magit
   :config
 
@@ -166,8 +166,7 @@
 (global-set-key (kbd "C-c m c") 'mc/edit-lines)
 (global-set-key (kbd "C-c m e") 'mc/edit-ends-of-lines)
 (global-set-key (kbd "C-c m a") 'mc/edit-beginnings-of-lines)
-
-;; -----------------------------------------------------------
+
 (use-package org
   :config
   (setq org-directory "~/org-files"
@@ -227,16 +226,41 @@
 ;; (require 'org-bullets)
 ;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
-
-;; -----------------------------------------------------------
+
 
 (require-package 'neotree)
 (require 'neotree)
 (global-set-key [f2] 'neotree-toggle)
-(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+(setq neo-smart-open t)
+(add-hook 'neotree-mode-hook
+	  (lambda ()
+	    (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+	    (define-key evil-normal-state-local-map (kbd "l") 'neotree-quick-look)
+	    (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-quick-look)
+	    (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+	    (define-key evil-normal-state-local-map (kbd "h") 'neotree-select-up-node)
+	    (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
+(defun neotree-project-dir ()
+  "Open NeoTree using the git root."
+  (interactive)
+  (let ((project-dir (projectile-project-root))
+	(file-name (buffer-file-name)))
+    (neotree-toggle)
+    (if project-dir
+	(if (neo-global--window-exists-p)
+	    (progn
+	      (neotree-dir project-dir)
+	      (neotree-find file-name)))
+      (message "Could not find git project root."))))
+(global-set-key [f8] 'neotree-project-dir)
 
-(use-package page-break-lines)
+
 
+(use-package page-break-lines
+  :config
+  (global-page-break-lines-mode))
+
 (use-package projectile
   :config
   (setq projectile-known-projects-file
@@ -248,7 +272,7 @@
 
   (setq projectile-switch-project-action 'neotree-projectile-action)
   )
-
+
 (use-package recentf
   :config
   (setq recentf-save-file (recentf-expand-file-name "~/.emacs.d/private/cache/recentf"))
@@ -304,7 +328,7 @@
 
 
 (use-package wgrep)
-
+
 (use-package yasnippet
   :diminish (yas-minor-mode . "")
   :config
@@ -317,14 +341,7 @@
 
   (yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.
   )
-
-;; (use-package move-dup
-;;   :ensure t
-;;   :bind
-;;   ([M-up] . md/move-lines-up)
-;;   ([M-down] . md/move-lines-down)
-;;   ("M-S-<down>" . md/duplicate-down)
-;;   ("M-S-<up>" . md/duplicate-up))
+
 (require-package 'move-dup)
 (require 'move-dup)
 (global-set-key [M-up] 'md/move-lines-up)
@@ -332,11 +349,7 @@
 (global-set-key (kbd "C-M-<up>") 'md/duplicate-up)
 (global-set-key (kbd "C-M-<down>") 'md/duplicate-down)
 
-;; (use-package default-text-scale
-;;   :bind
-;;   ("C-M-=" . default-text-scale-increase)
-;;   ("C-M--" . default-text-scale-decrease))
-
+
 (use-package rainbow-delimiters
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
@@ -344,7 +357,7 @@
 (require-package 'rainbow-mode)
 (require 'rainbow-mode)
 (add-hook 'after-init-hook 'rainbow-mode)
-
+
 (use-package highlight-symbol
   :bind
   ([(control f3)] . highlight-symbol)
@@ -363,10 +376,10 @@
   (global-origami-mode)
   :diminish origami-mode)
 
-(require-package 'all-the-icons)
-(require 'all-the-icons)
+;; (require-package 'all-the-icons)
+;; (require 'all-the-icons)
 
-
+
 (require-package 'ido-vertical-mode)
 (require 'ido-vertical-mode)
 (ido-vertical-mode 1)
@@ -378,7 +391,7 @@
 ;; http://www.reddit.com/r/emacs/comments/21a4p9/use_recentf_and_ido_together/cgbprem
 (add-hook 'ido-setup-hook (lambda () (define-key ido-completion-map [up] 'previous-history-element)))
 
-
+
 
 ;; http://tumashu.github.io/chinese-pyim/
 ;; (use-package chinese-pyim

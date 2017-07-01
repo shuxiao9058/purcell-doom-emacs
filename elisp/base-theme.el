@@ -4,9 +4,10 @@
 (require-package 'molokai-theme)
 (require-package 'zenburn-theme)
 (require-package 'github-theme)
+(require-package 'doom-themes)
 
 ;; If you don't customize it, this is the theme you get.
-(setq-default custom-enabled-themes '(solarized-dark))
+(setq-default custom-enabled-themes '(molokai))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -51,6 +52,12 @@
   (interactive)
   (setq custom-enabled-themes '(github))
   (reapply-themes))
+
+(defun doomone ()
+  "Activate github theme."
+  (interactive)
+  (setq custom-enabled-themes '(doom-molokai))
+  (reapply-themes))
 ;; (use-package gruvbox-theme
 ;;   :defer t
 ;;   :init
@@ -78,19 +85,19 @@
 ;;   :init
 ;;   (load-theme 'zenburn t))
 
-;; (use-package telephone-line
-;;   :init
-;;   (setq telephone-line-lhs
-;;         '((evil   . (telephone-line-evil-tag-segment))
-;;           (accent . (telephone-line-vc-segment
-;;                      telephone-line-erc-modified-channels-segment
-;;                      telephone-line-process-segment))
-;;           (nil    . (telephone-line-minor-mode-segment
-;;                      telephone-line-buffer-segment))))
-;;   (setq telephone-line-rhs
-;;         '((nil    . (telephone-line-misc-info-segment))
-;;           (accent . (telephone-line-major-mode-segment))
-;;           (evil   . (telephone-line-airline-position-segment))))
-;;   (telephone-line-mode t))
+(use-package telephone-line
+  :init
+  (setq telephone-line-lhs
+        '((evil   . (telephone-line-evil-tag-segment))
+          (accent . (telephone-line-vc-segment
+                     telephone-line-erc-modified-channels-segment
+                     telephone-line-process-segment))
+          (nil    . (telephone-line-minor-mode-segment
+                     telephone-line-buffer-segment))))
+  (setq telephone-line-rhs
+        '((nil    . (telephone-line-misc-info-segment))
+          (accent . (telephone-line-major-mode-segment))
+          (evil   . (telephone-line-airline-position-segment))))
+  (telephone-line-mode t))
 
 (provide 'base-theme)
