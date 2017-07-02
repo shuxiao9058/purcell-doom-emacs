@@ -175,7 +175,8 @@
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda))
 
-
+(use-package ob-ipython
+  :ensure t)
 ;; plantuml
 ;; active Org-babel languages
 (org-babel-do-load-languages
@@ -186,7 +187,7 @@
    (dot . t)
    (emacs-lisp . t)
    (R . t)
-   ;;(Python . t)
+   (ipython . t)
    (ruby . t)
    (gnuplot . t)
    (clojure . t)

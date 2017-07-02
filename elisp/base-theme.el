@@ -7,7 +7,7 @@
 (require-package 'doom-themes)
 
 ;; If you don't customize it, this is the theme you get.
-(setq-default custom-enabled-themes '(molokai))
+(setq-default custom-enabled-themes '(doom-molokai))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()

@@ -200,8 +200,8 @@ Return the updated `exec-path'"
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; 启动时全屏
-(custom-set-variables
- '(initial-frame-alist (quote ((fullscreen . maximized))))) ;; start maximized
+;; (custom-set-variables
+;;  '(initial-frame-alist (quote ((fullscreen . maximized))))) ;; start maximized
 
 (require 'server)
 (unless (server-running-p)

@@ -12,6 +12,9 @@
   :config
   (add-hook 'pip-requirements-mode-hook #'pip-requirements-auto-complete-setup))
 
+(use-package live-py-mode
+  :ensure t)
+
 ;; (when (maybe-require-package 'anaconda-mode)
 ;;   (after-load 'python
 ;;     (add-hook 'python-mode-hook 'anaconda-mode)
@@ -35,6 +38,8 @@
 
 (use-package py-autopep8
   :ensure t)
+;; (use-package python-mode
+;;   :ensure t)
 (use-package python
   :mode ("\\.py" . python-mode)
   :config
@@ -44,12 +49,14 @@
     :config
     (setq elpy-rpc-backend "jedi")
     (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+    (add-hook 'elpy-mode-hook 'live-py-mode)
     :bind (:map elpy-mode-map
 		("M-." . elpy-goto-definition)
 		("M-," . pop-tag-mark)))
   ;; (setq elpy-rpc-python-command "python3")
   (setq
    python-shell-interpreter-args "-i C:\\Python27\\Scripts\\ipython-script.py --pylab=qt"
+   ;; python-shell-interpreter-args "-i"
    python-shell-prompt-regexp "In \\[[0-9]+\\]: "
    python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
    python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
@@ -57,9 +64,6 @@
    python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
   (elpy-enable)
   (elpy-use-ipython))
-
-
-
 
 ;; (use-package pyenv-mode
 ;;   :init
