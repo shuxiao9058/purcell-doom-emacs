@@ -79,7 +79,17 @@
   :ensure t
   ;; :init (global-flycheck-mode)
   )
+
+(require-package 'imenu-anywhere)
+(require-package 'imenu+)
+(require 'imenu+)
+(defun try-to-add-imenu ()
+  (condition-case nil (imenu-add-to-menubar "Imenu") (error nil)))
+(add-hook 'font-lock-mode-hook 'try-to-add-imenu)
 
+(require-package 'sr-speedbar)
+(require 'sr-speedbar)
+
 (require-package 'hungry-delete)
 (require 'hungry-delete)
 (global-hungry-delete-mode)
