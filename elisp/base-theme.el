@@ -5,9 +5,10 @@
 (require-package 'zenburn-theme)
 (require-package 'github-theme)
 (require-package 'doom-themes)
+(require-package 'gruvbox-theme)
 
 ;; If you don't customize it, this is the theme you get.
-(setq-default custom-enabled-themes '(doom-molokai))
+(setq-default custom-enabled-themes '(gruvbox))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -53,10 +54,22 @@
   (setq custom-enabled-themes '(github))
   (reapply-themes))
 
-(defun doomone ()
+(defun doom-one ()
+  "Activate github theme."
+  (interactive)
+  (setq custom-enabled-themes '(doom-one))
+  (reapply-themes))
+
+(defun doom-molokai ()
   "Activate github theme."
   (interactive)
   (setq custom-enabled-themes '(doom-molokai))
+  (reapply-themes))
+
+(defun gruvbox-theme ()
+  "Activate github theme."
+  (interactive)
+  (setq custom-enabled-themes '(gruvbox))
   (reapply-themes))
 ;; (use-package gruvbox-theme
 ;;   :defer t

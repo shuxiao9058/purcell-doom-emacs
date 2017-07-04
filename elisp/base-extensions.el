@@ -81,6 +81,7 @@
   )
 
 (require-package 'imenu-anywhere)
+
 (require-package 'imenu+)
 (require 'imenu+)
 (defun try-to-add-imenu ()
@@ -89,6 +90,16 @@
 
 (require-package 'sr-speedbar)
 (require 'sr-speedbar)
+
+(add-hook 'speedbar-mode-hook
+	  (lambda ()
+	    (define-key motion-state-map (kbd "l") 'speedbar-toggle-line-expansion)
+	    (define-key motion-state-map (kbd "h") 'speedbar-up-directory)
+	    ))
+
+(require-package 'goto-last-change)
+(require 'goto-last-change)
+(global-set-key (kbd "C-x C-/") 'goto-last-change)
 
 (require-package 'hungry-delete)
 (require 'hungry-delete)
