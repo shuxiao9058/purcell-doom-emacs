@@ -59,9 +59,9 @@
     (exec-path-from-shell-copy-env "PYTHONPATH")
     (exec-path-from-shell-initialize)))
 
-;; (require 'golden-ratio)
+(require 'golden-ratio)
 ;; (golden-ratio-mode 1)
-;; (diminish 'golden-ratio-mode)
+(diminish 'golden-ratio-mode)
 (winner-mode 1)
 (require 'window-numbering)
 (window-numbering-mode t)
@@ -136,12 +136,12 @@
 (use-package ivy
   :diminish (ivy-mode . "")
   :bind
-  ("C-s" . swiper)
+  ("C-S-s" . swiper)
   ("C-x C-r" . ivy-resume)
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers nil)
-  (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
+  )
 
 
 (use-package hlinum
@@ -170,23 +170,18 @@
 
 (use-package magit-popup)
 
-;; (use-package multiple-cursors
-;;   :bind
-;;   ("C-S-c C-S-c" . mc/edit-lines)
-;;   ("C->" . mc/mark-next-like-this)
-;;   ("C-<" . mc/mark-previous-like-this)
-;;   ("C-c C->" . mc/mark-all-like-this))
+
 (require-package 'multiple-cursors)
-;; multiple-cursors
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-+") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-;; From active region to multiple cursors:
-(global-set-key (kbd "C-c m r") 'set-rectangular-region-anchor)
-(global-set-key (kbd "C-c m c") 'mc/edit-lines)
-(global-set-key (kbd "C-c m e") 'mc/edit-ends-of-lines)
-(global-set-key (kbd "C-c m a") 'mc/edit-beginnings-of-lines)
+(require-package 'visual-regexp)
+(require-package 'visual-regexp-steroids)
+(require 'visual-regexp-steroids)
+(define-key global-map (kbd "C-c r") 'vr/replace)
+(define-key global-map (kbd "C-c q") 'vr/query-replace)
+;; if you use multiple-cursors, this is for you:
+(define-key global-map (kbd "C-c m") 'vr/mc-mark)
+;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
+(define-key esc-map (kbd "C-r") 'vr/isearch-backward) ;; C-M-r
+(define-key esc-map (kbd "C-s") 'vr/isearch-forward) ;; C-M-s
 
 (use-package org
   :config

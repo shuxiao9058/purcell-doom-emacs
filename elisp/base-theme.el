@@ -7,8 +7,12 @@
 (require-package 'doom-themes)
 (require-package 'gruvbox-theme)
 
+;; (require 'hober-theme)
+;; (load-theme 'hober t)
+;; (require 'eclipse-theme)
+;; (load-theme 'eclipse t)
 ;; If you don't customize it, this is the theme you get.
-(setq-default custom-enabled-themes '(gruvbox))
+;; (setq-default custom-enabled-themes '())
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -76,11 +80,6 @@
 ;;   :init
 ;;   (load-theme 'gruvbox t))
 ;; (load-theme 'manoj-dark t)
-
-;; (require 'hober-theme)
-;; (load-theme 'hober t)
-;; (require 'eclipse-theme)
-;; (load-theme 'eclipse t)
 
 ;; (load-theme 'leuven t)
 ;; (load-theme 'manoj-dark t)
