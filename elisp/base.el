@@ -211,26 +211,26 @@ Return the updated `exec-path'"
 ;; Setting English Font
 ;; (set-face-attribute
 ;;  'default nil :font "Inziu Iosevka CL 12")
-;; (set-face-attribute
-;;  'default nil :font "Monaco 10")
-;; ;; Setting Chinese Font
-;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
-;;   (set-fontset-font (frame-parameter nil 'font)
-;; 		    charset
-;; 		    (font-spec :family "Microsoft Yahei" :size 16)))
+; (set-face-attribute
+ ; 'default nil :font "Monaco 10")
+;; Setting Chinese Font
+; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+  ; (set-fontset-font (frame-parameter nil 'font)
+		    ; charset
+		    ; (font-spec :family "Microsoft Yahei" :size 14)))
 
-;; ;;WIn7下使用Emacs-25会遇到卡顿，解决方法为使用 Microsoft YaHei Mono 字体。
-;; (custom-set-faces
-;;  '(default ((t (:family "Microsoft YaHei Mono" :foundry "outline" :slant normal :weight normal :size 17)))))
-;; ;;如使用Microsoft YaHei Mono，则可使用如下设置
-;; ;; Chinese Font
-;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
-;;   (set-fontset-font (frame-parameter nil 'font) charset (font-spec :family "Microsoft YaHei" :size 14)))
+;;WIn7下使用Emacs-25会遇到卡顿，解决方法为使用 Microsoft YaHei Mono 字体。
+(custom-set-faces
+ '(default ((t (:family "Microsoft YaHei Mono" :foundry "outline" :slant normal :weight normal :size 17)))))
+;;如使用Microsoft YaHei Mono，则可使用如下设置
+;; Chinese Font
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font) charset (font-spec :family "Microsoft YaHei" :size 14)))
 (require-package 'chinese-fonts-setup)
 (require 'chinese-fonts-setup)
-(chinese-fonts-setup-enable)
-(setq cfs-profiles
-      '("profile1"))
+;; (chinese-fonts-setup-enable)
+;; (setq cfs-profiles
+;;       '("profile1"))
 
 (provide 'base)
 ;;; base ends here

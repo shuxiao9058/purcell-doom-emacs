@@ -5,10 +5,6 @@
   ("C-;" . avy-goto-word-or-subword-1))
 
 
-;; (use-package company
-;;   :diminish company-mode
-;;   :config
-;;   (add-hook 'after-init-hook 'global-company-mode))
 
 (setq tab-always-indent 'complete)  ;; use 't when company is disabled
 (add-to-list 'completion-styles 'initials t)
@@ -65,10 +61,6 @@
 (require 'golden-ratio)
 ;; (golden-ratio-mode 1)
 (diminish 'golden-ratio-mode)
-(winner-mode 1)
-(require 'window-numbering)
-(window-numbering-mode t)
-(diminish 'window-numbering-mode)
 
 (use-package expand-region
   :bind
@@ -460,8 +452,7 @@
   (global-origami-mode)
   :diminish origami-mode)
 
-;; (require-package 'all-the-icons)
-;; (require 'all-the-icons)
+
 
 
 (require-package 'ido-vertical-mode)
