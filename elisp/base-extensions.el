@@ -163,10 +163,13 @@
 (require-package 'hungry-delete)
 (require 'hungry-delete)
 (global-hungry-delete-mode)
+(diminish 'hungry-delete-mode)
 
 (use-package aggressive-indent
   :config
   (global-aggressive-indent-mode 1)
+  :diminish
+  aggressive-indent-mode
   ;; (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
   )
 
@@ -209,7 +212,7 @@
 
 (use-package linum
   :config
-  (setq linum-format " %2d ")
+  (setq linum-format "%2d")
   (global-linum-mode nil))
 
 (use-package magit
@@ -335,7 +338,9 @@
 
 (use-package page-break-lines
   :config
-  (global-page-break-lines-mode))
+  (global-page-break-lines-mode)
+  :diminish
+  page-break-lines-mode)
 
 (use-package projectile
   :config
@@ -355,7 +360,6 @@
   (recentf-mode 1))
 
 (use-package smartparens-config
-  :diminish (smartparens-mode . "")
   :ensure smartparens
   :bind
   (:map smartparens-mode-map
@@ -385,7 +389,10 @@
   (progn
     (show-smartparens-global-mode t)
     (add-hook 'prog-mode-hook 'turn-on-smartparens-mode)
-    (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode)))
+    (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode))
+  :diminish
+  (smartparens-mode . "")
+  )
 
 
 (use-package undo-tree
