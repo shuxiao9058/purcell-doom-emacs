@@ -13,7 +13,7 @@
 ;; (require 'eclipse-theme)
 ;; (load-theme 'eclipse t)
 ;; If you don't customize it, this is the theme you get.
-(setq-default custom-enabled-themes '(dorsey))
+;; (setq-default custom-enabled-themes '(doom-one))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -174,6 +174,7 @@
 	  map))
   :config
   (winum-mode)
+  (winner-mode 1)
   )
 (use-package spaceline
   :config
@@ -181,15 +182,15 @@
   (spaceline-spacemacs-theme)
   (set 'spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
   )
-					; (use-package spaceline-all-the-icons
-					; :after spaceline
-					; :config
-					; (spaceline-all-the-icons-theme)
-					; (spaceline-all-the-icons--setup-anzu)            ;; Enable anzu searching
-					; (spaceline-all-the-icons--setup-package-updates) ;; Enable package update indicator
-					; (spaceline-all-the-icons--setup-git-ahead)       ;; Enable # of commits ahead of upstream in git
-					; (spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
-					; (spaceline-all-the-icons--setup-neotree)         ;; Enable Neotree mode line
-					; )
+;; (use-package spaceline-all-the-icons
+;;   :after spaceline
+;;   :config
+;;   (spaceline-all-the-icons-theme)
+;;   (spaceline-all-the-icons--setup-anzu)            ;; Enable anzu searching
+;;   ;; (spaceline-all-the-icons--setup-package-updates) ;; Enable package update indicator
+;;   ;; (spaceline-all-the-icons--setup-git-ahead)       ;; Enable # of commits ahead of upstream in git
+;;   ;; (spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
+;;   (spaceline-all-the-icons--setup-neotree)         ;; Enable Neotree mode line
+;;   )
 
 (provide 'base-theme)

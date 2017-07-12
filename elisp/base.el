@@ -199,6 +199,8 @@ Return the updated `exec-path'"
 ;; Delete trailing whitespace before save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+(setq inhibit-compacting-font-caches t)
+
 ;; 启动时全屏
 ;; (custom-set-variables
 ;;  '(initial-frame-alist (quote ((fullscreen . maximized))))) ;; start maximized

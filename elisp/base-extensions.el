@@ -1,11 +1,9 @@
-
 ;; quick jump
 (use-package avy
   :bind
   ("C-;" . avy-goto-word-or-subword-1))
-
-
 
+
 (setq tab-always-indent 'complete)  ;; use 't when company is disabled
 (add-to-list 'completion-styles 'initials t)
 ;; Stop completion-at-point from popping up completion buffers so eagerly
@@ -101,64 +99,41 @@
 (use-package bm
   :ensure t
   :demand t
-
   :init
   ;; restore on load (even before you require bm)
   (setq bm-restore-repository-on-load t)
-
-
   :config
   ;; Allow cross-buffer 'next'
   (setq bm-cycle-all-buffers t)
-
   ;; where to store persistant files
   (setq bm-repository-file "~/.emacs.d/bm-repository")
-
   ;; save bookmarks
   (setq-default bm-buffer-persistence t)
-
   ;; Loading the repository from file when on start up.
   (add-hook' after-init-hook 'bm-repository-load)
-
   ;; Restoring bookmarks when on file find.
   (add-hook 'find-file-hooks 'bm-buffer-restore)
-
   ;; Saving bookmarks
   (add-hook 'kill-buffer-hook #'bm-buffer-save)
-
   ;; Saving the repository to file when on exit.
   ;; kill-buffer-hook is not called when Emacs is killed, so we
   ;; must save all bookmarks first.
   (add-hook 'kill-emacs-hook #'(lambda nil
 				 (bm-buffer-save-all)
 				 (bm-repository-save)))
-
   ;; The `after-save-hook' is not necessary to use to achieve persistence,
   ;; but it makes the bookmark data in repository more in sync with the file
   ;; state.
   (add-hook 'after-save-hook #'bm-buffer-save)
-
   ;; Restoring bookmarks
   (add-hook 'find-file-hooks   #'bm-buffer-restore)
   (add-hook 'after-revert-hook #'bm-buffer-restore)
-
-  ;; The `after-revert-hook' is not necessary to use to achieve persistence,
-  ;; but it makes the bookmark data in repository more in sync with the file
-  ;; state. This hook might cause trouble when using packages
-  ;; that automatically reverts the buffer (like vc after a check-in).
-  ;; This can easily be avoided if the package provides a hook that is
-  ;; called before the buffer is reverted (like `vc-before-checkin-hook').
-  ;; Then new bookmarks can be saved before the buffer is reverted.
-  ;; Make sure bookmarks is saved before check-in (and revert-buffer)
   (add-hook 'vc-before-checkin-hook #'bm-buffer-save)
-
 
   :bind (("<f2>" . bm-next)
 	 ("S-<f2>" . bm-previous)
 	 ("C-<f2>" . bm-toggle))
   )
-
-
 
 (require-package 'hungry-delete)
 (require 'hungry-delete)
@@ -204,8 +179,7 @@
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers nil)
   )
-
-
+
 (use-package hlinum
   :config
   (hlinum-activate))
@@ -252,6 +226,8 @@
   :bind
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda))
+
+;; (require-package 'org-plus-contrib)
 
 (use-package ob-ipython
   :ensure t)
@@ -351,6 +327,13 @@
 
   (projectile-global-mode)
 
+  (setq-default
+   projectile-mode-line
+   '(:eval
+     (if (file-remote-p default-directory)
+	 " Pr"
+       (format " [%s]" (projectile-project-name)))))
+
   (setq projectile-switch-project-action 'neotree-projectile-action)
   )
 
@@ -358,43 +341,61 @@
   :config
   (setq recentf-save-file (recentf-expand-file-name "~/.emacs.d/private/cache/recentf"))
   (recentf-mode 1))
-
-(use-package smartparens-config
-  :ensure smartparens
-  :bind
-  (:map smartparens-mode-map
-	("C-M-a" . sp-beginning-of-sexp)
-	("C-M-e" . sp-end-of-sexp)
-
-	("C-M-f" . sp-forward-sexp)
-	("C-M-b" . sp-previous-sexp)
-
-	("C-M-n" . sp-next-sexp)
-	("C-M-p" . sp-backward-sexp)
-
-	("C-S-f" . sp-forward-symbol)
-	("C-S-b" . sp-backward-symbol)
-
-	("C-<right>" . sp-forward-slurp-sexp)
-	("M-<right>" . sp-forward-barf-sexp)
-	("C-<left>"  . sp-backward-slurp-sexp)
-	("M-<left>"  . sp-backward-barf-sexp)
-
-	("C-M-d" . sp-kill-sexp)
-	("C-M-w" . sp-copy-sexp)
-
-	("M-<backspace>" . backward-kill-word)
-	)
+
+(use-package smartparens
+  :defer t
+  :ensure t
+  :diminish smartparens-mode
   :init
-  (progn
-    (show-smartparens-global-mode t)
-    (add-hook 'prog-mode-hook 'turn-on-smartparens-mode)
-    (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode))
-  :diminish
-  (smartparens-mode . "")
-  )
+  ;; (setq sp-override-key-bindings
+  ;;       '(("C-<right>" . nil)
+  ;;         ("C-<left>" . nil)
+  ;;         ("C-)" . sp-forward-slurp-sexp)
+  ;;         ("M-<backspace>" . nil)
+  ;;         ("C-(" . sp-forward-barf-sexp)))
+  :config
+  (require 'smartparens-config)
+  (smartparens-global-mode t)
+  (sp-use-smartparens-bindings)
+  (sp--update-override-key-bindings)
+  :commands (smartparens-mode show-smartparens-mode))
+
+;; (use-package smartparens-config
+;;   :ensure smartparens
+;;   :bind
+;;   (:map smartparens-mode-map
+;; 	("C-M-a" . sp-beginning-of-sexp)
+;; 	("C-M-e" . sp-end-of-sexp)
 
+;; 	("C-M-f" . sp-forward-sexp)
+;; 	("C-M-b" . sp-previous-sexp)
 
+;; 	("C-M-n" . sp-next-sexp)
+;; 	("C-M-p" . sp-backward-sexp)
+
+;; 	("C-S-f" . sp-forward-symbol)
+;; 	("C-S-b" . sp-backward-symbol)
+
+;; 	("C-<right>" . sp-forward-slurp-sexp)
+;; 	("M-<right>" . sp-forward-barf-sexp)
+;; 	("C-<left>"  . sp-backward-slurp-sexp)
+;; 	("M-<left>"  . sp-backward-barf-sexp)
+
+;; 	("C-M-d" . sp-kill-sexp)
+;; 	("C-M-w" . sp-copy-sexp)
+
+;; 	("M-<backspace>" . backward-kill-word)
+;; 	)
+;;   :init
+;;   (progn
+;;     ;; (show-smartparens-global-mode t)
+;;     (add-hook 'prog-mode-hook 'turn-on-smartparens-mode)
+;;     (add-hook 'markdown-mode-hook 'turn-on-smartparens-mode))
+;;   :diminish
+;;   smartparens-mode
+;;   )
+
+
 (use-package undo-tree
   :config
   ;; Remember undo history
@@ -408,7 +409,7 @@
   :diminish which-key-mode
   :config
   (which-key-mode))
-
+
 
 (use-package wgrep)
 
@@ -457,8 +458,13 @@
 (use-package origami
   :config
   (global-origami-mode)
-  :diminish origami-mode)
+  :diminish origami-mode
+  :bind
+  ("C-{" . origami-toggle-node)
+  ("C-S-O". origami-toggle-all-nodes))
 
+;; (global-set-key (kbd "C-{") 'origami-toggle-node)
+;; (global-set-key (kbd "C-S-O") 'origami-toggle-all-nodes)
 
 
 

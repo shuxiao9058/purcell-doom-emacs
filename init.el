@@ -20,12 +20,8 @@
 (require 'base-theme)
 (require 'base-extensions)
 (require 'base-evil)
-(require 'base-global-keys)
 
 (require 'lang-python)
-
 (require 'lang-javascript)
-
 (require 'lang-web)
-
 (require 'lang-c)
