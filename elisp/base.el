@@ -223,21 +223,21 @@ Return the updated `exec-path'"
 
 ;;WIn7下使用Emacs-25会遇到卡顿，解决方法为使用 Microsoft YaHei Mono 字体。
 
-(when os:windowsp
-  (progn
-    (set-face-attribute
-     'default nil :font "Microsoft YaHei Mono 12")
-    ))
+;; (when os:windowsp
+;;   (progn
+;;     (set-face-attribute
+;;      'default nil :font "Microsoft YaHei Mono 12")
+;;     ))
 
 ;;如使用Microsoft YaHei Mono，则可使用如下设置
 ;; Chinese Font
 ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
 ;;   (set-fontset-font (frame-parameter nil 'font) charset (font-spec :family "Microsoft YaHei" :size 14)))
-;; (require-package 'chinese-fonts-setup)
-;; (require 'chinese-fonts-setup)
-;; (chinese-fonts-setup-enable)
-;; (setq cfs-profiles
-;;       '("profile1"))
+(require-package 'chinese-fonts-setup)
+(require 'chinese-fonts-setup)
+(chinese-fonts-setup-enable)
+(setq cfs-profiles
+      '("profile1"))
 
 (provide 'base)
 ;;; base ends here
