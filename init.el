@@ -16,10 +16,12 @@
 
 (require 'base)
 (require 'base-functions)
-
-(require 'base-theme)
-(require 'base-extensions)
 (require 'base-evil)
+(require 'base-theme)
+(require 'base-edit)
+(require 'base-company)
+(require 'base-org)
+(require 'base-git)
 
 (require 'lang-python)
 (require 'lang-javascript)

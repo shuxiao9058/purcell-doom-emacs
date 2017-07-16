@@ -85,7 +85,7 @@ Return the updated `exec-path'"
 			 (getenv "PROGRAMW6432"))
   "if current operation system is windows 64bit verison.")
 
-;; 设置编码
+;; coding
 (cond
  ((eq system-type 'windows-nt)
   (set-language-environment "chinese-gbk")
@@ -106,17 +106,9 @@ Return the updated `exec-path'"
   (set-language-environment "UTF-8")
   (prefer-coding-system 'utf-8)))
 
-;; 设置path
 ;; there are difference between exec-path and PATH.
 ;; The value of environment variable “PATH” is used by emacs when you are running a shell in emacs, similar to when you are using a shell in a terminal.
 ;; The exec-path is used by emacs itself to find programs it needs for its features, such as spell checking, file compression, compiling, grep, diff, etc. Original from http://ergoemacs.org/emacs/emacs_env_var_paths.html
-;; (cond
-;;  ((eq system-type 'windows-nt)
-;;   (setenv "PATH" (concat (getenv "PATH") ":/sw/bin"))
-;;   (setq exec-path (append exec-path '("/sw/bin")))))
-;; add extra binary path
-;; it seems the "find" in "unix-utils-bin" works better and the
-;; on in the "etc", so we put "ect" after "unix-utils-bin"
 (when os:windowsp
   (mapc #'prepend-to-exec-path
         (reverse
@@ -131,18 +123,8 @@ Return the updated `exec-path'"
 	  "~/.emacs.d/extra-bin/bin"))))
 
 
-;; Core settings
-;; UTF-8 please
-;; (set-charset-priority 'unicode)
-;; (setq locale-coding-system   'utf-8)   ; pretty
-;; (set-terminal-coding-system  'utf-8)   ; pretty
-;; (set-keyboard-coding-system  'utf-8)   ; pretty
-;; (set-selection-coding-system 'utf-8)   ; please
-;; (prefer-coding-system        'utf-8)   ; with sugar on top
-;; (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
-
 ;; Emacs customizations
-(setq ;; confirm-kill-emacs                  'y-or-n-p
+(setq
  confirm-nonexistent-file-or-buffer  t
  save-interprogram-paste-before-kill t
  mouse-yank-at-point                 t
@@ -150,94 +132,247 @@ Return the updated `exec-path'"
  visible-bell                        nil
  ring-bell-function                  'ignore
  custom-file                         "~/.emacs.d/.custom.el"
- ;; http://ergoemacs.org/emacs/emacs_stop_cursor_enter_prompt.html
  minibuffer-prompt-properties
  '(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)
-
- ;; Disable non selected window highlight
  cursor-in-non-selected-windows     nil
  highlight-nonselected-windows      nil
- ;; PATH
  exec-path                          (append exec-path '("/usr/local/bin/"))
  indent-tabs-mode                   nil
  inhibit-startup-message            t
  fringes-outside-margins            t
  x-select-enable-clipboard          t
- use-package-always-ensure          t)
-
-(auto-image-file-mode)
-;; Bookmarks
-(setq
- ;; persistent bookmarks
- bookmark-save-flag                  t
- bookmark-default-file              (concat temp-dir "/bookmarks"))
-
-;; Backups enabled, use nil to disable
-(setq
+ use-package-always-ensure          t
  history-length                     300
  backup-inhibited                   nil
  make-backup-files                  nil
  auto-save-default                  nil
- auto-save-list-file-name           (concat temp-dir "/autosave")
  make-backup-files                  nil
  create-lockfiles                   nil
- backup-directory-alist            `((".*" . ,(concat temp-dir "/backup/")))
- auto-save-file-name-transforms    `((".*" ,(concat temp-dir "/auto-save-list/") t)))
+ inhibit-compacting-font-caches     t
+ )
 
+(auto-image-file-mode)
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode t)
-
-;; Disable toolbar & menubar
-;;(menu-bar-mode -1)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . maximized))))) ;; start maximized
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 (when (  fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
-(show-paren-mode 1)
-
-;; Delete trailing whitespace before save
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-(setq inhibit-compacting-font-caches t)
-
-;; 启动时全屏
-;; (custom-set-variables
-;;  '(initial-frame-alist (quote ((fullscreen . maximized))))) ;; start maximized
-
 (require 'server)
 (unless (server-running-p)
   (server-start))
+
+(use-package recentf
+  :config
+  (setq recentf-save-file (recentf-expand-file-name "~/.emacs.d/private/cache/recentf"))
+  (recentf-mode 1))
+(show-paren-mode 1)
 
-;; ============================================================
-;; Setting English Font
-;; (set-face-attribute
-;;  'default nil :font "Inziu Iosevka CL 12")
-					; (set-face-attribute
-					; 'default nil :font "Monaco 10")
-;; Setting Chinese Font
-					; (dolist (charset '(kana han symbol cjk-misc bopomofo))
-					; (set-fontset-font (frame-parameter nil 'font)
-					; charset
-					; (font-spec :family "Microsoft Yahei" :size 14)))
+
+(use-package hlinum
+  :config
+  (hlinum-activate))
 
-;;WIn7下使用Emacs-25会遇到卡顿，解决方法为使用 Microsoft YaHei Mono 字体。
+(use-package linum
+  :config
+  (setq linum-format " %2d ")
+  (global-linum-mode nil))
+
 
-;; (when os:windowsp
-;;   (progn
-;;     (set-face-attribute
-;;      'default nil :font "Microsoft YaHei Mono 12")
-;;     ))
+(use-package page-break-lines
+  :config
+  (global-page-break-lines-mode)
+  :diminish
+  page-break-lines-mode)
 
-;;如使用Microsoft YaHei Mono，则可使用如下设置
-;; Chinese Font
-;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
-;;   (set-fontset-font (frame-parameter nil 'font) charset (font-spec :family "Microsoft YaHei" :size 14)))
+
 (require-package 'chinese-fonts-setup)
 (require 'chinese-fonts-setup)
 (chinese-fonts-setup-enable)
 (setq cfs-profiles
       '("profile1"))
+
+
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-items '((recents  . 7)
+			  (bookmarks . 5)
+			  (projects . 5))))
+
+(use-package ediff
+  :config
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq-default ediff-highlight-all-diffs 'nil)
+  (setq ediff-diff-options "-w"))
+
+(use-package exec-path-from-shell
+  :config
+  ;; Add GOPATH to shell
+  (when (memq window-system '(mac ns))
+    (exec-path-from-shell-copy-env "GOPATH")
+    (exec-path-from-shell-copy-env "PYTHONPATH")
+    (exec-path-from-shell-initialize)))
+
+(require-package 'imenu-anywhere)
+(require-package 'imenu+)
+(require 'imenu+)
+(defun try-to-add-imenu ()
+  (condition-case nil (imenu-add-to-menubar "Imenu") (error nil)))
+(add-hook 'font-lock-mode-hook 'try-to-add-imenu)
+
+(require-package 'sr-speedbar)
+(require 'sr-speedbar)
+
+(require-package 'goto-last-change)
+(require 'goto-last-change)
+(global-set-key (kbd "C-x C-/") 'goto-last-change)
+
+(require-package 'ido-vertical-mode)
+(require 'ido-vertical-mode)
+(ido-vertical-mode 1)
+(setq ido-vertical-define-keys 'C-n-and-C-p-only)
+(setq ido-vertical-show-count t)
+
+;; https://github.com/joodland/bm
+(use-package bm
+  :ensure t
+  :demand t
+  :init
+  ;; restore on load (even before you require bm)
+  (setq bm-restore-repository-on-load t)
+  :config
+  ;; Allow cross-buffer 'next'
+  (setq bm-cycle-all-buffers t)
+  ;; where to store persistant files
+  (setq bm-repository-file "~/.emacs.d/bm-repository")
+  ;; save bookmarks
+  (setq-default bm-buffer-persistence t)
+  ;; Loading the repository from file when on start up.
+  (add-hook' after-init-hook 'bm-repository-load)
+  ;; Restoring bookmarks when on file find.
+  (add-hook 'find-file-hooks 'bm-buffer-restore)
+  ;; Saving bookmarks
+  (add-hook 'kill-buffer-hook #'bm-buffer-save)
+  ;; Saving the repository to file when on exit.
+  ;; kill-buffer-hook is not called when Emacs is killed, so we
+  ;; must save all bookmarks first.
+  (add-hook 'kill-emacs-hook #'(lambda nil
+				 (bm-buffer-save-all)
+				 (bm-repository-save)))
+  ;; The `after-save-hook' is not necessary to use to achieve persistence,
+  ;; but it makes the bookmark data in repository more in sync with the file
+  ;; state.
+  (add-hook 'after-save-hook #'bm-buffer-save)
+  ;; Restoring bookmarks
+  (add-hook 'find-file-hooks   #'bm-buffer-restore)
+  (add-hook 'after-revert-hook #'bm-buffer-restore)
+  (add-hook 'vc-before-checkin-hook #'bm-buffer-save)
+
+  :bind (("<f2>" . bm-next)
+	 ("S-<f2>" . bm-previous)
+	 ("C-<f2>" . bm-toggle))
+  )
+
+
+(use-package undo-tree
+  :config
+  ;; Remember undo history
+  (setq
+   undo-tree-auto-save-history nil
+   undo-tree-history-directory-alist `(("." . ,(concat temp-dir "/undo/"))))
+  (global-undo-tree-mode 1)
+  (diminish 'undo-tree-mode))
+
+(use-package which-key
+  :diminish which-key-mode
+  :config
+  (which-key-mode))
+
+(use-package projectile
+  :config
+  (setq projectile-known-projects-file
+        (expand-file-name "projectile-bookmarks.eld" temp-dir))
+
+  (setq projectile-completion-system 'ivy)
+
+  (projectile-global-mode)
+
+  (setq-default
+   projectile-mode-line
+   '(:eval
+     (if (file-remote-p default-directory)
+	 " Pr"
+       (format " [%s]" (projectile-project-name)))))
+
+  (setq projectile-switch-project-action 'neotree-projectile-action)
+  )
+
+(use-package projectile-speedbar
+  :bind
+  ("C-<f8>" . projectile-speedbar-open-current-buffer-in-tree))
+
+
+(use-package ivy
+  :diminish (ivy-mode . "")
+  :bind
+  ("C-S-s" . swiper)
+  ("C-x C-r" . ivy-resume)
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers nil)
+  )
+
+(use-package counsel
+  :bind
+  ;; ("M-x" . counsel-M-x)
+  ("C-x C-f" . counsel-find-file)
+  ("C-x c k" . counsel-yank-pop))
+(use-package smex
+  :bind
+  ("M-x" . smex)
+  :config
+  (setq-default smex-save-file (expand-file-name ".smex-items" temp-dir)))
+
+(use-package counsel-projectile
+  :bind
+  ("C-x v" . counsel-projectile)
+  ("C-x c p" . counsel-projectile-ag)
+  :config
+  (counsel-projectile-on))
+
+(require-package 'neotree)
+(require 'neotree)
+;; (global-set-key [f2] 'neotree-toggle)
+;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+(setq neo-smart-open t)
+(add-hook 'neotree-mode-hook
+	  (lambda ()
+	    (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+	    (define-key evil-normal-state-local-map (kbd "l") 'neotree-quick-look)
+	    (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-quick-look)
+	    (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+	    (define-key evil-normal-state-local-map (kbd "g") 'neotree-refresh)
+	    (define-key evil-normal-state-local-map (kbd "h") 'neotree-select-up-node)
+	    (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
+(defun neotree-project-dir ()
+  "Open NeoTree using the git root."
+  (interactive)
+  (let ((project-dir (projectile-project-root))
+	(file-name (buffer-file-name)))
+    (neotree-toggle)
+    (if project-dir
+	(if (neo-global--window-exists-p)
+	    (progn
+	      (neotree-dir project-dir)
+	      (neotree-find file-name)))
+      (message "Could not find git project root."))))
+(global-set-key [f8] 'neotree-project-dir)
+
 
 (provide 'base)
 ;;; base ends here
