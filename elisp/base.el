@@ -309,8 +309,8 @@ Return the updated `exec-path'"
 	 " Pr"
        (format " [%s]" (projectile-project-name)))))
 
-  ;; (setq projectile-switch-project-action 'neotree-projectile-action)
-  (setq projectile-switch-project-action 'treemacs-projectile)
+  (setq projectile-switch-project-action 'neotree-projectile-action)
+  ;; (setq projectile-switch-project-action 'treemacs-projectile)
   )
 
 (use-package projectile-speedbar
@@ -357,8 +357,9 @@ Return the updated `exec-path'"
 	    (define-key evil-normal-state-local-map (kbd "l") 'neotree-quick-look)
 	    (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-quick-look)
 	    (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
-	    (define-key evil-normal-state-local-map (kbd "g") 'neotree-refresh)
+	    (define-key evil-normal-state-local-map (kbd "f") 'neotree-refresh)
 	    (define-key evil-normal-state-local-map (kbd "h") 'neotree-select-up-node)
+	    (define-key evil-normal-state-local-map (kbd "y") 'neotree-copy-filepath-to-yank-ring)
 	    (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
 (defun neotree-project-dir ()
   "Open NeoTree using the git root."
@@ -372,36 +373,36 @@ Return the updated `exec-path'"
 	      (neotree-dir project-dir)
 	      (neotree-find file-name)))
       (message "Could not find git project root."))))
-;; (global-set-key [f8] 'neotree-project-dir)
+(global-set-key [f8] 'neotree-project-dir)
 
-(use-package treemacs
-  :ensure t
-  :defer t
-  :config
-  (use-package treemacs-evil
-    :ensure t
-    :demand t)
-  (setq treemacs-header-function            #'treemacs--create-header-projectile
-        treemacs-follow-after-init          t
-        treemacs-width                      35
-        treemacs-indentation                2
-        treemacs-git-integration            t
-        treemacs-change-root-without-asking nil
-        treemacs-sorting                    'alphabetic-desc
-        treemacs-show-hidden-files          t
-        treemacs-never-persist              nil)
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t)
-  :bind
-  (:map global-map
-	([f8]        . treemacs-toggle)
-	("<C-M-tab>" . treemacs-toggle)
-	;; :map spacemacs-default-map
-	;; ("ft"    . treemacs)
-	;; ("fT"    . treemacs-projectile)
-	;; ("f C-t" . treemacs-find-file)
-	)
-  )
+;; (use-package treemacs
+;;   :ensure t
+;;   :defer t
+;;   :config
+;;   (use-package treemacs-evil
+;;     :ensure t
+;;     :demand t)
+;;   (setq treemacs-header-function            #'treemacs--create-header-projectile
+;;         treemacs-follow-after-init          t
+;;         treemacs-width                      35
+;;         treemacs-indentation                2
+;;         treemacs-git-integration            t
+;;         treemacs-change-root-without-asking nil
+;;         treemacs-sorting                    'alphabetic-desc
+;;         treemacs-show-hidden-files          t
+;;         treemacs-never-persist              nil)
+;;   (treemacs-follow-mode t)
+;;   (treemacs-filewatch-mode t)
+;;   :bind
+;;   (:map global-map
+;; 	([f8]        . treemacs-toggle)
+;; 	("<C-M-tab>" . treemacs-toggle)
+;; 	;; :map spacemacs-default-map
+;; 	;; ("ft"    . treemacs)
+;; 	;; ("fT"    . treemacs-projectile)
+;; 	;; ("f C-t" . treemacs-find-file)
+;; 	)
+;;   )
 
 (provide 'base)
 ;;; base ends here
