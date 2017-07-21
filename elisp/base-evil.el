@@ -28,7 +28,11 @@
   "wm" 'delete-other-windows
   "w\\" 'split-window-horizontally-instead
   "w-" 'split-window-vertically-instead
-  "0" 'winum-select-window-0-or-10
+  ;; "0" 'winum-select-window-0-or-10
+  "0" '(lambda ()
+	 (interactive)
+	 (unless (ignore-errors (winum-select-window-0-or-10))
+	   (sr-speedbar-select-window)))
   "1" 'winum-select-window-1
   "2" 'winum-select-window-2
   "3" 'winum-select-window-3
