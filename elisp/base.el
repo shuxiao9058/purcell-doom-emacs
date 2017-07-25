@@ -150,17 +150,17 @@ Return the updated `exec-path'"
  create-lockfiles                   nil
  inhibit-compacting-font-caches     t
  )
-
 (auto-image-file-mode)
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode t)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-(custom-set-variables
- '(initial-frame-alist (quote ((fullscreen . maximized))))) ;; start maximized
+;; (custom-set-variables
+;;  '(initial-frame-alist (quote ((fullscreen . maximized))))) ;; start maximized
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
 (when (  fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
+(global-set-key (kbd "RET") 'newline-and-indent)
 
 (require 'server)
 (unless (server-running-p)
@@ -195,14 +195,21 @@ Return the updated `exec-path'"
 (chinese-fonts-setup-enable)
 (setq cfs-profiles
       '("profile1"))
+;; (set-face-attribute
+;; 'default nil :font "Source Code Pro 13")
+;; ;; Chinese Font
+;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;; (set-fontset-font (frame-parameter nil 'font)
+;; charset
+;; (font-spec :family "WenQuanYi Micro Hei Mono" :size 16)))
 
 
 (use-package dashboard
   :config
   (dashboard-setup-startup-hook)
-  (setq dashboard-items '((recents  . 7)
-			  (bookmarks . 5)
-			  (projects . 5))))
+  (setq dashboard-items '((recents  . 9)
+			  (bookmarks . 9)
+			  (projects . 9))))
 
 (use-package ediff
   :config
@@ -374,35 +381,6 @@ Return the updated `exec-path'"
 	      (neotree-find file-name)))
       (message "Could not find git project root."))))
 (global-set-key [f8] 'neotree-project-dir)
-
-;; (use-package treemacs
-;;   :ensure t
-;;   :defer t
-;;   :config
-;;   (use-package treemacs-evil
-;;     :ensure t
-;;     :demand t)
-;;   (setq treemacs-header-function            #'treemacs--create-header-projectile
-;;         treemacs-follow-after-init          t
-;;         treemacs-width                      35
-;;         treemacs-indentation                2
-;;         treemacs-git-integration            t
-;;         treemacs-change-root-without-asking nil
-;;         treemacs-sorting                    'alphabetic-desc
-;;         treemacs-show-hidden-files          t
-;;         treemacs-never-persist              nil)
-;;   (treemacs-follow-mode t)
-;;   (treemacs-filewatch-mode t)
-;;   :bind
-;;   (:map global-map
-;; 	([f8]        . treemacs-toggle)
-;; 	("<C-M-tab>" . treemacs-toggle)
-;; 	;; :map spacemacs-default-map
-;; 	;; ("ft"    . treemacs)
-;; 	;; ("fT"    . treemacs-projectile)
-;; 	;; ("f C-t" . treemacs-find-file)
-;; 	)
-;;   )
-
+
 (provide 'base)
 ;;; base ends here

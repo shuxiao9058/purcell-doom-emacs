@@ -15,11 +15,11 @@
 
 
 (use-package aggressive-indent
-  :config
-  (global-aggressive-indent-mode 1)
   :diminish
   aggressive-indent-mode
-  ;; (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+  :config
+  ;; (global-aggressive-indent-mode 1)
+  (add-to-list 'aggressive-indent-excluded-modes 'python-mode)
   )
 
 
