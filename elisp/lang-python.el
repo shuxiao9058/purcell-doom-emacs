@@ -54,14 +54,14 @@
 		("M-." . elpy-goto-definition)
 		("M-," . pop-tag-mark)))
   ;; (setq elpy-rpc-python-command "python3")
-  (setq
-   python-shell-interpreter-args "-i C:\\Python27\\Scripts\\ipython-script.py --pylab=qt"
+  ;; (setq
+   ;; python-shell-interpreter-args "-i C:\\Python27\\Scripts\\ipython-script.py --pylab=qt"
    ;; python-shell-interpreter-args "-i"
-   python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-   python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-   python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
-   python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
-   python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+   ;; python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+   ;; python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+   ;; python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
+   ;; python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
+   ;; python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
   (elpy-enable)
   (elpy-use-ipython))
 
