@@ -54,12 +54,13 @@
 
 (define-key evil-normal-state-map (kbd "C-k") (lambda ()
                                                 (interactive)
-                                                (evil-scroll-up nil)))
+                                                (evil-scroll-up 1)))
 (define-key evil-normal-state-map (kbd "C-j") (lambda ()
                                                 (interactive)
-                                                (evil-scroll-down nil)))
+                                                (evil-scroll-down 1)))
 (define-key evil-normal-state-map (kbd "[b") 'previous-buffer)
 (define-key evil-normal-state-map (kbd "]b") 'next-buffer)
+(define-key evil-normal-state-map (kbd "M-.") nil)
 ;;=========================================================
 
 ;;evil-mode, https://bitbucket.org/lyro/evil
@@ -67,7 +68,8 @@
   :ensure t
   :config
   (evil-mode 1)
-  (local-unset-key (kbd "M-.")))
+  (local-unset-key (kbd "M-."))
+  )
 
 
 ;;=========================================================

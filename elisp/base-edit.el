@@ -18,7 +18,7 @@
   :diminish
   aggressive-indent-mode
   :config
-  ;; (global-aggressive-indent-mode 1)
+  (global-aggressive-indent-mode 1)
   (add-to-list 'aggressive-indent-excluded-modes 'python-mode)
   )
 
@@ -60,6 +60,13 @@
 (define-key esc-map (kbd "C-r") 'vr/isearch-backward) ;; C-M-r
 (define-key esc-map (kbd "C-s") 'vr/isearch-forward) ;; C-M-s
 
+(use-package anzu
+  :config
+  (global-anzu-mode +1)
+  :diminish
+  anzu-mode
+  :bind
+  ("C-c C-c r" . anzu-replace-at-cursor-thing) )
 
 (use-package expand-region
   :bind
@@ -97,13 +104,6 @@
   :diminish indent-guide-mode
   )
 
-(use-package origami
-  :config
-  (global-origami-mode)
-  :diminish origami-mode
-  :bind
-  ("C-{" . origami-toggle-node)
-  ("C-S-O". origami-toggle-all-nodes))
 
 (use-package smartparens
   :defer t
@@ -122,10 +122,6 @@
   (global-set-key (kbd "M-l") #'fix-word-downcase)
   (global-set-key (kbd "M-c") #'fix-word-capitalize))
 
-(use-package anzu
-  :config
-  (global-anzu-mode +1)
-  :diminish
-  anzu-mode)
+
 
 (provide 'base-edit)

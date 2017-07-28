@@ -8,6 +8,8 @@
 (require-package 'gruvbox-theme)
 (require-package 'sublime-themes)
 (require-package 'dracula-theme)
+(require-package 'material-theme)
+(require-package 'ample-theme)
 
 ;; (require 'hober-theme)
 ;; (load-theme 'hober t)
@@ -15,7 +17,7 @@
 ;; (load-theme 'eclipse t)
 ;; If you don't customize it, this is the theme you get.
 ;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
-(setq-default custom-enabled-themes '(dracula))
+(setq-default custom-enabled-themes '(ample))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -47,6 +49,18 @@
   "Activate molokai theme."
   (interactive)
   (setq custom-enabled-themes '(molokai))
+  (reapply-themes))
+
+(defun theme-material ()
+  "Activate material theme."
+  (interactive)
+  (setq custom-enabled-themes '(material))
+  (reapply-themes))
+
+(defun theme-dracula ()
+  "Activate molokai theme."
+  (interactive)
+  (setq custom-enabled-themes '(dracula))
   (reapply-themes))
 
 (defun theme-zenburn ()
