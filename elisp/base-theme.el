@@ -2,6 +2,7 @@
 (require-package 'color-theme-sanityinc-tomorrow)
 (require-package 'solarized-theme)
 (require-package 'molokai-theme)
+(require-package 'monokai-theme)
 (require-package 'zenburn-theme)
 (require-package 'github-theme)
 (require-package 'doom-themes)
@@ -17,7 +18,9 @@
 ;; (load-theme 'eclipse t)
 ;; If you don't customize it, this is the theme you get.
 ;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
-(setq-default custom-enabled-themes '(ample))
+;; (setq-default custom-enabled-themes '(ample))
+;; (setq-default custom-enabled-themes '(monokai))
+(setq-default custom-enabled-themes '(leuven))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -29,7 +32,6 @@
 
 (add-hook 'after-init-hook 'reapply-themes)
 (setq custom-safe-themes t)
-
 ;;------------------------------------------------------------------------------
 ;; Toggle between light and dark
 ;;------------------------------------------------------------------------------
@@ -57,6 +59,11 @@
   (setq custom-enabled-themes '(material))
   (reapply-themes))
 
+(defun theme-ample ()
+  "Activate ample theme."
+  (interactive)
+  (setq custom-enabled-themes '(ample))
+  (reapply-themes))
 (defun theme-dracula ()
   "Activate molokai theme."
   (interactive)

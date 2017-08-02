@@ -4,8 +4,8 @@
 ;;; `cfs-insert-fontname’ 来选择一个 *可用* 字体，然后在当前光标处插入其字体名称。
 (setq cfs--custom-set-fontnames
       '(
-        ("Fantasque Sans Mono" "DejaVu Sans Mono" "Ubuntu Mono" "Envy Code R" "Monaco" "Consolas" "Droid Sans Mono" "PragmataPro" "Courier" "Courier New" "Liberation Mono" "MonacoB" "MonacoB2" "MonacoBSemi" "Droid Sans Mono Pro" "Inconsolata" "Source Code Pro" "Lucida Console" "Andale Mono" "Lucida Sans Typewriter" "monoOne" "Lucida Typewriter" "Panic Sans" "Hack" "Bitstream Vera Sans Mono" "HyperFont" "PT Mono" "Ti92Pluspc" "Excalibur Monospace" "Menlof" "Cousine" "Fira Mono" "Lekton" "M+ 1mn" "BPmono" "Free Mono" "Anonymous Pro" "ProFont" "ProFontWindows" "Latin Modern Mono" "Code 2002" "ProggyCleanTT" "ProggyTinyTT")
-        ("Noto Sans S Chinese Regular" "文泉驿等宽微米黑" "FangSong" "微软雅黑" "宋体" "仿宋_GB2312" "黑体" "Microsoft Yahei" "Microsoft_Yahei" "Ubuntu Mono" "文泉驿等宽正黑" "Hiragino Sans GB" "文泉驿正黑" "文泉驿点阵正黑" "SimHei" "SimSun" "NSimSun" "KaiTi" "FangSong_GB2312" "KaiTi_GB2312" "LiSu" "YouYuan" "新宋体" "楷体_GB2312" "幼圆" "隶书" "STXihei" "STKaiti" "STSong" "STZhongsong" "STFangsong" "FZShuTi" "FZYaoti" "STCaiyun" "STHupo" "STLiti" "STXingkai" "STXinwei" "方正姚体" "方正舒体" "方正粗圆_GBK" "华文仿宋" "华文中宋" "华文彩云" "华文新魏" "华文细黑" "华文行楷")
+        ("Anonymous Pro" "PragmataPro" "Roboto" "Fira Mono" "Consolas" "Fantasque Sans Mono" "DejaVu Sans Mono" "Ubuntu Mono" "Envy Code R" "Monaco" "Droid Sans Mono" "Courier" "Courier New" "Liberation Mono" "MonacoB" "MonacoB2" "MonacoBSemi" "Droid Sans Mono Pro" "Inconsolata" "Source Code Pro" "Lucida Console" "Andale Mono" "Lucida Sans Typewriter" "monoOne" "Lucida Typewriter" "Panic Sans" "Hack" "Bitstream Vera Sans Mono" "HyperFont" "PT Mono" "Ti92Pluspc" "Excalibur Monospace" "Menlof" "Cousine" "Lekton" "M+ 1mn" "BPmono" "Free Mono" "ProFont" "ProFontWindows" "Latin Modern Mono" "Code 2002" "ProggyCleanTT" "ProggyTinyTT")
+        ("FangSong" "黑体" "文泉驿等宽微米黑" "Microsoft Yahei"  "Noto Sans S Chinese Regular"   "宋体" "仿宋_GB2312"  "Microsoft_Yahei" "Ubuntu Mono" "文泉驿等宽正黑" "Hiragino Sans GB" "文泉驿正黑" "文泉驿点阵正黑" "SimHei" "SimSun" "NSimSun" "KaiTi" "FangSong_GB2312" "KaiTi_GB2312" "LiSu" "YouYuan" "新宋体" "幼圆" "隶书" "STXihei" "STKaiti" "STSong" "STZhongsong" "STFangsong" "FZShuTi" "FZYaoti" "STCaiyun" "STHupo" "STLiti" "STXingkai" "STXinwei" "方正姚体" "方正舒体" "方正粗圆_GBK" "华文仿宋" "华文中宋" "华文彩云" "华文新魏" "华文细黑" "华文行楷")
         ("HanaMinB" "SimSun-ExtB" "MingLiU-ExtB" "PMingLiU-ExtB" "MingLiU_HKSCS-ExtB")
         ))
 
@@ -14,15 +14,11 @@
 ;;; 按 C-<up> 增大光标处字号，按 C-<down> 减小光标处字号。
 (setq cfs--custom-set-fontsizes
       '(
-        (10   10.5 10.5)
-        (11.5 12.0 12.0)
-        (11.5 12.0 12.0)
-        (12.5 13.5 13.5)
-        (12.5 13.5 13.5)
-        (13.5 16.5 16.5)
-        (13.5 16.5 16.5)
-        (13.5 16.5 16.5)
-        (14   15.0 15.0)
-        (16   16.5 16.5)
-        (18   18.0 18.5)
+        (10.0   10.0 10.5)
+        (11.0 11.0 12.0)
+        (12.0 12.5 13.5)
+        (13.0 13.5 13.5)
+        (14   14.5 15.0)
+        (16   16.0 16.5)
+        (18   18.5 19.5)
         ))

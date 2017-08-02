@@ -196,12 +196,12 @@ Return the updated `exec-path'"
 (setq cfs-profiles
       '("profile1"))
 ;; (set-face-attribute
-;; 'default nil :font "Source Code Pro 13")
-;; ;; Chinese Font
+;;  'default nil :font "Inziu Iosevka SC 13")
+;; Chinese Font
 ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
-;; (set-fontset-font (frame-parameter nil 'font)
-;; charset
-;; (font-spec :family "WenQuanYi Micro Hei Mono" :size 16)))
+;;   (set-fontset-font (frame-parameter nil 'font)
+;; 		    charset
+;; 		    (font-spec :family "WenQuanYi Micro Hei Mono" :size 16)))
 
 
 (use-package dashboard
@@ -355,7 +355,8 @@ Return the updated `exec-path'"
 
 (require-package 'neotree)
 (require 'neotree)
-;; (global-set-key [f2] 'neotree-toggle)
+(global-set-key [f8] 'neotree-toggle)
+(setq inhibit-compacting-font-caches t)
 ;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (setq neo-smart-open t)
 (add-hook 'neotree-mode-hook
@@ -380,7 +381,7 @@ Return the updated `exec-path'"
 	      (neotree-dir project-dir)
 	      (neotree-find file-name)))
       (message "Could not find git project root."))))
-(global-set-key [f8] 'neotree-project-dir)
+;; (global-set-key [f8] 'neotree-project-dir)
 
 (provide 'base)
 ;;; base ends here
