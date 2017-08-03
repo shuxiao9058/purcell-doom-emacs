@@ -190,18 +190,38 @@ Return the updated `exec-path'"
   page-break-lines-mode)
 
 
-(require-package 'chinese-fonts-setup)
-(require 'chinese-fonts-setup)
-(chinese-fonts-setup-enable)
-(setq cfs-profiles
-      '("profile1"))
-;; (set-face-attribute
-;;  'default nil :font "Inziu Iosevka SC 13")
-;; Chinese Font
-;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
-;;   (set-fontset-font (frame-parameter nil 'font)
-;; 		    charset
-;; 		    (font-spec :family "WenQuanYi Micro Hei Mono" :size 16)))
+;; set default font in initial window and for any new window
+(cond
+ ;; case: windows
+ ((string-equal system-type "windows-nt") ; Microsoft Windows
+  ;; Setting English Font
+  (set-face-attribute 'default nil :font "Consolas 11")
+  ;; Chinese Font
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font)
+		      charset (font-spec :family "Microsoft Yahei"
+					 :size 16)))
+  (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease))
+ ;; case: Max OS X
+ ((string-equal system-type "darwin") ; Mac OS X
+  (when (member "DejaVu Sans Mono" (font-family-list))
+    (add-to-list 'initial-frame-alist '(font . "DejaVu Sans Mono-10"))
+    (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10"))))
+ ;; case: linux
+ ((string-equal system-type "gnu/linux") ; linux
+  (when (member "DejaVu Sans Mono" (font-family-list))
+    (add-to-list 'initial-frame-alist '(font . "DejaVu Sans Mono-10"))
+    (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10")))
+  (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
+  (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease))
+ )
+
+;; specify font for all unicode characters
+(when (member "Symbola" (font-family-list))
+  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
+
+
 
 
 (use-package dashboard
@@ -357,7 +377,7 @@ Return the updated `exec-path'"
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 (setq inhibit-compacting-font-caches t)
-;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (setq neo-smart-open t)
 (add-hook 'neotree-mode-hook
 	  (lambda ()

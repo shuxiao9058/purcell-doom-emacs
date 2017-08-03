@@ -7,21 +7,18 @@
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda))
 
-;; (require-package 'org-plus-contrib)
-
-(use-package ob-ipython
-  :ensure t)
+(require 'ob-python)
 ;; plantuml
 ;; active Org-babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
- '(;; other Babel languages
+ '(
    (plantuml . t)
    (ditaa , t)
    (dot . t)
    (emacs-lisp . t)
    (R . t)
-   (ipython . t)
+   (python . t)
    (ruby . t)
    (gnuplot . t)
    (clojure . t)
@@ -30,7 +27,7 @@
    (org . t)
    (latex . t)))
 (setq org-confirm-babel-evaluate nil)
-
+(setq org-src-fontify-natively t)
 (setq org-plantuml-jar-path
       (expand-file-name "~/.emacs.d/extra-bin/bin/plantuml.jar"))
 (setq org-ditaa-jar-path (format "%s%s" ""
@@ -43,8 +40,6 @@
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
 (add-hook 'org-babel-after-execute-hook 'naso/display-inline-images 'append)
-;; Make babel results blocks lowercase
-(setq org-babel-results-keyword "results")
 
 (defun naso/display-inline-images ()
   (condition-case nil
@@ -57,9 +52,9 @@
   (setq org-projectile:per-repo-filename "todo.org"
 	org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
 
-(require-package 'org-bullets)
-(require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;; (require-package 'org-bullets)
+;; (require 'org-bullets)
+;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 
 ;;evil-org-mode , git clone git://github.com/edwtjo/evil-org-mode.git
