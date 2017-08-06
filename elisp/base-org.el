@@ -7,7 +7,7 @@
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda))
 
-(require 'ob-python)
+;; (require 'ob-python)
 ;; plantuml
 ;; active Org-babel languages
 (org-babel-do-load-languages
@@ -18,7 +18,7 @@
    (dot . t)
    (emacs-lisp . t)
    (R . t)
-   (python . t)
+   (ipython . t)
    (ruby . t)
    (gnuplot . t)
    (clojure . t)
@@ -40,6 +40,8 @@
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
 (add-hook 'org-babel-after-execute-hook 'naso/display-inline-images 'append)
+
+(add-hook 'org-mode-hook '(lambda ()(setq truncate-lines t)) 'append)
 
 (defun naso/display-inline-images ()
   (condition-case nil

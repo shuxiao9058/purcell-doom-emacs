@@ -1,22 +1,10 @@
-;;=========================================================
-					;evil-leader, https://github.com/cofi/evil-leader.git
-;; (require 'evil-leader)
-;; (global-evil-leader-mode)
-;; (evil-leader/set-leader "<SPC>")
-					;(evil-leader/set-key
-					;  "f" 'find-file
-					;  "b" 'switch-to-buffer
-					;  "k" 'kill-buffer)
-;; (evil-leader/set-key-for-mode 'emacs-lisp-mode "b" 'byte-compile-file)
+
 (use-package evil-leader
   :ensure t
   :config
   (global-evil-leader-mode)
   (evil-leader/set-leader "<SPC>")
-)
-;; (evil-leader/set-key "SPC" 'counsel-M-x)
-;; (evil-leader/set-key "bb" 'ivy-switch-buffer)
-;; (evil-leader/set-key "ff" 'counsel-find-file)
+  )
 (evil-leader/set-key
   "ff" 'counsel-find-file
   "bb" 'ivy-switch-buffer
@@ -68,10 +56,17 @@
   :ensure t
   :config
   (evil-mode 1)
-  (local-unset-key (kbd "M-."))
   )
 
-
+
+(require-package 'key-chord)
+;; Max time delay between two key presses to be considered a key chord
+(setq key-chord-two-keys-delay 0.1) ; default 0.1
+;; Max time delay between two presses of the same key to be considered a key chord.
+;; Should normally be a little longer than `key-chord-two-keys-delay'.
+(setq key-chord-one-key-delay 0.2) ; default 0.2
+(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+(key-chord-mode 1)
 ;;=========================================================
 ;;evil-nerd-commenter
 (use-package evil-nerd-commenter
