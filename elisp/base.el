@@ -1,11 +1,12 @@
-(setq package-enable-at-startup nil)
+;; (setq package-enable-at-startup nil)
+
+;; (setq package-archives '(
+;; 			 ("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
+;; 			 ("org-cn"   . "http://elpa.zilongshanren.com/org/")
+;; 			 ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")))
+(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
+                         ("melpa" . "http://elpa.emacs-china.org/melpa/")))
 (package-initialize)
-
-(setq package-archives '(
-      ("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
-      ("org-cn"   . "http://elpa.zilongshanren.com/org/")
-      ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")))
-
 
 (defun config-proxy()
   "config proxy when you are using proxy to access internet"
@@ -151,6 +152,7 @@ Return the updated `exec-path'"
  inhibit-compacting-font-caches     t
  )
 (auto-image-file-mode)
+(delete-selection-mode 1)
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode t)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)

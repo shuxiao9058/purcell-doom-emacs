@@ -7,6 +7,7 @@
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda))
 
+(use-package ob-ipython)
 ;; (require 'ob-python)
 ;; plantuml
 ;; active Org-babel languages
