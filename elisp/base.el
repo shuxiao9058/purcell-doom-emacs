@@ -153,6 +153,7 @@ Return the updated `exec-path'"
  )
 (auto-image-file-mode)
 (delete-selection-mode 1)
+(show-paren-mode 1)
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-auto-revert-mode t)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -172,8 +173,9 @@ Return the updated `exec-path'"
   :config
   (setq recentf-save-file (recentf-expand-file-name "~/.emacs.d/private/cache/recentf"))
   (recentf-mode 1))
-(show-paren-mode 1)
-
+(use-package dired+
+  :init
+  (setq diredp-hide-details-initially-flag nil))
 
 (use-package hlinum
   :config
@@ -359,12 +361,12 @@ Return the updated `exec-path'"
 
 (use-package counsel
   :bind
-  ;; ("M-x" . counsel-M-x)
+  ("M-x" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
   ("C-x c k" . counsel-yank-pop))
 (use-package smex
-  :bind
-  ("M-x" . smex)
+  ;; :bind
+  ;; ("M-x" . smex)
   :config
   (setq-default smex-save-file (expand-file-name ".smex-items" temp-dir)))
 
@@ -379,7 +381,7 @@ Return the updated `exec-path'"
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 (setq inhibit-compacting-font-caches t)
-(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (setq neo-smart-open t)
 (add-hook 'neotree-mode-hook
 	  (lambda ()
@@ -387,7 +389,7 @@ Return the updated `exec-path'"
 	    (define-key evil-normal-state-local-map (kbd "l") 'neotree-quick-look)
 	    (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-quick-look)
 	    (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
-	    (define-key evil-normal-state-local-map (kbd "f") 'neotree-refresh)
+	    (define-key evil-normal-state-local-map (kbd "r") 'neotree-refresh)
 	    (define-key evil-normal-state-local-map (kbd "h") 'neotree-select-up-node)
 	    (define-key evil-normal-state-local-map (kbd "y") 'neotree-copy-filepath-to-yank-ring)
 	    (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))

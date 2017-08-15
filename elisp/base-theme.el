@@ -20,8 +20,8 @@
 ;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
 ;; (setq-default custom-enabled-themes '(ample))
 ;; (setq-default custom-enabled-themes '(monokai))
-;; (setq-default custom-enabled-themes '(leuven))
-(setq-default custom-enabled-themes '(material))
+(setq-default custom-enabled-themes '(leuven))
+;; (setq-default custom-enabled-themes '(material))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -187,6 +187,8 @@
   (require 'spaceline-config)
   (spaceline-spacemacs-theme)
   (set 'spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+  (setq powerline-default-separator 'wave)
+  (spaceline-compile)
   )
 ;; (use-package spaceline-all-the-icons
 ;;   :after spaceline
