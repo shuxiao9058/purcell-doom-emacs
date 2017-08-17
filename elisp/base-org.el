@@ -55,9 +55,9 @@
   (setq org-projectile:per-repo-filename "todo.org"
 	org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
 
-;; (require-package 'org-bullets)
-;; (require 'org-bullets)
-;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(require-package 'org-bullets)
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 
 ;;evil-org-mode , git clone git://github.com/edwtjo/evil-org-mode.git
@@ -95,7 +95,9 @@
 ;; M-o	org-insert-heading+org-metaright
 ;; M-t	org-insert-todo-heading nil+ org-metaright
 (use-package evil-org
-  :ensure t)
+  :ensure t
+  :diminish
+  evil-org-mode)
 
 
 (provide 'base-org)

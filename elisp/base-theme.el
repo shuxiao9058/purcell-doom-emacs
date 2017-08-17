@@ -1,16 +1,11 @@
 (require-package 'color-theme-sanityinc-solarized)
 (require-package 'color-theme-sanityinc-tomorrow)
-(require-package 'solarized-theme)
 (require-package 'molokai-theme)
 (require-package 'monokai-theme)
-(require-package 'zenburn-theme)
-(require-package 'github-theme)
-(require-package 'doom-themes)
-(require-package 'gruvbox-theme)
-(require-package 'sublime-themes)
 (require-package 'dracula-theme)
 (require-package 'material-theme)
 (require-package 'ample-theme)
+(require-package 'color-theme-modern)
 
 ;; (require 'hober-theme)
 ;; (load-theme 'hober t)
@@ -20,8 +15,12 @@
 ;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
 ;; (setq-default custom-enabled-themes '(ample))
 ;; (setq-default custom-enabled-themes '(monokai))
-(setq-default custom-enabled-themes '(leuven))
+;; (setq-default custom-enabled-themes '(leuven))
+;; (setq-default custom-enabled-themes '(eclipse))
 ;; (setq-default custom-enabled-themes '(material))
+;; (require 'darknaso-theme)
+;; (setq-default custom-enabled-themes '(darknaso))
+(setq-default custom-enabled-themes '(dracula))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -33,20 +32,6 @@
 
 (add-hook 'after-init-hook 'reapply-themes)
 (setq custom-safe-themes t)
-;;------------------------------------------------------------------------------
-;; Toggle between light and dark
-;;------------------------------------------------------------------------------
-(defun theme-solarized-light ()
-  "Activate a light color theme."
-  (interactive)
-  (setq custom-enabled-themes '(solarized-light))
-  (reapply-themes))
-
-(defun theme-solarized-dark ()
-  "Activate a dark color theme."
-  (interactive)
-  (setq custom-enabled-themes '(solarized-dark))
-  (reapply-themes))
 
 (defun theme-molokai ()
   "Activate molokai theme."
@@ -71,80 +56,6 @@
   (setq custom-enabled-themes '(dracula))
   (reapply-themes))
 
-(defun theme-zenburn ()
-  "Activate zenburn theme."
-  (interactive)
-  (setq custom-enabled-themes '(zenburn))
-  (reapply-themes))
-
-(defun theme-github ()
-  "Activate github theme."
-  (interactive)
-  (setq custom-enabled-themes '(github))
-  (reapply-themes))
-
-(defun theme-doom-one ()
-  "Activate doom-one theme."
-  (interactive)
-  (setq custom-enabled-themes '(doom-one))
-  (reapply-themes))
-
-(defun theme-doom-molokai ()
-  "Activate doom-molokai theme."
-  (interactive)
-  (setq custom-enabled-themes '(doom-molokai))
-  (reapply-themes))
-
-(defun theme-gruvbox()
-  "Activate gruvbox theme."
-  (interactive)
-  (setq custom-enabled-themes '(gruvbox))
-  (reapply-themes))
-
-(defun theme-brin ()
-  "Activate brin theme."
-  (interactive)
-  (setq custom-enabled-themes '(brin))
-  (reapply-themes))
-
-(defun theme-granger ()
-  "Activate granger theme."
-  (interactive)
-  (setq custom-enabled-themes '(granger))
-  (reapply-themes))
-
-(defun theme-graham()
-  "Activate graham theme."
-  (interactive)
-  (setq custom-enabled-themes '(graham))
-  (reapply-themes))
-
-(defun theme-hickey()
-  "Activate hickey theme."
-  (interactive)
-  (setq custom-enabled-themes '(hickey))
-  (reapply-themes))
-
-(defun theme-dorsey()
-  "Activate dorsey theme."
-  (interactive)
-  (setq custom-enabled-themes '(dorsey))
-  (reapply-themes))
-
-
-(defun theme-mccarthy()
-  "Activate McCarthy theme."
-  (interactive)
-  (setq custom-enabled-themes '(mccarthy))
-  (reapply-themes))
-
-(defun theme-junio()
-  "Activate junio theme."
-  (interactive)
-  (setq custom-enabled-themes '(junio))
-  (reapply-themes))
-
-
 (defun theme-dracula()
   "Activate junio theme."
   (interactive)
@@ -157,8 +68,8 @@
   (setq custom-enabled-themes '(leuven))
   (reapply-themes))
 
-(require-package 'all-the-icons)
-(require 'all-the-icons)
+;; (require-package 'all-the-icons)
+;; (require 'all-the-icons)
 
 (use-package winum
   :init
@@ -190,15 +101,5 @@
   (setq powerline-default-separator 'wave)
   (spaceline-compile)
   )
-;; (use-package spaceline-all-the-icons
-;;   :after spaceline
-;;   :config
-;;   (spaceline-all-the-icons-theme)
-;;   (spaceline-all-the-icons--setup-anzu)            ;; Enable anzu searching
-;;   ;; (spaceline-all-the-icons--setup-package-updates) ;; Enable package update indicator
-;;   ;; (spaceline-all-the-icons--setup-git-ahead)       ;; Enable # of commits ahead of upstream in git
-;;   ;; (spaceline-all-the-icons--setup-paradox)         ;; Enable Paradox mode line
-;;   (spaceline-all-the-icons--setup-neotree)         ;; Enable Neotree mode line
-;;   )
 
 (provide 'base-theme)
