@@ -30,9 +30,9 @@
 (setq org-confirm-babel-evaluate nil)
 (setq org-src-fontify-natively t)
 (setq org-plantuml-jar-path
-      (expand-file-name "~/.emacs.d/extra-bin/bin/plantuml.jar"))
+      (expand-file-name "~/forwin/bin/plantuml.jar"))
 (setq org-ditaa-jar-path (format "%s%s" ""
-				 (expand-file-name "~/.emacs.d/extra-bin/bin/ditaa.jar")) )
+				 (expand-file-name "~/forwin/bin/ditaa.jar")) )
 
 ;; Enable plantuml-mode for PlantUML files
 (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
