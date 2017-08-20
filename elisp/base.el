@@ -225,7 +225,6 @@ Return the updated `exec-path'"
 (when (member "Symbola" (font-family-list))
   (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
-
 
 
 (use-package dashboard
@@ -363,7 +362,10 @@ Return the updated `exec-path'"
   :bind
   ("M-x" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
-  ("C-x c k" . counsel-yank-pop))
+  ("C-x c k" . counsel-yank-pop)
+  ("C-h v" . counsel-describe-variable)
+  ("C-h f" . counsel-describe-function)
+  )
 (use-package smex
   ;; :bind
   ;; ("M-x" . smex)

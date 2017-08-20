@@ -20,7 +20,8 @@
 ;; (setq-default custom-enabled-themes '(material))
 ;; (require 'darknaso-theme)
 ;; (setq-default custom-enabled-themes '(darknaso))
-(setq-default custom-enabled-themes '(dracula))
+;; (setq-default custom-enabled-themes '(dracula))
+(setq-default custom-enabled-themes '(zenburn))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -67,9 +68,6 @@
   (interactive)
   (setq custom-enabled-themes '(leuven))
   (reapply-themes))
-
-;; (require-package 'all-the-icons)
-;; (require 'all-the-icons)
 
 (use-package winum
   :init

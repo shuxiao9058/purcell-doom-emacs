@@ -122,6 +122,33 @@
   (global-set-key (kbd "M-l") #'fix-word-downcase)
   (global-set-key (kbd "M-c") #'fix-word-capitalize))
 
+(load-library "hideshow")
+(add-hook 'c-mode-common-hook   'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(add-hook 'lisp-mode-hook       'hs-minor-mode)
+(add-hook 'perl-mode-hook       'hs-minor-mode)
+(add-hook 'sh-mode-hook         'hs-minor-mode)
 
+(autoload 'hideshowvis-enable "hideshowvis" "Highlight foldable regions")
+(autoload 'hideshowvis-minor-mode
+  "hideshowvis"
+  "Will indicate regions foldable with hideshow in the fringe."
+  'interactive)
+(dolist (hook (list 'emacs-lisp-mode-hook
+                    'c++-mode-hook))
+  (add-hook hook 'hideshowvis-enable))
+;; If enabling hideshowvis-minor-mode is slow on your machine use M-x,
+;; customize-option, hideshowvis-ignore-same-line and set it to nil. This will
+;; then display - icons for foldable regions of one line, too but is faster
+
+;; To enable displaying a + symbol in the fringe for folded regions,
+;; use:
+;; (hideshowvis-symbols)
+
+(defadvice goto-line (after expand-after-goto-line
+			    activate compile)
+  "hideshow-expand affected block when using goto-line in a collapsed buffer"
+  (save-excursion
+    (hs-show-block)))
 
 (provide 'base-edit)
