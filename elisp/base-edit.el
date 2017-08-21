@@ -150,5 +150,14 @@
   "hideshow-expand affected block when using goto-line in a collapsed buffer"
   (save-excursion
     (hs-show-block)))
+
+;; (use-package yafolding
+;;   :init
+;;   (add-hook 'prog-mode-hook
+;; 	    (lambda () (yafolding-mode)))
+;;   (add-hook 'before-save-hook (lambda ()
+;; 				(yafolding-show-all)
+;; 				(delete-trailing-whitespace)))
+;;   )
 
 (provide 'base-edit)

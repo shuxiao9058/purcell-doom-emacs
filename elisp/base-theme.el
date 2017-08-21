@@ -20,8 +20,8 @@
 ;; (setq-default custom-enabled-themes '(material))
 ;; (require 'darknaso-theme)
 ;; (setq-default custom-enabled-themes '(darknaso))
-;; (setq-default custom-enabled-themes '(dracula))
-(setq-default custom-enabled-themes '(zenburn))
+(setq-default custom-enabled-themes '(dracula))
+;; (setq-default custom-enabled-themes '(zenburn))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
