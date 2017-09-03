@@ -12,15 +12,16 @@
 ;; (require 'eclipse-theme)
 ;; (load-theme 'eclipse t)
 ;; If you don't customize it, this is the theme you get.
-;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
+(setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
 ;; (setq-default custom-enabled-themes '(ample))
 ;; (setq-default custom-enabled-themes '(monokai))
 ;; (setq-default custom-enabled-themes '(leuven))
 ;; (setq-default custom-enabled-themes '(eclipse))
 ;; (setq-default custom-enabled-themes '(material))
+;; (setq-default custom-enabled-themes '(material-light))
 ;; (require 'darknaso-theme)
 ;; (setq-default custom-enabled-themes '(darknaso))
-(setq-default custom-enabled-themes '(dracula))
+;; (setq-default custom-enabled-themes '(dracula))
 ;; (setq-default custom-enabled-themes '(zenburn))
 
 ;; Ensure that themes will be applied even if they have not been customized

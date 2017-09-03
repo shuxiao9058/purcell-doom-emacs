@@ -57,7 +57,7 @@
 
 (require-package 'org-bullets)
 (require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 
 ;;evil-org-mode , git clone git://github.com/edwtjo/evil-org-mode.git

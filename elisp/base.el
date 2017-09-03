@@ -196,13 +196,23 @@ Return the updated `exec-path'"
 (cond
  ;; case: windows
  ((string-equal system-type "windows-nt") ; Microsoft Windows
-  ;; Setting English Font
-  (set-face-attribute 'default nil :font "Consolas 11")
-  ;; Chinese Font
-  (dolist (charset '(kana han symbol cjk-misc bopomofo))
-    (set-fontset-font (frame-parameter nil 'font)
-		      charset (font-spec :family "Microsoft Yahei"
-					 :size 16)))
+  (if (member "M+ 1m"(font-family-list))
+      (progn
+	;; Setting English Font
+	(set-face-attribute 'default nil :font "M+ 1m-12")
+	;; Chinese Font
+	(dolist (charset '(kana han symbol cjk-misc bopomofo))
+	  (set-fontset-font (frame-parameter nil 'font)
+			    charset (font-spec :family "Microsoft Yahei"
+					       :size 16))))
+    (progn
+      ;; Setting English Font
+      (set-face-attribute 'default nil :font "Consolas 11")
+      ;; Chinese Font
+      (dolist (charset '(kana han symbol cjk-misc bopomofo))
+	(set-fontset-font (frame-parameter nil 'font)
+			  charset (font-spec :family "Microsoft Yahei"
+					     :size 16)))))
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
   (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease))
  ;; case: Max OS X
