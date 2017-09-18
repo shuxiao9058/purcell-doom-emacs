@@ -15,7 +15,7 @@
   (setq url-http-proxy-basic-auth-storage
 	(list (list "127.0.0.1:3128"
 		    (cons "Input your LDAP UID !"
-			  (base64-encode-string "w00220012:huaweier@0"))))))
+			  (base64-encode-string "w00220012:huaweier@1"))))))
 
 
 (when (not package-archive-contents)
@@ -175,9 +175,9 @@ Return the updated `exec-path'"
   :init
   (setq diredp-hide-details-initially-flag nil))
 
-(use-package hlinum
-  :config
-  (hlinum-activate))
+;; (use-package hlinum
+;;   :config
+;;   (hlinum-activate))
 
 (use-package linum
   :config
@@ -185,11 +185,11 @@ Return the updated `exec-path'"
   (global-linum-mode nil))
 
 
-(use-package page-break-lines
-  :config
-  (global-page-break-lines-mode)
-  :diminish
-  page-break-lines-mode)
+;; (use-package page-break-lines
+;;   :config
+;;   (global-page-break-lines-mode)
+;;   :diminish
+;;   page-break-lines-mode)
 
 
 ;; set default font in initial window and for any new window
@@ -368,15 +368,15 @@ Return the updated `exec-path'"
 
 (use-package counsel
   :bind
-  ("M-x" . counsel-M-x)
+  ;; ("M-x" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
   ("C-x c k" . counsel-yank-pop)
   ("C-h v" . counsel-describe-variable)
   ("C-h f" . counsel-describe-function)
   )
 (use-package smex
-  ;; :bind
-  ;; ("M-x" . smex)
+  :bind
+  ("M-x" . smex)
   :config
   (setq-default smex-save-file (expand-file-name ".smex-items" temp-dir)))
 

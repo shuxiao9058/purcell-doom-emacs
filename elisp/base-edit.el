@@ -1,5 +1,3 @@
-
-
 ;; quick jump
 (use-package avy
   :bind
@@ -9,7 +7,7 @@
 
 (require-package 'hungry-delete)
 (require 'hungry-delete)
-(global-hungry-delete-mode)
+;; (global-hungry-delete-mode)
 (diminish 'hungry-delete-mode)
 
 
@@ -38,17 +36,19 @@
   :config
   (setq yas-snippet-dirs
 	'("~/.emacs.d/snippets"                 ;; personal snippets
-	  ;; "/path/to/yasnippet/yasmate/snippets" ;; the yasmate collection
-	  ;; "/path/to/yasnippet/snippets"         ;; the default collection
 	  "~/yasnippet-snippets"	;git clone https://github.com/AndreaCrotti/yasnippet-snippets.git
 	  ))
 
   (yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.
   )
 
-
-
 (require-package 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
+
 (require-package 'visual-regexp)
 (require-package 'visual-regexp-steroids)
 (require 'visual-regexp-steroids)
@@ -72,7 +72,6 @@
   :bind
   ("C-=" . er/expand-region))
 
-
 
 (use-package flycheck
   :ensure t
@@ -114,6 +113,7 @@
   (smartparens-global-mode t)
   (sp-use-smartparens-bindings)
   (sp--update-override-key-bindings)
+  (define-key smartparens-mode-map (kbd "M-<backspace>") nil)
   :commands (smartparens-mode show-smartparens-mode))
 
 (use-package fix-word
@@ -129,35 +129,4 @@
 (add-hook 'perl-mode-hook       'hs-minor-mode)
 (add-hook 'sh-mode-hook         'hs-minor-mode)
 
-(autoload 'hideshowvis-enable "hideshowvis" "Highlight foldable regions")
-(autoload 'hideshowvis-minor-mode
-  "hideshowvis"
-  "Will indicate regions foldable with hideshow in the fringe."
-  'interactive)
-(dolist (hook (list 'emacs-lisp-mode-hook
-                    'c++-mode-hook))
-  (add-hook hook 'hideshowvis-enable))
-;; If enabling hideshowvis-minor-mode is slow on your machine use M-x,
-;; customize-option, hideshowvis-ignore-same-line and set it to nil. This will
-;; then display - icons for foldable regions of one line, too but is faster
-
-;; To enable displaying a + symbol in the fringe for folded regions,
-;; use:
-;; (hideshowvis-symbols)
-
-(defadvice goto-line (after expand-after-goto-line
-			    activate compile)
-  "hideshow-expand affected block when using goto-line in a collapsed buffer"
-  (save-excursion
-    (hs-show-block)))
-
-;; (use-package yafolding
-;;   :init
-;;   (add-hook 'prog-mode-hook
-;; 	    (lambda () (yafolding-mode)))
-;;   (add-hook 'before-save-hook (lambda ()
-;; 				(yafolding-show-all)
-;; 				(delete-trailing-whitespace)))
-;;   )
-
 (provide 'base-edit)
