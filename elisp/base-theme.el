@@ -19,7 +19,7 @@
 ;; (setq-default custom-enabled-themes '(eclipse))
 ;; (setq-default custom-enabled-themes '(material))
 ;; (setq-default custom-enabled-themes '(material-light))
-(require 'darknaso-theme)
+;; (require 'darknaso-theme)
 ;; (setq-default custom-enabled-themes '(darknaso))
 ;; (setq-default custom-enabled-themes '(dracula))
 ;; (setq-default custom-enabled-themes '(zenburn))

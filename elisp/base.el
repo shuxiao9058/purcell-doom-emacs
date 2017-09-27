@@ -145,7 +145,6 @@ Return the updated `exec-path'"
  backup-inhibited                   nil
  make-backup-files                  nil
  auto-save-default                  nil
- make-backup-files                  nil
  create-lockfiles                   nil
  inhibit-compacting-font-caches     t
  )
@@ -256,12 +255,12 @@ Return the updated `exec-path'"
     (exec-path-from-shell-copy-env "PYTHONPATH")
     (exec-path-from-shell-initialize)))
 
-(require-package 'imenu-anywhere)
-(require-package 'imenu+)
-(require 'imenu+)
-(defun try-to-add-imenu ()
-  (condition-case nil (imenu-add-to-menubar "Imenu") (error nil)))
-(add-hook 'font-lock-mode-hook 'try-to-add-imenu)
+;; (require-package 'imenu-anywhere)
+;; (require-package 'imenu+)
+;; (require 'imenu+)
+;; (defun try-to-add-imenu ()
+;;   (condition-case nil (imenu-add-to-menubar "Imenu") (error nil)))
+;; (add-hook 'font-lock-mode-hook 'try-to-add-imenu)
 
 (require-package 'sr-speedbar)
 (require 'sr-speedbar)
@@ -391,7 +390,7 @@ Return the updated `exec-path'"
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 (setq inhibit-compacting-font-caches t)
-;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (setq neo-smart-open t)
 (add-hook 'neotree-mode-hook
 	  (lambda ()
