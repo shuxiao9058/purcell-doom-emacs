@@ -26,8 +26,8 @@
 (require 'move-dup)
 (global-set-key [M-up] 'md/move-lines-up)
 (global-set-key [M-down] 'md/move-lines-down)
-(global-set-key (kbd "C-M-<up>") 'md/duplicate-up)
-(global-set-key (kbd "C-M-<down>") 'md/duplicate-down)
+(global-set-key (kbd "M-S-<up>") 'md/duplicate-up)
+(global-set-key (kbd "M-S-<down>") 'md/duplicate-down)
 
 
 
@@ -43,10 +43,11 @@
   )
 
 (require-package 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C-S-L") 'mc/mark-all-like-this-dwim)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
 
 (require-package 'visual-regexp)

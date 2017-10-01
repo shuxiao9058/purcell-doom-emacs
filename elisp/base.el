@@ -174,9 +174,9 @@ Return the updated `exec-path'"
   :init
   (setq diredp-hide-details-initially-flag nil))
 
-;; (use-package hlinum
-;;   :config
-;;   (hlinum-activate))
+(use-package hlinum
+  :config
+  (hlinum-activate))
 
 (use-package linum
   :config
@@ -239,7 +239,7 @@ Return the updated `exec-path'"
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents  . 9)
 			  (bookmarks . 9)
-			  (projects . 9))))
+			  (projects . 12))))
 
 (use-package ediff
   :config
@@ -367,17 +367,17 @@ Return the updated `exec-path'"
 
 (use-package counsel
   :bind
-  ;; ("M-x" . counsel-M-x)
+  ("M-x" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
   ("C-x c k" . counsel-yank-pop)
   ("C-h v" . counsel-describe-variable)
   ("C-h f" . counsel-describe-function)
   )
-(use-package smex
-  :bind
-  ("M-x" . smex)
-  :config
-  (setq-default smex-save-file (expand-file-name ".smex-items" temp-dir)))
+;; (use-package smex
+;;   :bind
+;;   ("M-x" . smex)
+;;   :config
+;;   (setq-default smex-save-file (expand-file-name ".smex-items" temp-dir)))
 
 (use-package counsel-projectile
   :bind
@@ -388,7 +388,7 @@ Return the updated `exec-path'"
 
 (require-package 'neotree)
 (require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
+;; (global-set-key [f8] 'neotree-toggle)
 (setq inhibit-compacting-font-caches t)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (setq neo-smart-open t)

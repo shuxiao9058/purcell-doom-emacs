@@ -4,6 +4,7 @@
 ;; (require-package 'monokai-theme)
 (require-package 'dracula-theme)
 (require-package 'material-theme)
+(require-package 'doom-themes)
 ;; (require-package 'ample-theme)
 ;; (require-package 'color-theme-modern)
 
@@ -23,6 +24,7 @@
 ;; (setq-default custom-enabled-themes '(darknaso))
 ;; (setq-default custom-enabled-themes '(dracula))
 ;; (setq-default custom-enabled-themes '(zenburn))
+(setq-default custom-enabled-themes '(doom-molokai))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
