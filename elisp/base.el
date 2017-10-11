@@ -373,12 +373,14 @@ Return the updated `exec-path'"
   ("C-h v" . counsel-describe-variable)
   ("C-h f" . counsel-describe-function)
   )
-;; (use-package smex
-;;   :bind
-;;   ("M-x" . smex)
-;;   :config
-;;   (setq-default smex-save-file (expand-file-name ".smex-items" temp-dir)))
+(use-package smex
+  ;; :bind
+  ;; ("M-x" . smex)
+  :config
+  (setq-default smex-save-file (expand-file-name ".smex-items" temp-dir)))
 
+
+(use-package all-the-icons)
 (use-package counsel-projectile
   :bind
   ("C-x v" . counsel-projectile)

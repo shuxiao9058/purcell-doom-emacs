@@ -7,7 +7,7 @@
 
 (require-package 'hungry-delete)
 (require 'hungry-delete)
-;; (global-hungry-delete-mode)
+(global-hungry-delete-mode)
 (diminish 'hungry-delete-mode)
 
 
