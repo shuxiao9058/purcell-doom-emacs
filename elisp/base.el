@@ -346,8 +346,12 @@ Return the updated `exec-path'"
 	 " Pr"
        (format " [%s]" (projectile-project-name)))))
 
-  (setq projectile-switch-project-action 'neotree-projectile-action)
+  ;; (setq projectile-switch-project-action 'neotree-projectile-action)
   ;; (setq projectile-switch-project-action 'treemacs-projectile)
+  (setq projectile-switch-project-action
+	'(lambda ()
+	   (venv-projectile-auto-workon)
+	   (projectile-find-file)))
   )
 
 (use-package projectile-speedbar
@@ -390,7 +394,7 @@ Return the updated `exec-path'"
 
 (require-package 'neotree)
 (require 'neotree)
-;; (global-set-key [f8] 'neotree-toggle)
+(global-set-key [f8] 'neotree-toggle)
 (setq inhibit-compacting-font-caches t)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (setq neo-smart-open t)

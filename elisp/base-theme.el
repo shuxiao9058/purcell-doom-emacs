@@ -13,7 +13,7 @@
 ;; (require 'eclipse-theme)
 ;; (load-theme 'eclipse t)
 ;; If you don't customize it, this is the theme you get.
-;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
+(setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
 ;; (setq-default custom-enabled-themes '(ample))
 ;; (setq-default custom-enabled-themes '(monokai))
 ;; (setq-default custom-enabled-themes '(leuven))
@@ -24,7 +24,7 @@
 ;; (setq-default custom-enabled-themes '(darknaso))
 ;; (setq-default custom-enabled-themes '(dracula))
 ;; (setq-default custom-enabled-themes '(zenburn))
-(setq-default custom-enabled-themes '(doom-molokai))
+;; (setq-default custom-enabled-themes '(doom-molokai))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -56,12 +56,6 @@
   (reapply-themes))
 (defun theme-dracula ()
   "Activate molokai theme."
-  (interactive)
-  (setq custom-enabled-themes '(dracula))
-  (reapply-themes))
-
-(defun theme-dracula()
-  "Activate junio theme."
   (interactive)
   (setq custom-enabled-themes '(dracula))
   (reapply-themes))

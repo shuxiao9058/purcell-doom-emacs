@@ -13,7 +13,24 @@
   :ensure t
   :config
   (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
-)
+  ;; Activate on changing buffers
+  (add-hook 'window-configuration-change-hook 'auto-virtualenv-set-virtualenv)
+  ;; Activate on focus in
+  (add-hook 'focus-in-hook 'auto-virtualenv-set-virtualenv)
+  )
+
+(use-package virtualenvwrapper
+  :init
+  (venv-initialize-interactive-shells) ;; if you want interactive shell support
+  (venv-initialize-eshell) ;; if you want eshell support
+  ;; note that setting `venv-location` is not necessary if you
+  ;; use the default location (`~/.virtualenvs`), or if the
+  ;; the environment variable `WORKON_HOME` points to the right place
+  ;; (setq venv-location "/path/to/your/virtualenvs/")
+  :config
+  (add-hook 'venv-postmkvirtualenv-hook
+	    (lambda () (shell-command "pip install nose rope flake8 jedi")))
+  )
 
 (use-package elpy
   :ensure t
@@ -22,8 +39,8 @@
   (elpy-enable)
   :config
   (add-hook 'python-mode-hook 'elpy-mode)
-  (with-eval-after-load 'elpy
-  (add-hook 'elpy-mode-hook 'elpy-use-ipython))
+  ;; (with-eval-after-load 'elpy
+  ;; (add-hook 'elpy-mode-hook 'elpy-use-ipython))
   :bind (("M-*" . pop-tag-mark))
   )
 
