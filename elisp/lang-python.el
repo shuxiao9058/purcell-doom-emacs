@@ -29,28 +29,33 @@
   ;; (setq venv-location "/path/to/your/virtualenvs/")
   :config
   (add-hook 'venv-postmkvirtualenv-hook
-	    (lambda () (shell-command "pip install nose rope flake8 jedi")))
+	    (lambda () (shell-command "pip install rope jedi pylint")))
   )
 
-(use-package elpy
-  :ensure t
-  :init
-  (setq elpy-rpc-backend "jedi")
-  (elpy-enable)
-  :config
-  (add-hook 'python-mode-hook 'elpy-mode)
-  ;; (with-eval-after-load 'elpy
-  ;; (add-hook 'elpy-mode-hook 'elpy-use-ipython))
-  :bind (("M-*" . pop-tag-mark))
-  )
+;; (use-package elpy
+;;   :ensure t
+;;   :init
+;;   (setq elpy-rpc-backend "jedi")
+;;   (elpy-enable)
+;;   :config
+;;   (add-hook 'python-mode-hook 'elpy-mode)
+;;   ;; (with-eval-after-load 'elpy
+;;   ;; (add-hook 'elpy-mode-hook 'elpy-use-ipython))
+;;   :bind (("M-*" . pop-tag-mark))
+;;   )
 
+;; (require-package 'anaconda-eldoc-mode)
+(require-package 'anaconda-mode)
+(require-package 'company-anaconda)
+(add-to-list 'company-backends '(company-anaconda :with company-yasnippet))
+(add-hook 'python-mode-hook 'anaconda-mode)
+
+(use-package realgud)
 (use-package indent-tools
   :ensure t
   :init
   (add-hook 'python-mode-hook
-            (lambda () (define-key python-mode-map (kbd "C-c i") 'indent-tools-hydra/body))
-            )
-  )
+            (lambda () (define-key python-mode-map (kbd "C-c i") 'indent-tools-hydra/body))))
 
 (provide 'lang-python)
 ;;; lang-python.el ends here

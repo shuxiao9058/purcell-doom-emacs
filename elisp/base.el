@@ -97,7 +97,7 @@ Return the updated `exec-path'"
     (set-buffer-file-coding-system 'gbk)
     (set-buffer-process-coding-system 'gbk 'gbk))
   (add-hook 'shell-mode-hook #'windows-shell-mode-coding)
-  (add-hook 'inferior-python-mode-hook #'windows-shell-mode-coding)
+  ;; (add-hook 'inferior-python-mode-hook #'windows-shell-mode-coding)
   (defun python-encode-in-org-babel-execute (func body params)
     (let ((coding-system-for-write 'utf-8))
       (funcall func body params)))
@@ -156,8 +156,8 @@ Return the updated `exec-path'"
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 ;; (custom-set-variables
 ;;  '(initial-frame-alist (quote ((fullscreen . maximized))))) ;; start maximized
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
+;; (when (fboundp 'tool-bar-mode)
+;;   (tool-bar-mode -1))
 (when (  fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -394,7 +394,7 @@ Return the updated `exec-path'"
 
 (require-package 'neotree)
 (require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
+;; (global-set-key [f8] 'neotree-toggle)
 (setq inhibit-compacting-font-caches t)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (setq neo-smart-open t)
@@ -420,7 +420,7 @@ Return the updated `exec-path'"
 	      (neotree-dir project-dir)
 	      (neotree-find file-name)))
       (message "Could not find git project root."))))
-;; (global-set-key [f8] 'neotree-project-dir)
+(global-set-key [f8] 'neotree-project-dir)
 
 (provide 'base)
 ;;; base ends here
