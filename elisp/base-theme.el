@@ -5,15 +5,14 @@
 (require-package 'dracula-theme)
 (require-package 'material-theme)
 (require-package 'doom-themes)
-;; (require-package 'ample-theme)
-;; (require-package 'color-theme-modern)
+(require-package 'ample-theme)
+(require-package 'nord-theme)
+(require-package 'color-theme-modern)
 
-;; (require 'hober-theme)
-;; (load-theme 'hober t)
 ;; (require 'eclipse-theme)
 ;; (load-theme 'eclipse t)
 ;; If you don't customize it, this is the theme you get.
-(setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
+;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
 ;; (setq-default custom-enabled-themes '(ample))
 ;; (setq-default custom-enabled-themes '(monokai))
 ;; (setq-default custom-enabled-themes '(leuven))
@@ -24,6 +23,8 @@
 ;; (setq-default custom-enabled-themes '(darknaso))
 ;; (setq-default custom-enabled-themes '(dracula))
 ;; (setq-default custom-enabled-themes '(zenburn))
+(setq-default custom-enabled-themes '(nord))
+(setq nord-comment-brightness 15)
 ;; (setq-default custom-enabled-themes '(doom-molokai))
 
 ;; Ensure that themes will be applied even if they have not been customized
@@ -93,7 +94,7 @@
   (require 'spaceline-config)
   (spaceline-spacemacs-theme)
   (set 'spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
-  (setq powerline-default-separator 'alternate)
+  (setq powerline-default-separator 'bar)
   (spaceline-compile)
   )
 

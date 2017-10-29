@@ -16,7 +16,7 @@
 
 (require 'base)
 (require 'base-functions)
-;; (require 'base-evil)
+(require 'base-evil)
 (require 'base-theme)
 (require 'base-edit)
 (require 'base-company)

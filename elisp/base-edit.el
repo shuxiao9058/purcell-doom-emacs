@@ -1,7 +1,7 @@
 ;; quick jump
-(use-package avy
-  :bind
-  ("C-;" . avy-goto-word-or-subword-1))
+;; (use-package avy
+;;   :bind
+;;   ("C-;" . avy-goto-word-or-subword-1))
 
 
 
@@ -77,9 +77,13 @@
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode)
+  :diminish
+  flycheck-mode
+  :bind
+  ([f8] . flycheck-next-error)
+  ([(shift f8)] . flycheck-previous-error)
   )
 
-
 (use-package ag)
 (use-package wgrep)
 
@@ -104,7 +108,6 @@
   :diminish indent-guide-mode
   )
 
-
 (use-package smartparens
   :defer t
   :ensure t
@@ -123,11 +126,11 @@
   (global-set-key (kbd "M-l") #'fix-word-downcase)
   (global-set-key (kbd "M-c") #'fix-word-capitalize))
 
-(load-library "hideshow")
-(add-hook 'c-mode-common-hook   'hs-minor-mode)
-(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
-(add-hook 'lisp-mode-hook       'hs-minor-mode)
-(add-hook 'perl-mode-hook       'hs-minor-mode)
-(add-hook 'sh-mode-hook         'hs-minor-mode)
+;; (load-library "hideshow")
+;; (add-hook 'c-mode-common-hook   'hs-minor-mode)
+;; (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+;; (add-hook 'lisp-mode-hook       'hs-minor-mode)
+;; (add-hook 'perl-mode-hook       'hs-minor-mode)
+;; (add-hook 'sh-mode-hook         'hs-minor-mode)
 
 (provide 'base-edit)

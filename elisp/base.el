@@ -195,23 +195,29 @@ Return the updated `exec-path'"
 (cond
  ;; case: windows
  ((string-equal system-type "windows-nt") ; Microsoft Windows
-  (if (member "M+ 1m"(font-family-list))
+  (if (member "Ubuntu Mono"(font-family-list))
+      (progn
+	(set-face-attribute 'default nil :font "Ubuntu Mono 12")
+	(dolist (charset '(kana han symbol cjk-misc bopomofo))
+	  (set-fontset-font (frame-parameter nil 'font)
+			    charset (font-spec :family "Microsoft Yahei"
+					       :size 16)))
+	)
+    (if (member "M+ 1m"(font-family-list))
+	(progn
+	  (set-face-attribute 'default nil :font "M+ 1m-12")
+	  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+	    (set-fontset-font (frame-parameter nil 'font)
+			      charset (font-spec :family "Microsoft Yahei"
+						 :size 16))))
       (progn
 	;; Setting English Font
-	(set-face-attribute 'default nil :font "M+ 1m-12")
+	(set-face-attribute 'default nil :font "Consolas 11")
 	;; Chinese Font
 	(dolist (charset '(kana han symbol cjk-misc bopomofo))
 	  (set-fontset-font (frame-parameter nil 'font)
 			    charset (font-spec :family "Microsoft Yahei"
-					       :size 16))))
-    (progn
-      ;; Setting English Font
-      (set-face-attribute 'default nil :font "Consolas 11")
-      ;; Chinese Font
-      (dolist (charset '(kana han symbol cjk-misc bopomofo))
-	(set-fontset-font (frame-parameter nil 'font)
-			  charset (font-spec :family "Microsoft Yahei"
-					     :size 16)))))
+					       :size 16))))))
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
   (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease))
  ;; case: Max OS X
@@ -396,7 +402,7 @@ Return the updated `exec-path'"
 (require 'neotree)
 ;; (global-set-key [f8] 'neotree-toggle)
 (setq inhibit-compacting-font-caches t)
-(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+;; (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (setq neo-smart-open t)
 (add-hook 'neotree-mode-hook
 	  (lambda ()
@@ -420,7 +426,7 @@ Return the updated `exec-path'"
 	      (neotree-dir project-dir)
 	      (neotree-find file-name)))
       (message "Could not find git project root."))))
-(global-set-key [f8] 'neotree-project-dir)
+(global-set-key [C-f8] 'neotree-project-dir)
 
 (provide 'base)
 ;;; base ends here
