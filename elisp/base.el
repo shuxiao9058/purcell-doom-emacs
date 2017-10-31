@@ -170,10 +170,13 @@ Return the updated `exec-path'"
   :config
   (setq recentf-save-file (recentf-expand-file-name "~/.emacs.d/private/cache/recentf"))
   (recentf-mode 1))
+
 (use-package dired+
   :init
-  (setq diredp-hide-details-initially-flag nil))
-
+  (setq diredp-hide-details-initially-flag nil)
+  :config
+  (diredp-toggle-find-file-reuse-dir 1))
+
 (use-package hlinum
   :config
   (hlinum-activate))
@@ -182,13 +185,23 @@ Return the updated `exec-path'"
   :config
   (setq linum-format " %2d ")
   (global-linum-mode nil))
+
+(use-package idle-highlight-mode
+  :config
+  (defun my-coding-hook ()
+    (make-local-variable 'column-number-mode)
+    (column-number-mode t)
+    (idle-highlight-mode t))
+
+  (add-hook 'prog-mode-hook 'my-coding-hook)
+  )
 
 
-;; (use-package page-break-lines
-;;   :config
-;;   (global-page-break-lines-mode)
-;;   :diminish
-;;   page-break-lines-mode)
+(use-package page-break-lines
+  :config
+  (global-page-break-lines-mode)
+  :diminish
+  page-break-lines-mode)
 
 
 ;; set default font in initial window and for any new window
@@ -261,12 +274,12 @@ Return the updated `exec-path'"
     (exec-path-from-shell-copy-env "PYTHONPATH")
     (exec-path-from-shell-initialize)))
 
-;; (require-package 'imenu-anywhere)
-;; (require-package 'imenu+)
-;; (require 'imenu+)
-;; (defun try-to-add-imenu ()
-;;   (condition-case nil (imenu-add-to-menubar "Imenu") (error nil)))
-;; (add-hook 'font-lock-mode-hook 'try-to-add-imenu)
+(require-package 'imenu-anywhere)
+(require-package 'imenu+)
+(require 'imenu+)
+(defun try-to-add-imenu ()
+  (condition-case nil (imenu-add-to-menubar "Imenu") (error nil)))
+(add-hook 'font-lock-mode-hook 'try-to-add-imenu)
 
 (require-package 'sr-speedbar)
 (require 'sr-speedbar)
@@ -377,15 +390,15 @@ Return the updated `exec-path'"
 
 (use-package counsel
   :bind
-  ("M-x" . counsel-M-x)
+  ;; ("M-x" . counsel-M-x)
   ("C-x C-f" . counsel-find-file)
   ("C-x c k" . counsel-yank-pop)
   ("C-h v" . counsel-describe-variable)
   ("C-h f" . counsel-describe-function)
   )
 (use-package smex
-  ;; :bind
-  ;; ("M-x" . smex)
+  :bind
+  ("M-x" . smex)
   :config
   (setq-default smex-save-file (expand-file-name ".smex-items" temp-dir)))
 

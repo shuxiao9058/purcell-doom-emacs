@@ -19,4 +19,29 @@
 (require-package 'company-quickhelp)
 (company-quickhelp-mode 1)
 
+;; https://www.emacswiki.org/emacs/CompanyMode
+;; (defun check-expansion ()
+;;   (save-excursion
+;;     (if (looking-at "\\_>") t
+;;       (backward-char 1)
+;;       (if (looking-at "\\.") t
+;; 	(backward-char 1)
+;; 	(if (looking-at "->") t nil)))))
+
+;; (defun do-yas-expand ()
+;;   (let ((yas/fallback-behavior 'return-nil))
+;;     (yas/expand)))
+
+;; (defun tab-indent-or-complete ()
+;;   (interactive)
+;;   (if (minibufferp)
+;;       (minibuffer-complete)
+;;     (if (or (not yas/minor-mode)
+;; 	    (null (do-yas-expand)))
+;; 	(if (check-expansion)
+;; 	    (company-complete-common-or-cycle)
+;; 	  (indent-for-tab-command)))))
+
+;; (global-set-key [tab] 'tab-indent-or-complete)
+
 (provide 'base-company)

@@ -8,6 +8,7 @@
 (require-package 'ample-theme)
 (require-package 'nord-theme)
 (require-package 'color-theme-modern)
+(require-package 'twilight-bright-theme)
 
 ;; (require 'eclipse-theme)
 ;; (load-theme 'eclipse t)
@@ -22,9 +23,10 @@
 ;; (require 'darknaso-theme)
 ;; (setq-default custom-enabled-themes '(darknaso))
 ;; (setq-default custom-enabled-themes '(dracula))
-;; (setq-default custom-enabled-themes '(zenburn))
-(setq-default custom-enabled-themes '(nord))
-(setq nord-comment-brightness 15)
+(setq-default custom-enabled-themes '(zenburn))
+;; (setq-default custom-enabled-themes '(twilight-bright))
+;; (setq-default custom-enabled-themes '(nord))
+;; (setq nord-comment-brightness 15)
 ;; (setq-default custom-enabled-themes '(doom-molokai))
 
 ;; Ensure that themes will be applied even if they have not been customized
@@ -94,7 +96,7 @@
   (require 'spaceline-config)
   (spaceline-spacemacs-theme)
   (set 'spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
-  (setq powerline-default-separator 'bar)
+  (setq powerline-default-separator 'wave)
   (spaceline-compile)
   )
 
