@@ -1,8 +1,8 @@
-;; (use-package dired+
-;;   :init
-;;   (setq diredp-hide-details-initially-flag nil)
-;;   :config
-;;   (diredp-toggle-find-file-reuse-dir 1))
+(use-package dired+
+  :init
+  (setq diredp-hide-details-initially-flag nil)
+  :config
+  (diredp-toggle-find-file-reuse-dir 1))
 
 (use-package diff-hl
   :defer t
@@ -10,6 +10,22 @@
   (progn
     (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
     ))
+;; Open/close directories with double-click, RET or Space keys.
+;; To jump to the parent directory, hit the Backspace key.
+;; To toggle open/closed state of the subtree of the current directory, hit the x key.
+;; RET on different files starts the Ediff (or open file if one absent or the same)
+;; Space show the simple diff window for the current file instead of Ediff (or view file if one absent or the same)
+;; TAB to fast switch between panels
+;; h key to toggle show/hide identical files/directories
+;; H key to toggle show/hide hidden/ignored files/directories
+;; C key to copy current file or directory to the left or right panel
+;; D key to delete current file or directory
+;; v key to quick view the current file
+;; r initiates the rescan/refresh of current file or subdirectory
+;; F5 forces the full rescan.
+(use-package ztree
+  :defer t
+  :ensure t)
 
 (defun vinegar/dotfiles-toggle ()
   "Show/hide dot-files"
@@ -78,8 +94,12 @@
 				  (with-current-buffer (window-buffer other-win)
 				    (dired-get-marked-files nil)))))
     (cond ((= (length marked-files) 2)
-           (ediff-files (nth 0 marked-files)
-                        (nth 1 marked-files)))
+	   (if (and (file-directory-p (nth 0 marked-files))
+		    (file-directory-p (nth 1 marked-files)))
+	       (ztree-diff (nth 0 marked-files)
+			   (nth 1 marked-files))
+	     (ediff-files (nth 0 marked-files)
+			  (nth 1 marked-files))))
           ((= (length marked-files) 3)
            (ediff-files3 (nth 0 marked-files)
                          (nth 1 marked-files)
@@ -87,6 +107,10 @@
                          ))
           ((and (= (length marked-files) 1)
                 (= (length other-marked-files) 1))
+	   (if (and (file-directory-p (nth 0 marked-files))
+		    (file-directory-p (nth 0 other-marked-files)))
+	       (ztree-diff (nth 0 marked-files)
+			   (nth 0 other-marked-files)))
            (ediff-files (nth 0 marked-files)
                         (nth 0 other-marked-files)))
           ((= (length marked-files) 1)
@@ -153,6 +177,16 @@
 (evil-define-key 'normal  dired-mode-map (kbd "-") 'vinegar/up-directory)
 (evil-define-key 'normal  dired-mode-map (kbd "=") 'vinegar/dired-diff)
 (evil-define-key 'normal  dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+(evil-define-key 'normal  dired-mode-map (kbd "T") 'dired-tree-down)
+(evil-define-key 'normal  dired-mode-map (kbd "~") '(lambda ()(interactive)(find-alternate-file "~/")))
+(evil-define-key 'normal  dired-mode-map (kbd "r") 'revert-buffer)
+(evil-define-key 'normal  dired-mode-map (kbd "C-r") 'dired-do-redisplay)
+(evil-define-key 'normal  dired-mode-map (kbd "gg") 'vinegar/back-to-top)
+(evil-define-key 'normal  dired-mode-map (kbd "G") 'vinegar/jump-to-bottom)
+(evil-define-key 'normal  dired-mode-map (kbd "f") 'counsel-find-file)
+(evil-define-key 'normal  dired-mode-map (kbd "C-f") 'find-name-dired)
+(evil-define-key 'normal  dired-mode-map (kbd "H") 'diredp-dired-recent-dirs)
+(evil-define-key 'normal  dired-mode-map (kbd "J") 'dired-goto-file)
 ;; "j"         'vinegar/move-down
 ;; "k"         'vinegar/move-up
 ;; "-"         'vinegar/up-directory

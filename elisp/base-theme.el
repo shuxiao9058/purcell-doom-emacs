@@ -91,13 +91,13 @@
   (winum-mode)
   (winner-mode 1)
   )
-;; (use-package spaceline
-;;   :config
-;;   (require 'spaceline-config)
-;;   (spaceline-spacemacs-theme)
-;;   (set 'spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
-;;   ;; (setq powerline-default-separator 'arrow)
-;;   ;; (spaceline-compile)
-;;   )
+(use-package spaceline
+  :config
+  (require 'spaceline-config)
+  (spaceline-spacemacs-theme)
+  (set 'spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+  ;; (setq powerline-default-separator 'wave)
+  ;; (spaceline-compile)
+  )
 
 (provide 'base-theme)
