@@ -94,6 +94,8 @@
   :defer t)
 (use-package evil-surround
   :defer t
+  :init
+  (global-evil-surround-mode)
   :ensure t)
 
 (provide 'base-evil)
