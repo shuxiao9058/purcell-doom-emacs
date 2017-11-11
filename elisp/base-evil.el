@@ -37,7 +37,6 @@
   "gu" 'magit-pull
   "ge" 'magit-ediff-resolve
   "gr" 'magit-rebase-interactive
-
   )
 
 (define-key evil-normal-state-map (kbd "C-k") (lambda ()
@@ -49,26 +48,23 @@
 (define-key evil-normal-state-map (kbd "[b") 'previous-buffer)
 (define-key evil-normal-state-map (kbd "]b") 'next-buffer)
 (define-key evil-normal-state-map (kbd "M-.") nil)
-;;=========================================================
 
-;;evil-mode, https://bitbucket.org/lyro/evil
 (use-package evil
   :ensure t
   :config
   (evil-mode 1)
   )
-
+(use-package evil-mc
+  :defer t
+  :diminish evil-mc-mode
+  :init
+  (global-evil-mc-mode  1))
 
 (require-package 'key-chord)
-;; Max time delay between two key presses to be considered a key chord
 (setq key-chord-two-keys-delay 0.1) ; default 0.1
-;; Max time delay between two presses of the same key to be considered a key chord.
-;; Should normally be a little longer than `key-chord-two-keys-delay'.
 (setq key-chord-one-key-delay 0.2) ; default 0.2
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 (key-chord-mode 1)
-;;=========================================================
-;;evil-nerd-commenter
 (use-package evil-nerd-commenter
   :ensure t
   :config
@@ -78,20 +74,15 @@
   (define-key evil-normal-state-map (kbd ",cc") 'evilnc-copy-and-comment-lines)
   (define-key evil-normal-state-map (kbd ",cr") 'comment-or-uncomment-region))
 
-;;=========================================================
-;;evil-escape
 (use-package evil-escape
   :ensure t
   :bind(("C-c C-g" . evil-escape))
   :config
   (diminish 'evil-escape-mode))
-;;=========================================================
-;; evil-matchit
 (use-package evil-matchit
   :ensure t
   :config
   (global-evil-matchit-mode 1))
-;;=========================================================
 (use-package dash
   :ensure t
   :defer t)
@@ -101,8 +92,8 @@
 (use-package s
   :ensure t
   :defer t)
-;; (require 'evil-unimpaired)
-;;=========================================================
-
+(use-package evil-surround
+  :defer t
+  :ensure t)
 
 (provide 'base-evil)

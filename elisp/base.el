@@ -171,12 +171,6 @@ Return the updated `exec-path'"
   (setq recentf-save-file (recentf-expand-file-name "~/.emacs.d/private/cache/recentf"))
   (recentf-mode 1))
 
-(use-package dired+
-  :init
-  (setq diredp-hide-details-initially-flag nil)
-  :config
-  (diredp-toggle-find-file-reuse-dir 1))
-
 (use-package hlinum
   :config
   (hlinum-activate))
@@ -186,31 +180,31 @@ Return the updated `exec-path'"
   (setq linum-format " %2d ")
   (global-linum-mode nil))
 
-(use-package idle-highlight-mode
-  :config
-  (defun my-coding-hook ()
-    (make-local-variable 'column-number-mode)
-    (column-number-mode t)
-    (idle-highlight-mode t))
+;; (use-package idle-highlight-mode
+;;   :config
+;;   (defun my-coding-hook ()
+;;     (make-local-variable 'column-number-mode)
+;;     (column-number-mode t)
+;;     (idle-highlight-mode t))
 
-  (add-hook 'prog-mode-hook 'my-coding-hook)
-  )
+;;   (add-hook 'prog-mode-hook 'my-coding-hook)
+;;   )
 
 
-(use-package page-break-lines
-  :config
-  (global-page-break-lines-mode)
-  :diminish
-  page-break-lines-mode)
+;; (use-package page-break-lines
+;;   :config
+;;   (global-page-break-lines-mode)
+;;   :diminish
+;;   page-break-lines-mode)
 
 
 ;; set default font in initial window and for any new window
 (cond
  ;; case: windows
  ((string-equal system-type "windows-nt") ; Microsoft Windows
-  (if (member "Ubuntu Mono"(font-family-list))
+  (if (member "Monaco"(font-family-list))
       (progn
-	(set-face-attribute 'default nil :font "Ubuntu Mono 12")
+	(set-face-attribute 'default nil :font "Monaco 10")
 	(dolist (charset '(kana han symbol cjk-misc bopomofo))
 	  (set-fontset-font (frame-parameter nil 'font)
 			    charset (font-spec :family "Microsoft Yahei"
@@ -257,8 +251,8 @@ Return the updated `exec-path'"
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-items '((recents  . 9)
-			  (bookmarks . 9)
-			  (projects . 12))))
+			  (bookmarks . 5)
+			  (projects . 7))))
 
 (use-package ediff
   :config

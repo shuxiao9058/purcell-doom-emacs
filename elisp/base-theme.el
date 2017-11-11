@@ -1,7 +1,7 @@
-;; (require-package 'color-theme-sanityinc-solarized)
+(require-package 'color-theme-sanityinc-solarized)
 (require-package 'color-theme-sanityinc-tomorrow)
 (require-package 'molokai-theme)
-;; (require-package 'monokai-theme)
+(require-package 'monokai-theme)
 (require-package 'dracula-theme)
 (require-package 'material-theme)
 (require-package 'doom-themes)
@@ -23,7 +23,7 @@
 ;; (require 'darknaso-theme)
 ;; (setq-default custom-enabled-themes '(darknaso))
 ;; (setq-default custom-enabled-themes '(dracula))
-(setq-default custom-enabled-themes '(zenburn))
+;; (setq-default custom-enabled-themes '(zenburn))
 ;; (setq-default custom-enabled-themes '(twilight-bright))
 ;; (setq-default custom-enabled-themes '(nord))
 ;; (setq nord-comment-brightness 15)
@@ -91,13 +91,13 @@
   (winum-mode)
   (winner-mode 1)
   )
-(use-package spaceline
-  :config
-  (require 'spaceline-config)
-  (spaceline-spacemacs-theme)
-  (set 'spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
-  (setq powerline-default-separator 'wave)
-  (spaceline-compile)
-  )
+;; (use-package spaceline
+;;   :config
+;;   (require 'spaceline-config)
+;;   (spaceline-spacemacs-theme)
+;;   (set 'spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+;;   ;; (setq powerline-default-separator 'arrow)
+;;   ;; (spaceline-compile)
+;;   )
 
 (provide 'base-theme)

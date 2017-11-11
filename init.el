@@ -15,8 +15,10 @@
 (add-to-list 'load-path (concat user-emacs-directory "site-elisp"))
 
 (require 'base)
+
 (require 'base-functions)
 (require 'base-evil)
+(require 'base-filetree)
 (require 'base-theme)
 (require 'base-edit)
 (require 'base-company)
@@ -27,3 +29,4 @@
 (require 'lang-javascript)
 (require 'lang-web)
 (require 'lang-c)
+(put 'dired-find-alternate-file 'disabled nil)

@@ -1,15 +1,10 @@
-;; quick jump
-;; (use-package avy
-;;   :bind
-;;   ("C-;" . avy-goto-word-or-subword-1))
 
-
-
-(require-package 'hungry-delete)
-(require 'hungry-delete)
-(global-hungry-delete-mode)
-(diminish 'hungry-delete-mode)
-
+(use-package hungry-delete
+  :defer t
+  :init
+  (global-hungry-delete-mode)
+  :diminish
+  hungry-delete-mode)
 
 
 (use-package aggressive-indent
@@ -42,21 +37,17 @@
   (yas-global-mode 1) ;; or M-x yas-reload-all if you've started YASnippet already.
   )
 
-(require-package 'multiple-cursors)
-;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C-S-L") 'mc/mark-all-like-this-dwim)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-(global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
+;; (require-package 'multiple-cursors)
+;; (global-set-key (kbd "C-S-L") 'mc/mark-all-like-this-dwim)
+;; (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+;; (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+;; (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
 
 (require-package 'visual-regexp)
 (require-package 'visual-regexp-steroids)
 (require 'visual-regexp-steroids)
 (define-key global-map (kbd "C-c r") 'vr/replace)
 (define-key global-map (kbd "C-c q") 'vr/query-replace)
-;; if you use multiple-cursors, this is for you:
-(define-key global-map (kbd "C-c m") 'vr/mc-mark)
 ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
 (define-key esc-map (kbd "C-r") 'vr/isearch-backward) ;; C-M-r
 (define-key esc-map (kbd "C-s") 'vr/isearch-forward) ;; C-M-s
@@ -76,7 +67,7 @@
 
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode)
+  ;; :init (global-flycheck-mode)
   :diminish
   flycheck-mode
   :bind
@@ -126,11 +117,5 @@
   (global-set-key (kbd "M-l") #'fix-word-downcase)
   (global-set-key (kbd "M-c") #'fix-word-capitalize))
 
-;; (load-library "hideshow")
-;; (add-hook 'c-mode-common-hook   'hs-minor-mode)
-;; (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
-;; (add-hook 'lisp-mode-hook       'hs-minor-mode)
-;; (add-hook 'perl-mode-hook       'hs-minor-mode)
-;; (add-hook 'sh-mode-hook         'hs-minor-mode)
 
 (provide 'base-edit)
