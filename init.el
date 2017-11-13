@@ -10,23 +10,51 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
+;; Optimize loading performance
+(defvar default-file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
+(setq gc-cons-threshold 30000000)
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            "Restore defalut values after init"
+            (setq file-name-handler-alist default-file-name-handler-alist)
+            (setq gc-cons-threshold 800000)))
 
-(add-to-list 'load-path (concat user-emacs-directory "elisp"))
+(add-to-list 'load-path (concat user-emacs-directory "lisp"))
 (add-to-list 'load-path (concat user-emacs-directory "site-elisp"))
+;; Constants
+(require 'init-const)
 
-(require 'base)
+;; Customization
+(require 'init-custom)
+;; Packages
+(require 'init-package)
 
-(require 'base-functions)
-(require 'base-evil)
-(require 'base-filetree)
-(require 'base-theme)
-(require 'base-edit)
-(require 'base-company)
-(require 'base-org)
-(require 'base-git)
+(require 'init-basic)
 
-(require 'lang-python)
-(require 'lang-javascript)
-(require 'lang-web)
-(require 'lang-c)
-(put 'dired-find-alternate-file 'disabled nil)
+(require 'init-evil)
+(require 'init-funcs)
+(require 'init-dired)
+
+(require 'init-ivy)
+(require 'init-highlight)
+(require 'init-ibuffer)
+(require 'init-kill-ring)
+(require 'init-window)
+
+
+(require 'init-ui)
+(require 'init-edit)
+(require 'init-company)
+(require 'init-org)
+(require 'init-git)
+;; programing config
+(require 'init-vcs)
+(require 'init-flycheck)
+(require 'init-projectile)
+
+(require 'init-emacs-lisp)
+(require 'init-py)
+(require 'init-js)
+(require 'init-web)
+;;(require 'init-c)
