@@ -33,6 +33,7 @@
 ;;; Code:
 
 (eval-when-compile (require 'init-const))
+(eval-when-compile (require 'init-custom))
 
 ;; Manage and navigate projects
 (use-package projectile
@@ -42,8 +43,18 @@
   (setq projectile-mode-line
         '(:eval (format "[%s]" (projectile-project-name))))
 
+  (setq projectile-known-projects-file
+        (expand-file-name "projectile-bookmarks.eld" cache-dir))
+
+  (setq projectile-completion-system 'ivy)
+
   (setq projectile-sort-order 'recentf)
   (setq projectile-use-git-grep t)
+
+  (setq projectile-switch-project-action
+        '(lambda ()
+           (venv-projectile-auto-workon)
+           (projectile-find-file)))
 
   ;; Faster indexing on Windows
   ;; `ripgrep' is the fastest

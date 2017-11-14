@@ -31,7 +31,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Code:
-
+(eval-when-compile (require 'init-custom))
 ;; Explicitly set the prefered coding systems to avoid annoying prompt
 ;; from emacs (especially on Microsoft Windows)
 (prefer-coding-system 'utf-8)
@@ -241,7 +241,11 @@
 ;; Treat undo history as a tree
 (use-package undo-tree
   :diminish undo-tree-mode
-  :init (add-hook 'after-init-hook #'global-undo-tree-mode))
+  :init (add-hook 'after-init-hook #'global-undo-tree-mode)
+  :config
+  (setq
+   undo-tree-auto-save-history nil
+   undo-tree-history-directory-alist `(("." . ,(concat cache-dir "/undo/")))))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword

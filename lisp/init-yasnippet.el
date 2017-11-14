@@ -1,4 +1,4 @@
-;; init-c.el --- Initialize c configurations.	-*- lexical-binding: t -*-
+;; init-yasnippet.el --- Initialize yasnippet configurations.	-*- lexical-binding: t -*-
 ;;
 ;; Author: Vincent Zhang <seagle0128@gmail.com>
 ;; Version: 3.1.0
@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Commentary:
-;;             Configurations for C/C++.
+;;             Some configurations of yasnippet mode.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -32,25 +32,20 @@
 ;;
 ;;; Code:
 
-;; C/C++ Mode
-(use-package cc-mode
-  :ensure nil
-  :init
-  (add-hook 'c-mode-common-hook
-            (lambda ()
-              (c-set-style "bsd")
-              (setq tab-width 4)
-              (setq c-basic-offset 4)
-
-              ;; (local-set-key "\C-m" 'reindent-then-newline-and-indent)
-              (local-set-key "\C-cc" 'compile)))
+(use-package yasnippet
+  :diminish yas-minor-mode
+  :init (add-hook 'after-init-hook #'yas-global-mode)
   :config
-  ;; Company mode backend for C/C++ header files
-  (with-eval-after-load 'company
-    (use-package company-c-headers
-      :init (cl-pushnew (company-backend-with-yas 'company-c-headers) company-backends))))
+  (use-package dropdown-list :commands dropdown-list)
+  (setq yas-snippet-dirs
+	'("~/.emacs.d/snippets"                 ;; personal snippets
+	  "~/yasnippet-snippets"	;git clone https://github.com/AndreaCrotti/yasnippet-snippets.git
+	  ))
+  (setq yas-prompt-functions '(yas-dropdown-prompt
+                               yas-maybe-ido-prompt
+                               yas-completing-prompt)))
 
-(provide 'init-c)
+(provide 'init-yasnippet)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-c.el ends here
+;;; init-yasnippet.el ends here

@@ -37,11 +37,11 @@
   "Are we running on a WinTel system?")
 
 (defconst sys/win32p (and sys/windowsp
-			  (not (getenv "PROGRAMW6432")))
+              (not (getenv "PROGRAMW6432")))
   "if current operation system is windows 32bit version")
 
 (defconst sys/win64p (and sys/windowsp
-			  (getenv "PROGRAMW6432"))
+              (getenv "PROGRAMW6432"))
   "if current operation system is windows 64bit verison.")
 
 (defconst sys/linuxp
@@ -68,6 +68,8 @@
   (string-equal "root" (getenv "USER"))
   "Are you using ROOT user?")
 
+(defconst cache-dir
+  (expand-file-name "cache" user-emacs-directory))
 
 (provide 'init-const)
 

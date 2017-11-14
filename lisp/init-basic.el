@@ -127,5 +127,14 @@ Return the updated `exec-path'"
   :init
   (which-key-mode))
 
+(use-package ido-vertical-mode
+  :init
+  (ido-vertical-mode 1)
+  :config
+  (setq ido-vertical-show-count 1))
+
+(setq make-backup-files nil)
+(delete-selection-mode 1)
+
 (provide 'init-basic)
 ;;; base ends here

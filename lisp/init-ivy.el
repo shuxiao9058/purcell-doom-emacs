@@ -31,7 +31,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Code:
-
+(eval-when-compile (require 'init-custom))
 (use-package counsel
   :diminish ivy-mode counsel-mode
   :bind (("C-s" . counsel-grep-or-swiper)
@@ -114,7 +114,9 @@
   ;;           ivy-minibuffer-map)
 
   ;; Enhance M-x
-  (use-package smex)
+  (use-package smex
+    :config
+    (setq-default smex-save-file (expand-file-name ".smex-items" cache-dir)))
 
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
