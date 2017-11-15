@@ -69,7 +69,7 @@
   "Are you using ROOT user?")
 
 (defconst cache-dir
-  (expand-file-name "cache" user-emacs-directory))
+  (expand-file-name ".cache" user-emacs-directory))
 
 (provide 'init-const)
 

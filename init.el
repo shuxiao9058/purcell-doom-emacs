@@ -21,7 +21,7 @@
             (setq gc-cons-threshold 800000)))
 
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
-(add-to-list 'load-path (concat user-emacs-directory "site-elisp"))
+(add-to-list 'load-path (concat user-emacs-directory "site-lisp"))
 ;; Constants
 (require 'init-const)
 
@@ -32,7 +32,7 @@
 
 (require 'init-basic)
 
-(require 'init-evil)
+;; (require 'init-evil)
 (require 'init-funcs)
 (require 'init-dired)
 
@@ -42,7 +42,7 @@
 (require 'init-ibuffer)
 (require 'init-kill-ring)
 (require 'init-window)
-
+(require 'init-restore)
 
 (require 'init-ui)
 (require 'init-edit)
