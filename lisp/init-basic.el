@@ -1,6 +1,4 @@
-;;; init-basic.el --- Initialize package configurations.	-*- lexical-binding: t -*-
-;;
-;; Author: Haibo Wang <nasoundead@163.com>
+;;; init-basic.elAuthor: Haibo Wang <nasoundead@163.com>
 ;; Version: 0.0.1
 ;; URL: https://github.com/nasoundead/.emacs.d
 ;; Keywords:
@@ -90,10 +88,11 @@ Return the updated `exec-path'"
 (use-package saveplace
   :ensure nil
   :init
-  ;; Emacs 25 has a proper mode for `save-place'
+  ;; Emacsag 25 has a proper mode for `save-place'
   (if (fboundp 'save-place-mode)
       (add-hook 'after-init-hook #'save-place-mode)
-    (setq save-place t)))
+    (setq save-place t))
+  (setq save-place-file (locate-user-emacs-file cache-dir ".emacs-places")))
 
 (use-package recentf
   :ensure nil
@@ -122,6 +121,20 @@ Return the updated `exec-path'"
         savehist-autosave-interval 60)
   (add-hook 'after-init-hook #'savehist-mode))
 
+;; https://www.emacswiki.org/emacs/AutoSave
+(make-directory cache-dir t)
+(setq backup-directory-alist
+      `((".*" . ,cache-dir)))
+(setq auto-save-file-name-transforms
+      `((".*" ,cache-dir t)))
+(setq auto-save-list-file-prefix
+      cache-dir)
+(defun save-all ()
+  "Save all buffers."
+  (interactive)
+  (save-some-buffers t))
+(add-hook 'focus-out-hook 'save-all)
+
 (use-package which-key
   :diminish which-key-mode
   :init
@@ -133,8 +146,6 @@ Return the updated `exec-path'"
   :config
   (setq ido-vertical-show-count 1))
 
-(setq make-backup-files nil)
-(delete-selection-mode 1)
 
 (provide 'init-basic)
 ;;; base ends here

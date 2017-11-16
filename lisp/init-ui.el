@@ -36,6 +36,8 @@
  ((eq my-theme 'default)
   ;; (require 'eclipse-theme)
   ;; (load-theme 'eclipse t)
+  (use-package spacemacs-theme
+    :init (load-theme 'spacemacs-dark t))
   )
  ((eq my-theme 'monokai)
   (use-package monokai-theme
@@ -112,39 +114,39 @@
   (reapply-themes))
 
 
-;; (use-package winum
-;;   :init
-;;   (setq winum-auto-setup-mode-line nil)
-;;   (setq winum-keymap
-;;         (let ((map (make-sparse-keymap)))
-;;           (define-key map (kbd "C-`") 'winum-select-window-by-number)
-;;           (define-key map (kbd "C-²") 'winum-select-window-by-number)
-;;           (define-key map (kbd "M-0") 'winum-select-window-0-or-10)
-;;           (define-key map (kbd "M-1") 'winum-select-window-1)
-;;           (define-key map (kbd "M-2") 'winum-select-window-2)
-;;           (define-key map (kbd "M-3") 'winum-select-window-3)
-;;           (define-key map (kbd "M-4") 'winum-select-window-4)
-;;           (define-key map (kbd "M-5") 'winum-select-window-5)
-;;           (define-key map (kbd "M-6") 'winum-select-window-6)
-;;           (define-key map (kbd "M-7") 'winum-select-window-7)
-;;           (define-key map (kbd "M-8") 'winum-select-window-8)
-;;           (define-key map (kbd "M-9") 'winum-select-window-9)
-;;           map))
-;;   (winum-mode))
+(use-package winum
+  :init
+  (setq winum-auto-setup-mode-line nil)
+  (setq winum-keymap
+        (let ((map (make-sparse-keymap)))
+          (define-key map (kbd "C-`") 'winum-select-window-by-number)
+          (define-key map (kbd "C-²") 'winum-select-window-by-number)
+          (define-key map (kbd "M-0") 'winum-select-window-0-or-10)
+          (define-key map (kbd "M-1") 'winum-select-window-1)
+          (define-key map (kbd "M-2") 'winum-select-window-2)
+          (define-key map (kbd "M-3") 'winum-select-window-3)
+          (define-key map (kbd "M-4") 'winum-select-window-4)
+          (define-key map (kbd "M-5") 'winum-select-window-5)
+          (define-key map (kbd "M-6") 'winum-select-window-6)
+          (define-key map (kbd "M-7") 'winum-select-window-7)
+          (define-key map (kbd "M-8") 'winum-select-window-8)
+          (define-key map (kbd "M-9") 'winum-select-window-9)
+          map))
+  (winum-mode))
 
-;; ;; Modeline
-;; (use-package spaceline-config
-;;   :ensure spaceline
-;;   :commands (spaceline-spacemacs-theme
-;;              spaceline-info-mode)
-;;   :init
-;;   (setq powerline-default-separator (if sys/windowsp 'arrow 'utf-8))
-;;   (add-hook 'after-init-hook
-;;             (lambda ()
-;;               (spaceline-spacemacs-theme)))
-;;   :config
-;;   (spaceline-info-mode 1)
-;;   (set 'spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
+;; Modeline
+(use-package spaceline-config
+  :ensure spaceline
+  :commands (spaceline-spacemacs-theme
+             spaceline-info-mode)
+  :init
+  (setq powerline-default-separator (if sys/windowsp 'arrow 'utf-8))
+  (add-hook 'after-init-hook
+            (lambda ()
+              (spaceline-spacemacs-theme)))
+  :config
+  (spaceline-info-mode 1)
+  (set 'spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
 
 ;; Fonts
 (use-package cnfonts
@@ -179,8 +181,8 @@
 ;; Scroll one line at a time (less "jumpy" than defaults)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 (setq mouse-wheel-progressive-speed nil)
-(setq scroll-step 1
-      scroll-margin 1
+(setq scroll-step 5
+      scroll-margin 5
       scroll-conservatively 100000)
 
 (use-package smooth-scrolling
