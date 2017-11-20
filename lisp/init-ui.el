@@ -38,6 +38,8 @@
   ;; (load-theme 'eclipse t)
   (use-package spacemacs-theme
     :init (load-theme 'spacemacs-dark t))
+  ;; (use-package monokai-theme
+  ;;   :init (load-theme 'monokai t))
   )
  ((eq my-theme 'monokai)
   (use-package monokai-theme
@@ -149,17 +151,48 @@
   (set 'spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
 
 ;; Fonts
-(use-package cnfonts
-  :init
-  (when my-cnfonts-enabled
-    (add-hook 'after-init-hook #'cnfonts-enable))
-  :config
-  (setq cnfonts-keep-frame-size nil)
-  (setq cnfonts-profiles
-        '("program" "org-mode" "read-book"))
-  (setq cnfonts--profiles-steps '(("program" . 3)
-                                  ("org-mode" . 6)
-                                  ("read-book" . 8))))
+;; (use-package cnfonts
+;;   :init
+;;   (when my-cnfonts-enabled
+;;     (add-hook 'after-init-hook #'cnfonts-enable))
+;;   :config
+;;   (setq cnfonts-keep-frame-size nil)
+;;   (setq cnfonts-profiles
+;;         '("program" "org-mode" "read-book"))
+;;   (setq cnfonts--profiles-steps '(("program" . 3)
+;;                                   ("org-mode" . 6)
+;;                                   ("read-book" . 8))))
+
+;; set default font in initial window and for any new window
+(cond
+ ;; case: windows
+ ((string-equal system-type "windows-nt") ; Microsoft Windows
+  ;; Setting English Font
+  (set-face-attribute 'default nil :font "Monaco 10")
+  ;; Chinese Font
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font)
+                      charset (font-spec :family "Microsoft Yahei"
+                                         :size 16)))
+  )
+ (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+ (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+ ;; case: Max OS X
+ ((string-equal system-type "darwin")  ; Mac OS X
+  (when (member "DejaVu Sans Mono" (font-family-list))
+    (add-to-list 'initial-frame-alist '(font . "DejaVu Sans Mono-10"))
+    (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10"))))
+ ;; case: linux
+ ((string-equal system-type "gnu/linux") ; linux
+  (when (member "DejaVu Sans Mono" (font-family-list))
+    (add-to-list 'initial-frame-alist '(font . "DejaVu Sans Mono-10"))
+    (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10")))
+  (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
+  (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)))
+
+;; specify font for all unicode characters
+(when (member "Symbola" (font-family-list))
+  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
 
 ;; Line and Column
 (setq-default fill-column 80)
@@ -179,11 +212,11 @@
 
 ;; Mouse & Smooth Scroll
 ;; Scroll one line at a time (less "jumpy" than defaults)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
-(setq mouse-wheel-progressive-speed nil)
-(setq scroll-step 5
-      scroll-margin 5
-      scroll-conservatively 100000)
+;; (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+;; (setq mouse-wheel-progressive-speed nil)
+;; (setq scroll-step 10
+;;       scroll-margin 10
+;;       scroll-conservatively 100000)
 
 (use-package smooth-scrolling
   :init (add-hook 'after-init-hook #'smooth-scrolling-mode)

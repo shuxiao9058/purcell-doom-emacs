@@ -50,24 +50,18 @@
   (setq company-tooltip-align-annotations t)
 
   (setq company-idle-delay 0.5
-        company-minimum-prefix-length 2
+        company-minimum-prefix-length 1
         company-require-match nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil)
-
-  ;; weight by frequency
-  ;; (setq company-transformers '(company-sort-by-occurrence))
-
-  ;; Sort candidates using completion history
-  ;; (use-package company-statistics
-  ;;   :init (company-statistics-mode 1))
 
   ;; Popup documentation for completion candidates
   (use-package company-quickhelp
     :if (display-graphic-p)
     :bind (:map company-active-map
                 ("M-h" . company-quickhelp-manual-begin))
-    :init (company-quickhelp-mode 1))
+    ;; :init (company-quickhelp-mode t)
+    )
 
   ;; Support yas in commpany
   ;; Note: Must be the last to involve all backends
