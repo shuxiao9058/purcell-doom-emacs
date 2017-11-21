@@ -35,16 +35,15 @@
     ;;--------------------------------------------------------------------------
 ;;;  comment/uncoment the block to consider python or ipython
     ;;--------------------------------------------------------------------------
-    (if (executable-find "ipython")
-        (elpy-use-ipython)
-      )
+    (if (executable-find "ipython3")
+        (elpy-use-ipython "ipython3")
+      (if (executable-find "ipython")
+          (elpy-use-ipython "ipython")))
     ;;--------------------------------------------------------------------------
     ;;(elpy-use-cpython)
     (elpy-enable)
     (add-to-list 'company-backends
-                 (company-backend-with-yas 'elpy-company-backend))
-    )
-  )
+                 (company-backend-with-yas 'elpy-company-backend))))
 (use-package company-jedi
   :ensure t
   :defer t

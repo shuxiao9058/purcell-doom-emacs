@@ -46,7 +46,7 @@ Return the updated `exec-path'"
   "prepend the PATH to the head of the `load-path', return updated load-path."
   (add-to-list 'load-path path))
 
-;; The value of environment variable “PATH” is used by emacs when you are running a shell in emacs, similar to when you are using a shell in a terminal.
+;; The value of environment variable 'PATH' is used by emacs when you are running a shell in emacs, similar to when you are using a shell in a terminal.
 ;; The exec-path is used by emacs itself to find programs it needs for its features, such as spell checking, file compression, compiling, grep, diff, etc.
 ;; Original from http://ergoemacs.org/emacs/emacs_env_var_paths.html
 (when sys/windowsp
@@ -70,6 +70,26 @@ Return the updated `exec-path'"
   ;; (w32-register-hot-key [s-])
   (w32-register-hot-key [s-t]))
 
+;; coding
+(cond
+ ((eq system-type 'windows-nt)
+  (set-language-environment "chinese-gbk")
+  (prefer-coding-system 'utf-8)
+  (set-terminal-coding-system 'gbk)
+  (modify-coding-system-alist 'process "*" 'gbk)
+  (defun windows-shell-mode-coding ()
+    (set-buffer-file-coding-system 'gbk)
+    (set-buffer-process-coding-system 'gbk 'gbk))
+  (add-hook 'shell-mode-hook #'windows-shell-mode-coding)
+  (add-hook 'inferior-python-mode-hook #'windows-shell-mode-coding)
+  (defun python-encode-in-org-babel-execute (func body params)
+    (let ((coding-system-for-write 'utf-8))
+      (funcall func body params)))
+  (advice-add #'org-babel-execute:python :around
+              #'python-encode-in-org-babel-execute))
+ (t
+  (set-language-environment "UTF-8")
+  (prefer-coding-system 'utf-8)))
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p)
   (use-package exec-path-from-shell
