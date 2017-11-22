@@ -7,9 +7,9 @@
 ;; Title
 (setq frame-title-format
       '("GNU Emacs " emacs-version "@" user-login-name " : "
-        (:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
+    (:eval (if (buffer-file-name)
+           (abbreviate-file-name (buffer-file-name))
+         "%b"))))
 (setq icon-title-format frame-title-format)
 
 ;; Menu/Tool/Scroll bars
@@ -32,29 +32,6 @@
 (require-package 'nord-theme)
 (require-package 'color-theme-modern)
 (require-package 'twilight-bright-theme)
-(cond
- ((eq my-theme 'default)
-  ;; (require 'eclipse-theme)
-  ;; (load-theme 'eclipse t)
-  (use-package spacemacs-theme
-    :init (load-theme 'spacemacs-dark t))
-  ;; (use-package monokai-theme
-  ;;   :init (load-theme 'monokai t))
-  )
- ((eq my-theme 'monokai)
-  (use-package monokai-theme
-    :init (load-theme 'monokai t)))
- ((eq my-theme 'dark)
-  (use-package spacemacs-theme
-    :init (load-theme 'spacemacs-dark t)))
- ((eq my-theme 'light)
-  (use-package spacemacs-theme
-    :init (load-theme 'spacemacs-light t)))
- ((eq my-theme 'daylight)
-  (use-package leuven-theme
-    :init (load-theme 'leuven t))))
-
-
 
 ;; (require 'eclipse-theme)
 ;; (load-theme 'eclipse t)
@@ -69,7 +46,7 @@
 ;; (require 'darknaso-theme)
 ;; (setq-default custom-enabled-themes '(darknaso))
 ;; (setq-default custom-enabled-themes '(dracula))
-;; (setq-default custom-enabled-themes '(zenburn))
+(setq-default custom-enabled-themes '(zenburn))
 ;; (setq-default custom-enabled-themes '(twilight-bright))
 ;; (setq-default custom-enabled-themes '(nord))
 ;; (setq nord-comment-brightness 15)
@@ -120,32 +97,32 @@
   :init
   (setq winum-auto-setup-mode-line nil)
   (setq winum-keymap
-        (let ((map (make-sparse-keymap)))
-          (define-key map (kbd "C-`") 'winum-select-window-by-number)
-          (define-key map (kbd "C-²") 'winum-select-window-by-number)
-          (define-key map (kbd "M-0") 'winum-select-window-0-or-10)
-          (define-key map (kbd "M-1") 'winum-select-window-1)
-          (define-key map (kbd "M-2") 'winum-select-window-2)
-          (define-key map (kbd "M-3") 'winum-select-window-3)
-          (define-key map (kbd "M-4") 'winum-select-window-4)
-          (define-key map (kbd "M-5") 'winum-select-window-5)
-          (define-key map (kbd "M-6") 'winum-select-window-6)
-          (define-key map (kbd "M-7") 'winum-select-window-7)
-          (define-key map (kbd "M-8") 'winum-select-window-8)
-          (define-key map (kbd "M-9") 'winum-select-window-9)
-          map))
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "C-`") 'winum-select-window-by-number)
+      (define-key map (kbd "C-²") 'winum-select-window-by-number)
+      (define-key map (kbd "M-0") 'winum-select-window-0-or-10)
+      (define-key map (kbd "M-1") 'winum-select-window-1)
+      (define-key map (kbd "M-2") 'winum-select-window-2)
+      (define-key map (kbd "M-3") 'winum-select-window-3)
+      (define-key map (kbd "M-4") 'winum-select-window-4)
+      (define-key map (kbd "M-5") 'winum-select-window-5)
+      (define-key map (kbd "M-6") 'winum-select-window-6)
+      (define-key map (kbd "M-7") 'winum-select-window-7)
+      (define-key map (kbd "M-8") 'winum-select-window-8)
+      (define-key map (kbd "M-9") 'winum-select-window-9)
+      map))
   (winum-mode))
 
 ;; Modeline
 (use-package spaceline-config
   :ensure spaceline
   :commands (spaceline-spacemacs-theme
-             spaceline-info-mode)
+         spaceline-info-mode)
   :init
   (setq powerline-default-separator (if sys/windowsp 'arrow 'utf-8))
   (add-hook 'after-init-hook
-            (lambda ()
-              (spaceline-spacemacs-theme)))
+        (lambda ()
+          (spaceline-spacemacs-theme)))
   :config
   (spaceline-info-mode 1)
   (set 'spaceline-highlight-face-func 'spaceline-highlight-face-evil-state))
@@ -167,13 +144,27 @@
 (cond
  ;; case: windows
  ((string-equal system-type "windows-nt") ; Microsoft Windows
-  ;; Setting English Font
-  (set-face-attribute 'default nil :font "Monaco 10")
-  ;; Chinese Font
+  ;; ;; Setting English Font
+  ;; (set-face-attribute 'default nil :font "Monaco 10")
+  ;; ;; Chinese Font
+  ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+  ;;   (set-fontset-font (frame-parameter nil 'font)
+  ;;                     charset (font-spec :family "Microsoft Yahei"
+  ;;                                        :size 16)))
+  (set-face-attribute
+   'default nil
+   :font (font-spec :name "-outline-Source Code Pro-bold-normal-normal-mono-*-*-*-*-c-*-iso10646-1"
+                    :weight 'normal
+                    :slant 'normal
+                    :size 12.5))
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
-    (set-fontset-font (frame-parameter nil 'font)
-                      charset (font-spec :family "Microsoft Yahei"
-                                         :size 16)))
+    (set-fontset-font
+     (frame-parameter nil 'font)
+     charset
+     (font-spec :name "-outline-楷体-normal-normal-normal-mono-*-*-*-*-c-*-iso10646-1"
+                :weight 'normal
+                :slant 'normal
+                :size 15.0)))
   )
  (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
@@ -210,14 +201,6 @@
     :init (add-hook 'after-init-hook #'global-linum-mode)
     :config (setq linum-format "%4d ")))
 
-;; Mouse & Smooth Scroll
-;; Scroll one line at a time (less "jumpy" than defaults)
-;; (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
-;; (setq mouse-wheel-progressive-speed nil)
-;; (setq scroll-step 10
-;;       scroll-margin 10
-;;       scroll-conservatively 100000)
-
 (use-package smooth-scrolling
   :init (add-hook 'after-init-hook #'smooth-scrolling-mode)
   :config (setq smooth-scroll-margin 0))
@@ -250,8 +233,8 @@
 
 ;; Toggle fullscreen
 (bind-keys ([(control f11)] . toggle-frame-fullscreen)
-           ([(control super f)] . toggle-frame-fullscreen) ; Compatible with macOS
-           ([(super return)] . toggle-frame-fullscreen)
-           ([(meta shift return)] . toggle-frame-fullscreen))
+       ([(control super f)] . toggle-frame-fullscreen) ; Compatible with macOS
+       ([(super return)] . toggle-frame-fullscreen)
+       ([(meta shift return)] . toggle-frame-fullscreen))
 
 (provide 'init-ui)
