@@ -15,10 +15,10 @@
 (setq file-name-handler-alist nil)
 (setq gc-cons-threshold 30000000)
 (add-hook 'emacs-startup-hook
-	  (lambda ()
-	    "Restore defalut values after init"
-	    (setq file-name-handler-alist default-file-name-handler-alist)
-	    (setq gc-cons-threshold 800000)))
+          (lambda ()
+            "Restore defalut values after init"
+            (setq file-name-handler-alist default-file-name-handler-alist)
+            (setq gc-cons-threshold 800000)))
 
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 (add-to-list 'load-path (concat user-emacs-directory "site-lisp"))
@@ -32,7 +32,7 @@
 
 (require 'init-basic)
 
-;; (require 'init-evil)
+;;(require 'init-evil)
 (require 'init-funcs)
 (require 'init-dired)
 
@@ -59,6 +59,7 @@
 (require 'init-prog)
 (require 'init-emacs-lisp)
 (require 'init-py)
+;; (require 'init-lsp)
 (require 'init-js)
 (require 'init-web)
 (require 'init-c)
