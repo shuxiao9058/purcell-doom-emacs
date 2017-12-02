@@ -57,8 +57,8 @@
   :bind ("C-x o" . ace-window))
 
 ;; Numbered window shortcuts
-;; (use-package window-numbering
-;;   :init (add-hook 'after-init-hook #'window-numbering-mode))
+(use-package window-numbering
+  :init (add-hook 'after-init-hook #'window-numbering-mode))
 
 ;; Zoom window like tmux
 (use-package zoom-window

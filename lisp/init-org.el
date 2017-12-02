@@ -8,8 +8,7 @@
   ("C-c a" . org-agenda))
 
 (use-package ob-ipython)
-;; (require 'ob-python)
-;; plantuml
+
 ;; active Org-babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -31,20 +30,22 @@
 (setq org-ditaa-jar-path (format "%s%s" ""
                                  (expand-file-name "~/forwin/bin/ditaa.jar")) )
 
-;; Enable plantuml-mode for PlantUML files
-(add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
-
-;; Integration with org-mode
-(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-
 (add-hook 'org-babel-after-execute-hook 'naso/display-inline-images 'append)
-
 (add-hook 'org-mode-hook '(lambda ()(setq truncate-lines t)) 'append)
-
 (defun naso/display-inline-images ()
   (condition-case nil
       (org-display-inline-images)
     (error nil)))
+
+(use-package plantuml-mode
+  :init
+  (setq plantuml-jar-path
+        (expand-file-name
+         "~/forwin/bin/plantuml.jar"))
+  ;; Enable plantuml-mode for PlantUML files
+  (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+  ;; Integration with org-mode
+  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
 
 (use-package org-projectile
   :config
