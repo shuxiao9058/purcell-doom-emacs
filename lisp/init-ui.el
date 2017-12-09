@@ -20,7 +20,9 @@
   (scroll-bar-mode -1))
 
 
-(setq-default custom-enabled-themes '(zenburn))
+(use-package ample-theme)
+(use-package zenburn-theme)
+(setq-default custom-enabled-themes '(ample))
 
 
 ;; Ensure that themes will be applied even if they have not been customized
@@ -39,26 +41,18 @@
   (interactive)
   (setq custom-enabled-themes '(zenburn))
   (reapply-themes))
-
-;; Fonts
-;; (use-package cnfonts
-;;   :init
-;;   (when my-cnfonts-enabled
-;;     (add-hook 'after-init-hook #'cnfonts-enable))
-;;   :config
-;;   (setq cnfonts-keep-frame-size nil)
-;;   (setq cnfonts-profiles
-;;         '("program" "org-mode" "read-book"))
-;;   (setq cnfonts--profiles-steps '(("program" . 3)
-;;                                   ("org-mode" . 6)
-;;                                   ("read-book" . 8))))
+(defun ample()
+  "Activate zenburn theme."
+  (interactive)
+  (setq custom-enabled-themes '(ample))
+  (reapply-themes))
 
 ;; set default font in initial window and for any new window
 (cond
  ;; case: windows
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   ;; Setting English Font
-  (set-face-attribute 'default nil :font "Consolas 11")
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono-11")
   ;; Chinese Font
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
@@ -90,15 +84,9 @@
 (setq line-number-mode t)
 
 ;; Show native line numbers if possible, otherwise use linum
-(if (fboundp 'display-line-numbers-mode)
-    (use-package display-line-numbers
-      :ensure nil
-      ;; :init (add-hook 'prog-mode-hook #'display-line-numbers-mode)
-      )
-  (use-package linum-off
-    :after linum
-    :init (add-hook 'after-init-hook #'global-linum-mode)
-    :config (setq linum-format "%4d ")))
+(add-hook 'after-init-hook #'global-linum-mode)
+;; :config (setq linum-format "%4d ")
+
 
 (use-package smooth-scrolling
   :init (add-hook 'after-init-hook #'smooth-scrolling-mode)

@@ -32,7 +32,7 @@
 
 (require 'init-basic)
 
-;;(require 'init-evil)
+(require 'init-evil)
 (require 'init-funcs)
 (require 'init-dired)
 
@@ -42,7 +42,7 @@
 (require 'init-ibuffer)
 (require 'init-kill-ring)
 (require 'init-window)
-(require 'init-restore)
+;; (require 'init-restore)
 
 (require 'init-ui)
 (require 'init-edit)
@@ -62,5 +62,5 @@
 ;; (require 'init-lsp)
 (require 'init-js)
 (require 'init-web)
-(require 'init-c)
+;; (require 'init-c)
 (put 'dired-find-alternate-file 'disabled nil)

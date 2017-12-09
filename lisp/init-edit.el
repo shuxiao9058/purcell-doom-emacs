@@ -38,7 +38,6 @@
 (prefer-coding-system 'utf-8)
 
 ;; Miscs
-;; (setq initial-scratch-message nil)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets) ; Show path if names are same
 (setq adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*")
 (setq adaptive-fill-first-line-regexp "^* *$")
@@ -69,11 +68,6 @@
   :ensure nil
   :init (add-hook 'after-init-hook #'delete-selection-mode))
 
-;; Rectangle
-(use-package rect
-  :ensure nil
-  :bind (("<C-return>" . rectangle-mark-mode)))
-
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure nil
@@ -89,11 +83,10 @@
 
 ;; Jump to things in Emacs tree-style
 (use-package avy
-  :bind (("C-:" . avy-goto-char)
-         ("C-'" . avy-goto-char-2)
-         ("M-g f" . avy-goto-line)
+  :bind (("C-;" . avy-goto-char)
          ("M-g w" . avy-goto-word-1)
-         ("M-g e" . avy-goto-word-0))
+         ;; ("M-g e" . avy-goto-word-0)
+         )
   :init (add-hook 'after-init-hook #'avy-setup-default)
   :config (setq avy-background t))
 
@@ -165,10 +158,10 @@
   :config
   (add-to-list 'drag-stuff-except-modes 'org-mode)
   (drag-stuff-define-keys))
-(use-package move-dup
-  :bind
-  ("M-S-<up>" . md/duplicate-up)
-  ("M-S-<down>". md/duplicate-down))
+;; (use-package move-dup
+;;   :bind
+;;   ("M-S-<up>" . md/duplicate-up)
+;;   ("M-S-<down>". md/duplicate-down))
 
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
@@ -204,19 +197,8 @@
 (use-package hungry-delete
   :diminish hungry-delete-mode
   :init (add-hook 'after-init-hook #'global-hungry-delete-mode)
-  :config (setq-default hungry-delete-chars-to-skip " \t\f\v"))
-
-;; Edit multiple regions in the same way simultaneously
-(use-package iedit
-  :bind (("C-;" . iedit-mode)
-         ("C-x r RET" . iedit-rectangle-mode)
-         :map isearch-mode-map ("C-;" . iedit-mode-from-isearch)
-         :map esc-map ("C-;" . iedit-execute-last-modification)
-         :map help-map ("C-;" . iedit-mode-toggle-on-function))
-  :init
-  ;; Avoid to restore Iedit mode when restoring desktop
-  (add-to-list 'desktop-minor-mode-handlers
-               '(iedit-mode . nil)))
+  ;; :config (setq-default hungry-delete-chars-to-skip " \t\f\v")
+  )
 
 ;; Multiple cursors
 (use-package multiple-cursors
@@ -258,13 +240,6 @@
   :ensure nil
   :diminish subword-mode
   :init (add-hook 'prog-mode-hook #'subword-mode))
-
-;; Hideshow
-(use-package hideshow
-  :ensure nil
-  :bind (:map hs-minor-mode-map
-              ("C-`" . hs-toggle-hiding))
-  :diminish hs-minor-mode)
 
 (provide 'init-edit)
 
