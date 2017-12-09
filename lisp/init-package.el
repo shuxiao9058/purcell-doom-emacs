@@ -75,7 +75,7 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-
+;; (require 'diminish)
 (defun require-package (package &optional min-version no-refresh)
   "Install given PACKAGE, optionally requiring MIN-VERSION.
 If NO-REFRESH is non-nil, the available package lists will not be
@@ -103,6 +103,8 @@ locate PACKAGE."
     (error
      (message "Couldn't install optional package `%s': %S" package err)
      nil)))
+
+(require-package 'diminish)
 
 (setq use-package-always-ensure t)
 (setq use-package-always-defer t)
