@@ -22,8 +22,9 @@
 
 (use-package ample-theme)
 (use-package zenburn-theme)
-(setq-default custom-enabled-themes '(ample))
-
+(require 'intellij-theme)
+;; (setq-default custom-enabled-themes '(zenburn))
+(setq-default custom-enabled-themes '(intellij))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -52,12 +53,16 @@
  ;; case: windows
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   ;; Setting English Font
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono-11")
+  ;; (set-face-attribute 'default nil :font "Consolas-11")
+  (set-default-font "IBM Plex Mono-11")
   ;; Chinese Font
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
-                      charset (font-spec :family "Microsoft Yahei"
-                                         :size 14)))
+                      charset (font-spec :family "Microsoft Yahei")))
+  (setq face-font-rescale-alist '(
+                                  ("微软雅黑" . 1.1)
+                                  ("Microsoft Yahei" . 1.1)
+                                  ))
 
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
   (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease) )
@@ -85,7 +90,7 @@
 
 ;; Show native line numbers if possible, otherwise use linum
 (add-hook 'after-init-hook #'global-linum-mode)
-;; :config (setq linum-format "%4d ")
+(setq linum-format "%2d ")
 
 
 (use-package smooth-scrolling

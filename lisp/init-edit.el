@@ -83,7 +83,7 @@
 
 ;; Jump to things in Emacs tree-style
 (use-package avy
-  :bind (("C-;" . avy-goto-char)
+  :bind (("C-;" . avy-goto-word-0)
          ("M-g w" . avy-goto-word-1)
          ;; ("M-g e" . avy-goto-word-0)
          )
@@ -197,7 +197,7 @@
 (use-package hungry-delete
   :diminish hungry-delete-mode
   :init (add-hook 'after-init-hook #'global-hungry-delete-mode)
-  ;; :config (setq-default hungry-delete-chars-to-skip " \t\f\v")
+  :config (setq-default hungry-delete-chars-to-skip " \t\f\v")
   )
 
 ;; Multiple cursors
