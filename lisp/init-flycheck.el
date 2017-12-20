@@ -1,6 +1,6 @@
 ;; init-flycheck.el --- Initialize flycheck configurations.	-*- lexical-binding: t -*-
 ;;
-;; Author: Vincent Zhang <seagle0128@gmail.com>
+;; Author: Wanghaibo <nasoundead@163.com>
 ;; Version: 3.1.0
 ;; URL: https://github.com/seagle0128/.emacs.d
 ;; Keywords:
@@ -34,18 +34,11 @@
 
 (use-package flycheck
   :diminish flycheck-mode
-  :init (add-hook 'after-init-hook #'global-flycheck-mode)
+  ;; :init (add-hook 'after-init-hook #'global-flycheck-mode)
   :config
   (setq flycheck-indication-mode 'right-fringe)
   (setq flycheck-emacs-lisp-load-path 'inherit)
-
-  ;; Display Flycheck errors in GUI tooltips
-  (use-package flycheck-pos-tip
-    :init (flycheck-pos-tip-mode 1))
-
-  ;; Jump to and fix syntax errors via `avy'
-  (use-package avy-flycheck
-    :init (avy-flycheck-setup)))
+  )
 
 (provide 'init-flycheck)
 

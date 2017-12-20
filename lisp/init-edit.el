@@ -38,9 +38,6 @@
 (prefer-coding-system 'utf-8)
 
 ;; Miscs
-(setq uniquify-buffer-name-style 'post-forward-angle-brackets) ; Show path if names are same
-(setq adaptive-fill-regexp "[ t]+|[ t]*([0-9]+.|*+)[ t]*")
-(setq adaptive-fill-first-line-regexp "^* *$")
 (setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
 (setq make-backup-files nil)               ; Forbide to make backup files
 (setq auto-save-default nil)               ; Disable auto save
@@ -63,11 +60,6 @@
               tab-width        4
               indent-tabs-mode nil)
 
-;; Delete selection if you insert
-(use-package delsel
-  :ensure nil
-  :init (add-hook 'after-init-hook #'delete-selection-mode))
-
 ;; Automatically reload files was modified by external program
 (use-package autorevert
   :ensure nil
@@ -83,17 +75,10 @@
 
 ;; Jump to things in Emacs tree-style
 (use-package avy
-  :bind (("C-;" . avy-goto-word-0)
-         ("M-g w" . avy-goto-word-1)
-         ;; ("M-g e" . avy-goto-word-0)
+  :bind (("C-;" . avy-goto-char)
          )
   :init (add-hook 'after-init-hook #'avy-setup-default)
   :config (setq avy-background t))
-
-;; Kill text between the point and the character CHAR
-(use-package avy-zap
-  :bind (("M-z" . avy-zap-to-char-dwim)
-         ("M-Z" . avy-zap-up-to-char-dwim)))
 
 ;; Quickly follow links
 (use-package ace-link
@@ -197,18 +182,17 @@
 (use-package hungry-delete
   :diminish hungry-delete-mode
   :init (add-hook 'after-init-hook #'global-hungry-delete-mode)
-  :config (setq-default hungry-delete-chars-to-skip " \t\f\v")
   )
 
 ;; Multiple cursors
-(use-package multiple-cursors
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-         ("C->" . mc/mark-next-like-this)
-         ("C-<". mc/mark-previous-like-this)
-         ("C-c C-<". mc/mark-all-like-this)
-         ("C-S-L" . mc/mark-all-like-this-dwim)
-         ("s-<mouse-1>" . mc/add-cursor-on-click)
-         ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
+;; (use-package multiple-cursors
+;;   :bind (("C-S-c C-S-c" . mc/edit-lines)
+;;          ("C->" . mc/mark-next-like-this)
+;;          ("C-<". mc/mark-previous-like-this)
+;;          ("C-c C-<". mc/mark-all-like-this)
+;;          ("C-S-L" . mc/mark-all-like-this-dwim)
+;;          ("s-<mouse-1>" . mc/add-cursor-on-click)
+;;          ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
 
 ;; Move to the beginning/end of line or code
 (use-package mwim

@@ -23,8 +23,8 @@
 (use-package ample-theme)
 (use-package zenburn-theme)
 (require 'intellij-theme)
-;; (setq-default custom-enabled-themes '(zenburn))
-(setq-default custom-enabled-themes '(intellij))
+(setq-default custom-enabled-themes '(zenburn))
+;; (setq-default custom-enabled-themes '(intellij))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -55,13 +55,13 @@
   ;; Setting English Font
   ;; (set-face-attribute 'default nil :font "Consolas-11")
   (set-default-font "IBM Plex Mono-11")
+  (set-fontset-font "fontset-default" 'chinese-gbk "STKaiti")
   ;; Chinese Font
-  (dolist (charset '(kana han symbol cjk-misc bopomofo))
-    (set-fontset-font (frame-parameter nil 'font)
-                      charset (font-spec :family "Microsoft Yahei")))
+  ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+  ;;   (set-fontset-font (frame-parameter nil 'font)
+  ;;                     charset (font-spec :family "Microsoft Yahei")))
   (setq face-font-rescale-alist '(
-                                  ("微软雅黑" . 1.1)
-                                  ("Microsoft Yahei" . 1.1)
+                                  ("STKaiti" . 1.4)
                                   ))
 
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
@@ -85,13 +85,13 @@
 
 ;; Line and Column
 (setq-default fill-column 80)
-(setq column-number-mode t)
-(setq line-number-mode t)
+;; (setq column-number-mode t)
+;; (setq line-number-mode t)
 
 ;; Show native line numbers if possible, otherwise use linum
-(add-hook 'after-init-hook #'global-linum-mode)
-(setq linum-format "%2d ")
-
+(if (version<= "26.0.50" emacs-version )
+    (global-display-line-numbers-mode)
+  (add-hook 'after-init-hook #'global-linum-mode))
 
 (use-package smooth-scrolling
   :init (add-hook 'after-init-hook #'smooth-scrolling-mode)

@@ -11,14 +11,22 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 ;; Optimize loading performance
-(defvar default-file-name-handler-alist file-name-handler-alist)
-(setq file-name-handler-alist nil)
-(setq gc-cons-threshold 30000000)
-(add-hook 'emacs-startup-hook
-      (lambda ()
-        "Restore defalut values after init"
-        (setq file-name-handler-alist default-file-name-handler-alist)
-        (setq gc-cons-threshold 800000)))
+;; (defvar default-file-name-handler-alist file-name-handler-alist)
+;; (setq file-name-handler-alist nil)
+;; (setq gc-cons-threshold 30000000)
+;; (add-hook 'emacs-startup-hook
+;;           (lambda ()
+;;             "Restore defalut values after init"
+;;             (setq file-name-handler-alist default-file-name-handler-alist)
+;;             (setq gc-cons-threshold 800000)))
+
+(when (eq system-type 'windows-nt)
+  (setq gc-cons-threshold (* 512 1024 1024))
+  (setq gc-cons-percentage 0.5)
+  (run-with-idle-timer 5 t #'garbage-collect)
+  ;; 显示垃圾回收信息，这个可以作为调试用
+  ;; (setq garbage-collection-messages t)
+  )
 
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 (add-to-list 'load-path (concat user-emacs-directory "site-lisp"))

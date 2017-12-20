@@ -16,10 +16,10 @@
   "wm" 'delete-other-windows
   "w\\" 'split-window-horizontally-instead
   "w-" 'split-window-vertically-instead
-  ;; "0" '(lambda ()
-  ;;        (interactive)
-  ;;        (unless (ignore-errors (select-window-0-or-10))
-  ;;          (sr-speedbar-select-window)))
+  "0" '(lambda ()
+         (interactive)
+         (unless (ignore-errors (select-window-0-or-10))
+           (treemacs-select-window)))
   "1" 'select-window-1
   "2" 'select-window-2
   "3" 'select-window-3
