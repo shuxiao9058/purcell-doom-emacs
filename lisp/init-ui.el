@@ -19,12 +19,11 @@
 (when (and (fboundp 'scroll-bar-mode) scroll-bar-mode)
   (scroll-bar-mode -1))
 
-
-(use-package ample-theme)
-(use-package zenburn-theme)
-(require 'intellij-theme)
-(setq-default custom-enabled-themes '(zenburn))
-;; (setq-default custom-enabled-themes '(intellij))
+;; color theme
+(setq custom-safe-themes t)
+(require-package 'color-theme-sanityinc-tomorrow)
+;; If you don't customize it, this is the theme you get.
+(setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -35,17 +34,20 @@
   (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
 
 (add-hook 'after-init-hook 'reapply-themes)
-(setq custom-safe-themes t)
 
-(defun zenburn ()
-  "Activate zenburn theme."
+;;------------------------------------------------------------------------------
+;; Toggle between light and dark
+;;------------------------------------------------------------------------------
+(defun light ()
+  "Activate a light color theme."
   (interactive)
-  (setq custom-enabled-themes '(zenburn))
+  (setq custom-enabled-themes '(sanityinc-tomorrow-day))
   (reapply-themes))
-(defun ample()
-  "Activate zenburn theme."
+
+(defun dark ()
+  "Activate a dark color theme."
   (interactive)
-  (setq custom-enabled-themes '(ample))
+  (setq custom-enabled-themes '(sanityinc-tomorrow-bright))
   (reapply-themes))
 
 ;; set default font in initial window and for any new window
@@ -54,14 +56,15 @@
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   ;; Setting English Font
   ;; (set-face-attribute 'default nil :font "Consolas-11")
-  (set-default-font "IBM Plex Mono-11")
-  (set-fontset-font "fontset-default" 'chinese-gbk "STKaiti")
+  ;; (set-default-font "IBM Plex Mono-11")
+  (set-default-font "Ubuntu Mono-12")
+  (set-fontset-font "fontset-default" 'chinese-gbk "Microsoft Yahei")
   ;; Chinese Font
   ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
   ;;   (set-fontset-font (frame-parameter nil 'font)
   ;;                     charset (font-spec :family "Microsoft Yahei")))
   (setq face-font-rescale-alist '(
-                                  ("STKaiti" . 1.4)
+                                  ("Microsoft Yahei" . 1.1)
                                   ))
 
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
@@ -89,9 +92,28 @@
 ;; (setq line-number-mode t)
 
 ;; Show native line numbers if possible, otherwise use linum
-(if (version<= "26.0.50" emacs-version )
-    (global-display-line-numbers-mode)
-  (add-hook 'after-init-hook #'global-linum-mode))
+;; (if (version<= "26.0.50" emacs-version )
+;;     (global-display-line-numbers-mode)
+;;   (add-hook 'after-init-hook #'global-linum-mode))
+(use-package nlinum
+  :init
+  (defun initialize-nlinum (&optional frame)
+    (require 'nlinum)
+    (add-hook 'prog-mode-hook 'nlinum-mode))
+  (when (daemonp)
+    (add-hook 'window-setup-hook 'initialize-nlinum)
+    (defadvice make-frame (around toggle-nlinum-mode compile activate)
+      (nlinum-mode -1) ad-do-it (nlinum-mode 1)))
+  ;; Preset `nlinum-format' for minimum width.
+  (defun my-nlinum-mode-hook ()
+    (when nlinum-mode
+      (setq-local nlinum-format
+                  (concat "%" (number-to-string
+                               ;; Guesstimate number of buffer lines.
+                               (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
+                          "d"))))
+  (add-hook 'nlinum-mode-hook #'my-nlinum-mode-hook)
+  )
 
 (use-package smooth-scrolling
   :init (add-hook 'after-init-hook #'smooth-scrolling-mode)
