@@ -14,8 +14,12 @@
         (elpy-use-ipython "ipython3")
       (if (executable-find "ipython")
           (elpy-use-ipython "ipython")))
-    ;; (add-hook 'elpy-mode-hook 'elpy-use-ipython)
-    )
+    (when (require 'flycheck nil t)
+      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+      (add-hook 'elpy-mode-hook 'flycheck-mode))
+    (use-package py-autopep8
+      :init
+      (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)))
   :bind (("M-*" . pop-tag-mark))
   )
 ;; (use-package elpy

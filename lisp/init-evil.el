@@ -83,5 +83,7 @@
   :init
   (global-evil-surround-mode)
   :ensure t)
-
+(use-package evil-vimish-fold
+  :init
+  (evil-vimish-fold-mode 1))
 (provide 'init-evil)

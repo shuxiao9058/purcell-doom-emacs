@@ -64,7 +64,7 @@
   ;;   (set-fontset-font (frame-parameter nil 'font)
   ;;                     charset (font-spec :family "Microsoft Yahei")))
   (setq face-font-rescale-alist '(
-                                  ("Microsoft Yahei" . 1.1)
+                                  ("Microsoft Yahei" . 1.0)
                                   ))
 
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
@@ -97,6 +97,7 @@
 ;;   (add-hook 'after-init-hook #'global-linum-mode))
 (use-package nlinum
   :init
+  (add-hook 'prog-mode-hook 'nlinum-mode)
   (defun initialize-nlinum (&optional frame)
     (require 'nlinum)
     (add-hook 'prog-mode-hook 'nlinum-mode))
