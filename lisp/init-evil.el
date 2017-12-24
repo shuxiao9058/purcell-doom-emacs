@@ -85,5 +85,34 @@
   :ensure t)
 (use-package evil-vimish-fold
   :init
-  (evil-vimish-fold-mode 1))
+  (evil-vimish-fold-mode 1)
+  :diminish
+  evil-vimish-fold-mode)
+(use-package evil-args
+  :init
+  ;; bind evil-args text objects
+  (define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
+  (define-key evil-outer-text-objects-map "a" 'evil-outer-arg)
+
+  ;; bind evil-forward/backward-args
+  (define-key evil-normal-state-map "L" 'evil-forward-arg)
+  (define-key evil-normal-state-map "H" 'evil-backward-arg)
+  (define-key evil-motion-state-map "L" 'evil-forward-arg)
+  (define-key evil-motion-state-map "H" 'evil-backward-arg)
+
+  ;; bind evil-jump-out-args
+  (define-key evil-normal-state-map "K" 'evil-jump-out-args))
+(use-package evil-mc
+  :init
+  (global-evil-mc-mode 1)
+  :diminish
+  evil-mc-mode
+  )
+(use-package evil-mc-extras
+  :init
+  (require 'evil-mc-extras)
+  (global-evil-mc-extras-mode 1)
+  :diminish
+  (evil-mc-extras-mode))
+
 (provide 'init-evil)
