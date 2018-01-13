@@ -6,14 +6,10 @@
   :ensure t
   :init
   (setq elpy-rpc-backend "jedi")
-  (elpy-enable)
-  :config
   (add-hook 'python-mode-hook 'elpy-mode)
+  :config
   (with-eval-after-load 'elpy
-    (if (executable-find "ipython3")
-        (elpy-use-ipython "ipython3")
-      (if (executable-find "ipython")
-          (elpy-use-ipython "ipython")))
+    (elpy-use-ipython "ipython")
     (when (require 'flycheck nil t)
       (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
       (add-hook 'elpy-mode-hook 'flycheck-mode))
@@ -61,7 +57,9 @@
 ;;   (add-to-list 'company-backends
 ;;                (company-backend-with-yas 'company-jedi))
 ;;   )
-
+;; (when (executable-find "ipython")
+;;   (setq python-shell-interpreter "ipython")
+;;   (setq python-shell-interpreter-args "--pylab"))
 ;; (require-package 'anaconda-eldoc-mode)
 ;; (require-package 'anaconda-mode)
 ;; (require-package 'company-anaconda)

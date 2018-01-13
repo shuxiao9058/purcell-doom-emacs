@@ -81,7 +81,7 @@ Return the updated `exec-path'"
     (set-buffer-file-coding-system 'gbk)
     (set-buffer-process-coding-system 'gbk 'gbk))
   (add-hook 'shell-mode-hook #'windows-shell-mode-coding)
-  (add-hook 'inferior-python-mode-hook #'windows-shell-mode-coding)
+  ;; (add-hook 'inferior-python-mode-hook #'windows-shell-mode-coding)
   (defun python-encode-in-org-babel-execute (func body params)
     (let ((coding-system-for-write 'utf-8))
       (funcall func body params)))

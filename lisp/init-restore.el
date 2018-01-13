@@ -1,8 +1,6 @@
 ;; init-restore.el --- Initialize restore configurations.	-*- lexical-binding: t -*-
 ;;
-;; Author: Vincent Zhang <seagle0128@gmail.com>
-;; Version: 3.1.0
-;; URL: https://github.com/seagle0128/.emacs.d
+;; Author: wanghaibo
 ;; Keywords:
 ;; Compatibility:
 ;;
@@ -32,27 +30,17 @@
 ;;
 ;;; Code:
 
-;; Save and restore status
-(use-package desktop
-  :ensure nil
-  :init (desktop-save-mode 1)
-  :config
-  ;; Restore frames into their original displays (if possible)
-  (setq desktop-restore-in-current-display nil)
+(use-package workgroups2
+  :init
+  ;; Change prefix key (before activating WG)
+  (setq wg-prefix-key (kbd "C-c z"))
+  ;; Change workgroups session file
+  (setq wg-session-file "~/.emacs.d/.emacs_workgroups")
+  (global-set-key (kbd "<pause>")     'wg-reload-session)
+  (global-set-key (kbd "C-S-<pause>") 'wg-save-session)
 
-  ;; Load custom theme
-  (add-hook 'desktop-after-read-hook
-            (lambda ()
-              (dolist (theme custom-enabled-themes)
-                (load-theme theme t))))
-
-  ;; Don't save/restore frames in tty
-  (unless (display-graphic-p)
-    (setq desktop-restore-frames nil)))
-
-;; Persistent the scratch buffter
-(use-package persistent-scratch
-  :init (add-hook 'after-init-hook #'persistent-scratch-setup-default))
+  (workgroups-mode 1)   ; put this one at the bottom of .emacs
+  )
 
 (provide 'init-restore)
 

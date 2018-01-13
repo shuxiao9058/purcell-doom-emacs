@@ -23,7 +23,7 @@
 (setq custom-safe-themes t)
 (require-package 'color-theme-sanityinc-tomorrow)
 ;; If you don't customize it, this is the theme you get.
-(setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
+;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -56,15 +56,18 @@
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   ;; Setting English Font
   ;; (set-face-attribute 'default nil :font "Consolas-11")
-  ;; (set-default-font "IBM Plex Mono-11")
-  (set-default-font "Ubuntu Mono-12")
-  (set-fontset-font "fontset-default" 'chinese-gbk "Microsoft Yahei")
+  (set-default-font "IBM Plex Mono-11")
+  ;; (set-default-font "Ubuntu Mono-12")
+  ;; (set-default-font "Source Code Pro-12")
+  ;; (set-fontset-font "fontset-default" 'chinese-gbk "Microsoft Yahei")
+  (set-fontset-font "fontset-default" 'chinese-gbk "宋体")
   ;; Chinese Font
   ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
   ;;   (set-fontset-font (frame-parameter nil 'font)
   ;;                     charset (font-spec :family "Microsoft Yahei")))
   (setq face-font-rescale-alist '(
-                                  ("Microsoft Yahei" . 1.0)
+                                  ;; ("Microsoft Yahei" . 1.142857)
+                                  ("宋体" . 1.2)
                                   ))
 
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)

@@ -71,10 +71,10 @@
   :config (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold))
 
 ;; Highlight indentions
-(use-package indent-guide
-  :diminish indent-guide-mode
-  :init (add-hook 'after-init-hook #'indent-guide-global-mode)
-  :config (setq indent-guide-delay 0.5))
+;; (use-package indent-guide
+;;   :diminish indent-guide-mode
+;;   :init (add-hook 'after-init-hook #'indent-guide-global-mode)
+;;   :config (setq indent-guide-delay 0.5))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode
@@ -85,18 +85,16 @@
     (add-hook 'web-mode-hook #'rainbow-mode))
   (with-eval-after-load 'css-mode
     (add-hook 'css-mode-hook #'rainbow-mode)))
-
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters
   :init (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 ;; Highlight TODO/FIXME/BUG...
-(use-package fic-mode
-  :init (add-hook 'prog-mode-hook #'fic-mode)
-  :config
-  (setq fic-activated-faces '(font-lock-comment-face))
-  (set-face-background 'fic-face "yellow")
-  (set-face-background 'fic-author-face "yellow"))
+  (use-package fic-mode
+    :config
+    (setq fic-activated-faces '(font-lock-comment-face))
+    (set-face-background 'fic-face "yellow")
+    (set-face-background 'fic-author-face "yellow"))
 
 ;; Highlight uncommitted changes
 (use-package diff-hl

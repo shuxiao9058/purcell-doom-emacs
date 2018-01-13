@@ -24,7 +24,6 @@
   (setq gc-cons-threshold (* 512 1024 1024))
   (setq gc-cons-percentage 0.5)
   (run-with-idle-timer 5 t #'garbage-collect)
-  ;; 显示垃圾回收信息，这个可以作为调试用
   ;; (setq garbage-collection-messages t)
   )
 
@@ -43,6 +42,7 @@
 (require 'init-evil)
 (require 'init-funcs)
 (require 'init-dired)
+(require 'init-restore)
 
 (require 'init-ivy)
 (require 'init-projectile)

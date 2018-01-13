@@ -50,7 +50,7 @@
   (setq company-tooltip-align-annotations t)
 
   (setq company-idle-delay 0.5
-        company-minimum-prefix-length 1
+        company-minimum-prefix-length 2
         company-require-match nil
         company-dabbrev-ignore-case nil
         company-dabbrev-downcase nil)
