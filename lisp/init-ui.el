@@ -23,6 +23,12 @@
 (setq custom-safe-themes t)
 (require-package 'color-theme-sanityinc-tomorrow)
 ;; If you don't customize it, this is the theme you get.
+(require 'modern-light)
+(require 'modern-solarizeddark)
+(require 'modern-solarizedlight)
+;; (setq-default custom-enabled-themes '(modern-light))
+(setq-default custom-enabled-themes '(modern-solarizeddark))
+;; (setq-default custom-enabled-themes '(modern-solarizedlight))
 ;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
 
 ;; Ensure that themes will be applied even if they have not been customized
@@ -55,20 +61,11 @@
  ;; case: windows
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   ;; Setting English Font
-  ;; (set-face-attribute 'default nil :font "Consolas-11")
-  (set-default-font "IBM Plex Mono-11")
+  (set-default-font "Consolas-11")
+  ;; (set-default-font "IBM Plex Mono-11")
   ;; (set-default-font "Ubuntu Mono-12")
   ;; (set-default-font "Source Code Pro-12")
-  ;; (set-fontset-font "fontset-default" 'chinese-gbk "Microsoft Yahei")
-  (set-fontset-font "fontset-default" 'chinese-gbk "宋体")
-  ;; Chinese Font
-  ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
-  ;;   (set-fontset-font (frame-parameter nil 'font)
-  ;;                     charset (font-spec :family "Microsoft Yahei")))
-  (setq face-font-rescale-alist '(
-                                  ;; ("Microsoft Yahei" . 1.142857)
-                                  ("宋体" . 1.2)
-                                  ))
+  (setq face-font-rescale-alist '(("宋体" . 1.2)))
 
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
   (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease) )
@@ -85,39 +82,35 @@
   (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
   (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)))
 
-;; specify font for all unicode characters
-(when (member "Symbola" (font-family-list))
-  (set-fontset-font t 'unicode "Symbola" nil 'prepend))
-
 ;; Line and Column
 (setq-default fill-column 80)
-;; (setq column-number-mode t)
+(setq column-number-mode t)
 ;; (setq line-number-mode t)
 
 ;; Show native line numbers if possible, otherwise use linum
-;; (if (version<= "26.0.50" emacs-version )
-;;     (global-display-line-numbers-mode)
-;;   (add-hook 'after-init-hook #'global-linum-mode))
-(use-package nlinum
-  :init
-  (add-hook 'prog-mode-hook 'nlinum-mode)
-  (defun initialize-nlinum (&optional frame)
-    (require 'nlinum)
-    (add-hook 'prog-mode-hook 'nlinum-mode))
-  (when (daemonp)
-    (add-hook 'window-setup-hook 'initialize-nlinum)
-    (defadvice make-frame (around toggle-nlinum-mode compile activate)
-      (nlinum-mode -1) ad-do-it (nlinum-mode 1)))
-  ;; Preset `nlinum-format' for minimum width.
-  (defun my-nlinum-mode-hook ()
-    (when nlinum-mode
-      (setq-local nlinum-format
-                  (concat "%" (number-to-string
-                               ;; Guesstimate number of buffer lines.
-                               (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
-                          "d"))))
-  (add-hook 'nlinum-mode-hook #'my-nlinum-mode-hook)
-  )
+(if (version<= "26.0.50" emacs-version )
+    (global-display-line-numbers-mode)
+  (add-hook 'after-init-hook #'global-linum-mode))
+;; (use-package nlinum
+;;   :init
+;;   (add-hook 'prog-mode-hook 'nlinum-mode)
+;;   (defun initialize-nlinum (&optional frame)
+;;     (require 'nlinum)
+;;     (add-hook 'prog-mode-hook 'nlinum-mode))
+;;   (when (daemonp)
+;;     (add-hook 'window-setup-hook 'initialize-nlinum)
+;;     (defadvice make-frame (around toggle-nlinum-mode compile activate)
+;;       (nlinum-mode -1) ad-do-it (nlinum-mode 1)))
+;;   ;; Preset `nlinum-format' for minimum width.
+;;   (defun my-nlinum-mode-hook ()
+;;     (when nlinum-mode
+;;       (setq-local nlinum-format
+;;                   (concat "%" (number-to-string
+;;                                ;; Guesstimate number of buffer lines.
+;;                                (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
+;;                           "d"))))
+;;   (add-hook 'nlinum-mode-hook #'my-nlinum-mode-hook)
+;;   )
 
 (use-package smooth-scrolling
   :init (add-hook 'after-init-hook #'smooth-scrolling-mode)
