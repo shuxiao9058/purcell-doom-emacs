@@ -35,7 +35,6 @@
 ;; Emacs client for the Language Server Protocol
 ;; https://github.com/emacs-lsp/lsp-mode
 (use-package lsp-mode
-  :diminish lsp-mode
   :config
   (with-eval-after-load 'flycheck
     (require 'lsp-flycheck))
@@ -43,7 +42,15 @@
   (with-eval-after-load 'company
     (use-package company-lsp
       :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))))
-
+(use-package lsp-ui
+  :init
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  :config
+  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+  (lsp-ui-peek-jump-backward)
+  (lsp-ui-peek-jump-forward)
+  )
 ;; Go support for lsp-mode using Sourcegraph's Go Language Server
 ;; Install: go get github.com/sourcegraph/go-langserver
 (use-package lsp-go

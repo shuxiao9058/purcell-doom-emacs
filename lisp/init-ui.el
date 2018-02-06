@@ -21,15 +21,19 @@
 
 ;; color theme
 (setq custom-safe-themes t)
+(require-package 'doom-themes)
+(require-package 'zenburn-theme)
 (require-package 'color-theme-sanityinc-tomorrow)
 ;; If you don't customize it, this is the theme you get.
 (require 'modern-light)
 (require 'modern-solarizeddark)
 (require 'modern-solarizedlight)
 ;; (setq-default custom-enabled-themes '(modern-light))
-(setq-default custom-enabled-themes '(modern-solarizeddark))
+;; (setq-default custom-enabled-themes '(modern-solarizeddark))
 ;; (setq-default custom-enabled-themes '(modern-solarizedlight))
 ;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
+;; (setq-default custom-enabled-themes '(doom-nova))
+(setq-default custom-enabled-themes '(zenburn))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -44,6 +48,12 @@
 ;;------------------------------------------------------------------------------
 ;; Toggle between light and dark
 ;;------------------------------------------------------------------------------
+(defun zenburn ()
+  "Activate a light color theme."
+  (interactive)
+  (setq custom-enabled-themes '(zenburn))
+  (reapply-themes))
+
 (defun light ()
   "Activate a light color theme."
   (interactive)
@@ -56,11 +66,26 @@
   (setq custom-enabled-themes '(sanityinc-tomorrow-bright))
   (reapply-themes))
 
+
+(defun solarized-dark ()
+  "Activate a dark color theme."
+  (interactive)
+  (setq custom-enabled-themes '(modern-solarizeddark))
+  (reapply-themes))
+
+
+(defun solarized-light ()
+  "Activate a dark color theme."
+  (interactive)
+  (setq custom-enabled-themes '(modern-solarizedlight))
+  (reapply-themes))
+
 ;; set default font in initial window and for any new window
 (cond
  ;; case: windows
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   ;; Setting English Font
+  ;; (set-default-font "Monaco-10")
   (set-default-font "Consolas-11")
   ;; (set-default-font "IBM Plex Mono-11")
   ;; (set-default-font "Ubuntu Mono-12")
@@ -91,26 +116,6 @@
 (if (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode)
   (add-hook 'after-init-hook #'global-linum-mode))
-;; (use-package nlinum
-;;   :init
-;;   (add-hook 'prog-mode-hook 'nlinum-mode)
-;;   (defun initialize-nlinum (&optional frame)
-;;     (require 'nlinum)
-;;     (add-hook 'prog-mode-hook 'nlinum-mode))
-;;   (when (daemonp)
-;;     (add-hook 'window-setup-hook 'initialize-nlinum)
-;;     (defadvice make-frame (around toggle-nlinum-mode compile activate)
-;;       (nlinum-mode -1) ad-do-it (nlinum-mode 1)))
-;;   ;; Preset `nlinum-format' for minimum width.
-;;   (defun my-nlinum-mode-hook ()
-;;     (when nlinum-mode
-;;       (setq-local nlinum-format
-;;                   (concat "%" (number-to-string
-;;                                ;; Guesstimate number of buffer lines.
-;;                                (ceiling (log (max 1 (/ (buffer-size) 80)) 10)))
-;;                           "d"))))
-;;   (add-hook 'nlinum-mode-hook #'my-nlinum-mode-hook)
-;;   )
 
 (use-package smooth-scrolling
   :init (add-hook 'after-init-hook #'smooth-scrolling-mode)

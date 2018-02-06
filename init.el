@@ -67,7 +67,7 @@
 (require 'init-prog)
 (require 'init-emacs-lisp)
 (require 'init-py)
-;; (require 'init-lsp)
+(require 'init-lsp)
 (require 'init-js)
 (require 'init-web)
 ;; (require 'init-c)
