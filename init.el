@@ -53,6 +53,7 @@
 (require 'init-modeline)
 (require 'init-window)
 (require 'init-ui)
+(require 'init-font)
 (require 'init-company)
 (require 'init-yasnippet)
 (require 'init-org)

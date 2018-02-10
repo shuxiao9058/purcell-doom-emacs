@@ -51,14 +51,12 @@ Return the updated `exec-path'"
 ;; Original from http://ergoemacs.org/emacs/emacs_env_var_paths.html
 (when sys/windowsp
   (mapc #'prepend-to-exec-path
-        (reverse
-         (list
-          (if sys/win64p
-              "C:/Program Files (x86)/Git/bin"
-            "C:/Program Files/Git/bin")
-          "~/forwin/dll"
-          "~/forwin/bin"
-          ))))
+        (reverse (list (if sys/win64p
+                           "C:/Program Files (x86)/Git/bin"
+                         "C:/Program Files/Git/bin")
+                       "~/forwin/dll"
+                       "~/forwin/bin"
+                       ))))
 
 ;; Key Modifiers
 (when sys/win32p
@@ -81,7 +79,7 @@ Return the updated `exec-path'"
     (set-buffer-file-coding-system 'gbk)
     (set-buffer-process-coding-system 'gbk 'gbk))
   (add-hook 'shell-mode-hook #'windows-shell-mode-coding)
-  ;; (add-hook 'inferior-python-mode-hook #'windows-shell-mode-coding)
+  (add-hook 'inferior-python-mode-hook #'windows-shell-mode-coding)
   (defun python-encode-in-org-babel-execute (func body params)
     (let ((coding-system-for-write 'utf-8))
       (funcall func body params)))
@@ -90,6 +88,7 @@ Return the updated `exec-path'"
  (t
   (set-language-environment "UTF-8")
   (prefer-coding-system 'utf-8)))
+
 ;; Environment
 (when (or sys/mac-x-p sys/linux-x-p)
   (use-package exec-path-from-shell
@@ -100,9 +99,9 @@ Return the updated `exec-path'"
     (exec-path-from-shell-initialize)))
 
 ;; Start server
-(use-package server
-  :ensure nil
-  :init (add-hook 'after-init-hook #'server-mode))
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 ;; History
 (use-package saveplace
@@ -118,7 +117,6 @@ Return the updated `exec-path'"
   :ensure nil
   :init
   (setq recentf-max-saved-items 200)
-
   (add-hook 'find-file-hook (lambda ()
                               (unless recentf-mode
                                 (recentf-mode)
@@ -165,6 +163,10 @@ Return the updated `exec-path'"
   (ido-vertical-mode 1)
   :config
   (setq ido-vertical-show-count 1))
+
+(use-package all-the-icons
+  :init
+  (setq inhibit-compacting-font-caches t))
 
 
 (provide 'init-basic)
