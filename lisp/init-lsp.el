@@ -35,7 +35,7 @@
 ;; Emacs client for the Language Server Protocol
 ;; https://github.com/emacs-lsp/lsp-mode
 (use-package lsp-mode
-  :config
+  :init
   (with-eval-after-load 'flycheck
     (require 'lsp-flycheck))
 
