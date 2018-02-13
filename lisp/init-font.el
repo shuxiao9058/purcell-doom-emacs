@@ -50,10 +50,10 @@
 
 (defvar bhj-english-font-size nil)
 (defun naso-set-font (english-fonts
-                       english-font-size
-                       chinese-fonts
-                       &optional chinese-fonts-scale
-                       )
+                      english-font-size
+                      chinese-fonts
+                      &optional chinese-fonts-scale
+                      )
   (setq chinese-fonts-scale (or chinese-fonts-scale 1.2))
   (save-excursion
     (with-current-buffer (find-file-noselect naso-font-size-config-file)
@@ -62,6 +62,7 @@
       (save-buffer)
       (kill-buffer)))
   (setq face-font-rescale-alist `(("Microsoft Yahei" . ,chinese-fonts-scale)
+                                  ("宋体" . ,chinese-fonts-scale)
                                   ("Microsoft_Yahei" . ,chinese-fonts-scale)
                                   ("微软雅黑" . ,chinese-fonts-scale)
                                   ("WenQuanYi Zen Hei" . ,chinese-fonts-scale)))
@@ -102,8 +103,8 @@ If set/leave chinese-font-size to nil, it will follow english-font-size"
   (shell-command-to-string "sawfish-client -e '(maximize-window (input-focus))'&"))
 
 
-(defvar bhj-english-fonts '("Monaco" "Consolas" "DejaVu Sans Mono" "Monospace" "Courier New"))
-(defvar bhj-chinese-fonts '("Microsoft Yahei" "Microsoft_Yahei" "微软雅黑" "文泉驿等宽微米黑" "黑体" "新宋体" "宋体"))
+(defvar bhj-english-fonts '("Roboto Mono" "Monaco" "Consolas" "DejaVu Sans Mono" "Monospace" "Courier New"))
+(defvar bhj-chinese-fonts '("宋体" "Microsoft Yahei" "Microsoft_Yahei" "微软雅黑" "文泉驿等宽微米黑" "黑体" "新宋体"))
 
 (naso-set-font
  bhj-english-fonts
@@ -146,8 +147,8 @@ If set/leave chinese-font-size to nil, it will follow english-font-size"
 ;; (global-set-key [(control x) (meta -)] (lambda () (interactive) (bhj-step-frame-font-size -1)))
 ;; (global-set-key [(control x) (meta +)] (lambda () (interactive) (bhj-step-frame-font-size 1)))
 
-(global-set-key (kbd "<C-wheel-up>") (lambda () (interactive) (bhj-step-frame-font-size -1)))
-(global-set-key (kbd "<C-wheel-down>") (lambda () (interactive) (bhj-step-frame-font-size 1)))
+(global-set-key (kbd "<C-wheel-up>") (lambda () (interactive) (bhj-step-frame-font-size 1)))
+(global-set-key (kbd "<C-wheel-down>") (lambda () (interactive) (bhj-step-frame-font-size -1)))
 (set-face-attribute 'default nil :font (font-spec))
 
 
