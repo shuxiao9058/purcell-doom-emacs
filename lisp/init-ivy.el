@@ -125,7 +125,8 @@
 
   ;; Ivy integration for Projectile
   (use-package counsel-projectile
-    :init (counsel-projectile-on))
+    ;; :init (counsel-projectile-on)
+    )
 
   ;; Correcting words with flyspell via Ivy
   (use-package flyspell-correct-ivy

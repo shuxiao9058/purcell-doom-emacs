@@ -104,14 +104,8 @@ Return the updated `exec-path'"
   (server-start))
 
 ;; History
-(use-package saveplace
-  :ensure nil
-  :init
-  ;; Emacsag 25 has a proper mode for `save-place'
-  (if (fboundp 'save-place-mode)
-      (add-hook 'after-init-hook #'save-place-mode)
-    (setq save-place t))
-  (setq save-place-file (locate-user-emacs-file cache-dir ".emacs-places")))
+;; Emacsag 25 has a proper mode for `save-place'
+(add-hook 'after-init-hook #'save-place-mode)
 
 (use-package recentf
   :ensure nil

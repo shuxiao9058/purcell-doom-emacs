@@ -44,16 +44,21 @@
     (unless after-init-time
       (add-hook 'after-init-hook #'package--save-selected-packages))))
 
-;;
+
 ;; ELPA: refer to https://elpa.emacs-china.org/
-;;
 (cond
  ((eq my-package-archives 'melpa)
   (setq package-archives '(("gnu"   . "http://elpa.gnu.org/packages/")
                            ("melpa" . "http://melpa.org/packages/"))))
  ((eq my-package-archives 'emacs-china)
   (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-                           ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
+                           ("melpa" . "http://elpa.emacs-china.org/melpa/")
+                           ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
+                           ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
+                           ("org" . "http://elpa.emacs-china.org/org/")
+                           ("sunrise-commander" . "http://elpa.emacs-china.org/sunrise-commander/")
+                           ("user42" . "http://elpa.emacs-china.org/user42/")
+                           )))
  ((eq my-package-archives 'tuna)
   (setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
                            ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))))

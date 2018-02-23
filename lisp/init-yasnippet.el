@@ -36,7 +36,7 @@
   :diminish yas-minor-mode
   :init (add-hook 'after-init-hook #'yas-global-mode)
   :config
-  (use-package dropdown-list :commands dropdown-list)
+  ;; (use-package dropdown-list :commands dropdown-list)
   (setq yas-snippet-dirs
 	'("~/.emacs.d/snippets"                 ;; personal snippets
 	  "~/yasnippet-snippets"	;git clone https://github.com/AndreaCrotti/yasnippet-snippets.git
