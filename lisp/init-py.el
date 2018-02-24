@@ -12,7 +12,7 @@
     (elpy-use-ipython "ipython")
     (when (require 'flycheck nil t)
       (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-      (setq elpy-modules (delq 'elpy-module-company elpy-modules))
+      ;; (setq elpy-modules (delq 'elpy-module-company elpy-modules))
       (add-hook 'elpy-mode-hook 'flycheck-mode))
     (use-package py-autopep8
       :init

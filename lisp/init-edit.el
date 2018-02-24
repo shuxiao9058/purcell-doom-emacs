@@ -143,10 +143,10 @@
   :config
   (add-to-list 'drag-stuff-except-modes 'org-mode)
   (drag-stuff-define-keys))
-;; (use-package move-dup
-;;   :bind
-;;   ("M-S-<up>" . md/duplicate-up)
-;;   ("M-S-<down>". md/duplicate-down))
+(use-package move-dup
+  :bind
+  ("M-S-<up>" . md/duplicate-up)
+  ("M-S-<down>". md/duplicate-down))
 
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
@@ -185,14 +185,14 @@
   )
 
 ;; Multiple cursors
-;; (use-package multiple-cursors
-;;   :bind (("C-S-c C-S-c" . mc/edit-lines)
-;;          ("C->" . mc/mark-next-like-this)
-;;          ("C-<". mc/mark-previous-like-this)
-;;          ("C-c C-<". mc/mark-all-like-this)
-;;          ("C-S-L" . mc/mark-all-like-this-dwim)
-;;          ("s-<mouse-1>" . mc/add-cursor-on-click)
-;;          ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
+(use-package multiple-cursors
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<". mc/mark-previous-like-this)
+         ;; ("C-c C-<". mc/mark-all-like-this)
+         ("C-S-L" . mc/mark-all-like-this-dwim)
+         ("s-<mouse-1>" . mc/add-cursor-on-click)
+         ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
 
 ;; Move to the beginning/end of line or code
 (use-package mwim

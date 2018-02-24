@@ -130,8 +130,12 @@
                "%1"
                '(:eval evil-mode-line-tag)
                '(:eval (propertize " %b " 'face (if (buffer-modified-p)
-                                                    '(:background "#d33682" :foreground "#fdf6e3" :weight bold)
-                                                  '(:background "#268bd2" :foreground "#fdf6e3" :weight normal))
+                                                    '(:background "#d33682"
+                                                                  :foreground "#fdf6e3"
+                                                                  :weight bold)
+                                                  nil
+                                                  ;; '(:background "#268bd2" :foreground "#fdf6e3" :weight normal)
+                                                  )
                                    'help-echo (buffer-file-name)))
                '(:eval
                  (pcase flycheck-last-status-change
@@ -158,16 +162,16 @@
                '(:eval (propertize (buffer-encoding-abbrev)
                                    'help-echo (format "%s" buffer-file-coding-system)))
                "(" ;; '%02' to set to 2 chars at least; prevents flickering
-               (propertize "%03l")
+               (propertize "%02l")
                ","
                (propertize "%02c")
                ")"
-               '(:propertize " %p/%I")
+               '(:propertize "%p/%I")
                '(:eval (propertize (concat " " (eyebrowse-mode-line-indicator))))
                '(:propertize vc-mode face (:inherit font-lock-keyword-face :weight bold))
                mode-line-modes
                mode-line-misc-info
-               '(:eval (propertize (format-time-string " %H:%M") 'help-echo (format-time-string "%F %a")))
+               '(:eval (propertize (format-time-string "%H:%M") 'help-echo (format-time-string "%F %a")))
                mode-line-end-spaces)
               )
 
