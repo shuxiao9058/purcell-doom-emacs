@@ -108,11 +108,11 @@
   :diminish
   evil-mc-mode
   )
-(use-package evil-mc-extras
-  :init
-  (require 'evil-mc-extras)
-  (global-evil-mc-extras-mode 1)
-  :diminish
-  (evil-mc-extras-mode))
+;; (use-package evil-mc-extras
+;;   :init
+;;   (require 'evil-mc-extras)
+;;   (global-evil-mc-extras-mode 1)
+;;   :diminish
+;;   (evil-mc-extras-mode))
 
 (provide 'init-evil)
