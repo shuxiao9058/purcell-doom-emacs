@@ -28,7 +28,7 @@
 ;; Packages
 (require 'init-package)
 (require 'init-basic)
-;; (require 'init-evil)
+(require 'init-evil)
 (require 'init-funcs)
 (require 'init-dired)
 (require 'init-restore)
@@ -41,7 +41,7 @@
 (require 'init-modeline)
 (require 'init-window)
 (require 'init-ui)
-(require 'init-font)
+;; (require 'init-font)
 (require 'init-company)
 (require 'init-yasnippet)
 (require 'init-org)
@@ -58,3 +58,4 @@
 (require 'init-js)
 (require 'init-web)
 ;; (require 'init-c)
+(put 'dired-find-alternate-file 'disabled nil)

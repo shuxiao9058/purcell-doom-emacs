@@ -185,13 +185,13 @@
   )
 
 ;; Multiple cursors
-;; (use-package multiple-cursors
-;;   :bind (("C-S-c C-S-c" . mc/edit-lines)
-;;          ("C->" . mc/mark-next-like-this)
-;;          ("C-<". mc/mark-previous-like-this)
-;;          ("C-S-L" . mc/mark-all-like-this-dwim)
-;;          ("s-<mouse-1>" . mc/add-cursor-on-click)
-;;          ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
+(use-package multiple-cursors
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<". mc/mark-previous-like-this)
+         ("C-S-L" . mc/mark-all-like-this-dwim)
+         ("s-<mouse-1>" . mc/add-cursor-on-click)
+         ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
 
 ;; Move to the beginning/end of line or code
 (use-package mwim

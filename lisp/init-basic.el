@@ -165,6 +165,15 @@ Return the updated `exec-path'"
   :init
   (setq inhibit-compacting-font-caches t))
 
+;; use browser depending on url
+(setq
+ browse-url-browser-function
+ '(
+   ("wikipedia\\.org" . browse-url-firefox)
+   ("github" . browse-url-chromium)
+   ("thefreedictionary\\.com" . eww-browse-url)
+   ("." . browse-url-default-browser)
+   ))
 
 (provide 'init-basic)
 ;;; base ends here

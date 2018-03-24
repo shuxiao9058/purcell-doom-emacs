@@ -31,9 +31,10 @@
 ;; (setq-default custom-enabled-themes '(modern-light))
 ;; (setq-default custom-enabled-themes '(modern-solarizeddark))
 ;; (setq-default custom-enabled-themes '(modern-solarizedlight))
+(setq-default custom-enabled-themes '(sanityinc-tomorrow-night))
 ;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
 ;; (setq-default custom-enabled-themes '(doom-nova))
-(setq-default custom-enabled-themes '(zenburn))
+;; (setq-default custom-enabled-themes '(zenburn))
 ;; (setq-default custom-enabled-themes '(leuven))
 
 ;; Ensure that themes will be applied even if they have not been customized
@@ -81,35 +82,33 @@
   (setq custom-enabled-themes '(modern-solarizedlight))
   (reapply-themes))
 
-;; ;; set default font in initial window and for any new window
-;; (cond
-;;  ;; case: windows
-;;  ((string-equal system-type "windows-nt") ; Microsoft Windows
-;;   ;; Setting English Font
-;;   ;; (set-default-font "Monaco-10")
-;;   ;; (set-default-font "Consolas-11")
-;;   ;; (set-default-font "IBM Plex Mono-11")
-;;   (set-default-font "Ubuntu Mono-12")
-;;   ;; (set-default-font "Source Code Pro-12")
-;;   (dolist (charset '(kana han symbol cjk-misc bopomofo))
-;;     (set-fontset-font (frame-parameter nil 'font)
-;;                       charset (font-spec :family "微软雅黑" :size 14)))
-;;   (setq face-font-rescale-alist '(("微软雅黑" . 1.2) ("Microsoft Yahei" . 1.2) ("WenQuanYi Zen Hei" . 1.2)))
+;; set default font in initial window and for any new window
+(cond
+ ;; case: windows
+ ((string-equal system-type "windows-nt") ; Microsoft Windows
+  ;; Setting English Font
+  ;; (set-default-font "Consolas-11")
+  (set-default-font "Ubuntu Mono-12")
+  ;; (set-default-font "Source Code Pro-12")
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font)
+                      charset (font-spec :family "宋体" :size 14)))
+  (setq face-font-rescale-alist '(("宋体" . 1.2) ("Microsoft Yahei" . 1.2) ("WenQuanYi Zen Hei" . 1.2)))
 
-;;   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
-;;   (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease) )
-;;  ;; case: Max OS X
-;;  ((string-equal system-type "darwin")  ; Mac OS X
-;;   (when (member "DejaVu Sans Mono" (font-family-list))
-;;     (add-to-list 'initial-frame-alist '(font . "DejaVu Sans Mono-10"))
-;;     (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10"))))
-;;  ;; case: linux
-;;  ((string-equal system-type "gnu/linux") ; linux
-;;   (when (member "DejaVu Sans Mono" (font-family-list))
-;;     (add-to-list 'initial-frame-alist '(font . "DejaVu Sans Mono-10"))
-;;     (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10")))
-;;   (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
-;;   (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)))
+  (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease) )
+ ;; case: Max OS X
+ ((string-equal system-type "darwin")  ; Mac OS X
+  (when (member "DejaVu Sans Mono" (font-family-list))
+    (add-to-list 'initial-frame-alist '(font . "DejaVu Sans Mono-10"))
+    (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10"))))
+ ;; case: linux
+ ((string-equal system-type "gnu/linux") ; linux
+  (when (member "DejaVu Sans Mono" (font-family-list))
+    (add-to-list 'initial-frame-alist '(font . "DejaVu Sans Mono-10"))
+    (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10")))
+  (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
+  (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)))
 
 ;; Line and Column
 (setq-default fill-column 80)
