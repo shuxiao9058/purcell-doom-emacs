@@ -69,19 +69,6 @@
   (reapply-themes))
 
 
-(defun solarized-dark ()
-  "Activate a dark color theme."
-  (interactive)
-  (setq custom-enabled-themes '(modern-solarizeddark))
-  (reapply-themes))
-
-
-(defun solarized-light ()
-  "Activate a dark color theme."
-  (interactive)
-  (setq custom-enabled-themes '(modern-solarizedlight))
-  (reapply-themes))
-
 ;; set default font in initial window and for any new window
 (cond
  ;; case: windows
@@ -90,11 +77,9 @@
   ;; (set-default-font "Consolas-11")
   (set-default-font "Ubuntu Mono-12")
   ;; (set-default-font "Source Code Pro-12")
-  (dolist (charset '(kana han symbol cjk-misc bopomofo))
-    (set-fontset-font (frame-parameter nil 'font)
-                      charset (font-spec :family "宋体" :size 14)))
-  (setq face-font-rescale-alist '(("宋体" . 1.2) ("Microsoft Yahei" . 1.2) ("WenQuanYi Zen Hei" . 1.2)))
-
+  (set-fontset-font "fontset-default" 'chinese-gbk "宋体")
+  (setq face-font-rescale-alist '(("宋体" . 1.2)
+                                  ("Microsoft Yahei" . 1.1)))
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
   (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease) )
  ;; case: Max OS X
@@ -124,22 +109,13 @@
   :init (add-hook 'after-init-hook #'smooth-scrolling-mode)
   :config (setq smooth-scroll-margin 0))
 
-;; Display Time
-(use-package time
-  :ensure nil
-  :unless (display-graphic-p)
-  :preface
-  (setq display-time-24hr-format t)
-  (setq display-time-day-and-date t)
-  :init (add-hook 'after-init-hook #'display-time-mode))
-
 ;; Misc
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-startup-screen t)
 (setq visible-bell t)
 (size-indication-mode 1)
 ;; (blink-cursor-mode -1)
-(setq track-eol t)                      ; Keep cursor at end of lines. Require line-move-visual is nil.
+(setq track-eol t)                      
 (setq line-move-visual nil)
 
 ;; Don't open a file in a new frame
