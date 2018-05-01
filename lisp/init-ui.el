@@ -31,8 +31,8 @@
 ;; (setq-default custom-enabled-themes '(modern-light))
 ;; (setq-default custom-enabled-themes '(modern-solarizeddark))
 ;; (setq-default custom-enabled-themes '(modern-solarizedlight))
-(setq-default custom-enabled-themes '(sanityinc-tomorrow-night))
-;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
+;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-night))
+(setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
 ;; (setq-default custom-enabled-themes '(doom-nova))
 ;; (setq-default custom-enabled-themes '(zenburn))
 ;; (setq-default custom-enabled-themes '(leuven))
@@ -114,8 +114,7 @@
 (setq inhibit-startup-screen t)
 (setq visible-bell t)
 (size-indication-mode 1)
-;; (blink-cursor-mode -1)
-(setq track-eol t)                      
+(setq track-eol t)
 (setq line-move-visual nil)
 
 ;; Don't open a file in a new frame

@@ -36,15 +36,14 @@
 ;; https://github.com/emacs-lsp/lsp-mode
 (use-package lsp-mode
   :init
-  (with-eval-after-load 'flycheck
-    (require 'lsp-flycheck))
-
   (with-eval-after-load 'company
     (use-package company-lsp
       :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))))
 (use-package lsp-ui
   :init
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  (with-eval-after-load 'flycheck
+    (require 'lsp-ui-flycheck))
   :config
   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)

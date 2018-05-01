@@ -53,8 +53,6 @@
  ((eq my-package-archives 'emacs-china)
   (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                            ("melpa" . "http://elpa.emacs-china.org/melpa/")
-                           ("melpa-stable" . "http://elpa.emacs-china.org/melpa-stable/")
-                           ("marmalade" . "http://elpa.emacs-china.org/marmalade/")
                            ("org" . "http://elpa.emacs-china.org/org/")
                            ("sunrise-commander" . "http://elpa.emacs-china.org/sunrise-commander/")
                            ("user42" . "http://elpa.emacs-china.org/user42/")

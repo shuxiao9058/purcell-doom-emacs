@@ -161,10 +161,6 @@ Return the updated `exec-path'"
   :config
   (setq ido-vertical-show-count 1))
 
-(use-package all-the-icons
-  :init
-  (setq inhibit-compacting-font-caches t))
-
 ;; use browser depending on url
 (setq
  browse-url-browser-function
@@ -174,6 +170,8 @@ Return the updated `exec-path'"
    ("thefreedictionary\\.com" . eww-browse-url)
    ("." . browse-url-default-browser)
    ))
+(setq w32-pass-lwindow-to-system nil)
+(setq w32-lwindow-modifier 'super) ; Left Windows key
 
 (provide 'init-basic)
 ;;; base ends here

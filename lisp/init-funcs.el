@@ -181,23 +181,6 @@ Call a second time to restore the original window configuration."
 (bind-key "<f5>" 'revert-current-buffer)
 (bind-key "s-r" 'revert-current-buffer)
 
-;; Update configurations
-(defun update-config ()
-  "Update Emacs configurations to the latest version."
-  (interactive)
-  (message "Updating Emacs configurations...")
-  (cd "~/.emacs.d/")
-  (shell-command "git pull")
-  (message "Update finished. Restart Emacs to complete the process."))
-
-;; Update org files
-(defun update-org ()
-  "Update Org files to the latest version."
-  (interactive)
-  (message "Updating Org files...")
-  (cd "~/org/")
-  (shell-command "git pull")
-  (message "Update finished."))
 
 ;; Save a file as utf-8
 (defun save-buffer-as-utf8 (coding-system)
@@ -235,7 +218,7 @@ Call a second time to restore the original window configuration."
       (unset-proxy)
     (set-proxy)))
 
-(defun xah-open-in-external-app ()
+(defun open-in-external-app ()
   "Open the current file or dired marked files in external app.
 The app is chosen from your OS's preference.
 URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
@@ -264,35 +247,7 @@ Version 2016-10-15"
         (mapc
          (lambda ($fpath) (let ((process-connection-type nil))
                         (start-process "" nil "xdg-open" $fpath))) $file-list))))))
-(defun xah-show-in-desktop ()
-  "Show current file in desktop.
- (Mac Finder, Windows Explorer, Linux file manager)
- This command can be called when in a file or in `dired'.
 
-URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
-Version 2018-01-13"
-  (interactive)
-  (let (($path (if (buffer-file-name) (buffer-file-name) default-directory )))
-    (cond
-     ((string-equal system-type "windows-nt")
-      (w32-shell-execute "explore" (replace-regexp-in-string "/" "\\" $path t t)))
-     ((string-equal system-type "darwin")
-      (if (eq major-mode 'dired-mode)
-          (let (($files (dired-get-marked-files )))
-            (if (eq (length $files) 0)
-                (shell-command
-                 (concat "open " (shell-quote-argument default-directory)))
-              (shell-command
-               (concat "open -R " (shell-quote-argument (car (dired-get-marked-files )))))))
-        (shell-command
-         (concat "open -R " $path))))
-     ((string-equal system-type "gnu/linux")
-      (let (
-            (process-connection-type nil)
-            (openFileProgram (if (file-exists-p "/usr/bin/gvfs-open")
-                                 "/usr/bin/gvfs-open"
-                               "/usr/bin/xdg-open")))
-        (start-process "" nil openFileProgram $path))
-      ;; (shell-command "xdg-open .") ;; 2013-02-10 this sometimes froze emacs till the folder is closed. eg with nautilus
-      ))))
+(global-set-key (kbd "C-c o") 'open-in-external-app)
+
 (provide 'init-funcs)
