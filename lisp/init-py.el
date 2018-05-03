@@ -9,11 +9,18 @@
   (add-hook 'python-mode-hook 'elpy-mode)
   :config
   (with-eval-after-load 'elpy
-    (elpy-use-ipython "ipython")
+    ;; (setq python-shell-interpreter "ipython"
+    ;;       python-shell-interpreter-args "-i --simple-prompt")
+    (setq python-shell-interpreter "jupyter"
+          python-shell-interpreter-args "console --simple-prompt"
+          python-shell-prompt-detect-failure-warning nil)
+    (add-to-list 'python-shell-completion-native-disabled-interpreters
+                 "jupyter")
     (when (require 'flycheck nil t)
       (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
       ;; (setq elpy-modules (delq 'elpy-module-company elpy-modules))
-      (add-hook 'elpy-mode-hook 'flycheck-mode))
+      ;; (add-hook 'elpy-mode-hook 'flycheck-mode)
+      )
     (use-package py-autopep8
       :init
       (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)))
