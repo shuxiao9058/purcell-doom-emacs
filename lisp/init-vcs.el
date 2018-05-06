@@ -36,12 +36,22 @@
 
 ;; Git
 (use-package magit
-  :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-dispatch-popup)
-         ("C-c M-g" . magit-file-popup))
   :config
+  (setq magit-completing-read-function 'ivy-completing-read)
+
   (when sys/win32p
-    (setenv "GIT_ASKPASS" "git-gui--askpass")))
+    (setenv "GIT_ASKPASS" "git-gui--askpass"))
+  :bind
+  ;; Magic
+  ("C-x g s" . magit-status)
+  ("C-x g x" . magit-checkout)
+  ("C-x g c" . magit-commit)
+  ("C-x g p" . magit-push)
+  ("C-x g u" . magit-pull)
+  ("C-x g e" . magit-ediff-resolve)
+  ("C-x g r" . magit-rebase-interactive))
+
+(use-package magit-popup)
 
 ;; Gitflow externsion for Magit
 (use-package magit-gitflow

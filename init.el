@@ -45,7 +45,6 @@
 (require 'init-company)
 (require 'init-yasnippet)
 (require 'init-org)
-(require 'init-git)
 (require 'init-eshell)
 (require 'init-utils)
 ;; programing config
@@ -53,8 +52,8 @@
 (require 'init-flycheck)
 (require 'init-prog)
 (require 'init-emacs-lisp)
-(require 'init-py)
 (require 'init-lsp)
+(require 'init-py)
 (require 'init-js)
 (require 'init-web)
 ;; (require 'init-c)

@@ -30,7 +30,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Code:
-(require 'all-the-icons)
+;; (require 'all-the-icons)
 ;; (setq evil-normal-state-tag   (propertize "NORMAL" 'face '((:background "DarkGoldenrod2" :foreground "black" :weight bold)))
 ;;       evil-emacs-state-tag    (propertize "EMACS " 'face '((:background "SkyBlue2" :foreground "black" :weight bold)))
 ;;       evil-insert-state-tag   (propertize "INSERT" 'face '((:background "chartreuse3") :foreground "white" :weight bold))

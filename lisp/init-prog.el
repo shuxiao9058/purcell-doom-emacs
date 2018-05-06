@@ -32,16 +32,16 @@
 ;;
 ;;; Code:
 
-(use-package prog-mode
-  :ensure nil
-  :init
-  ;; Prettify Symbols
-  ;; e.g. display “lambda” as “λ”
-  (when (boundp 'global-prettify-symbols-mode)
-    (add-hook 'after-init-hook #'global-prettify-symbols-mode)
-    (add-hook 'emacs-lisp-mode-hook
-              (lambda ()
-                (push '("<=" . ?≤) prettify-symbols-alist)))))
+;; (use-package prog-mode
+;;   :ensure nil
+;;   :init
+;;   ;; Prettify Symbols
+;;   ;; e.g. display “lambda” as “λ”
+;;   (when (boundp 'global-prettify-symbols-mode)
+;;     (add-hook 'after-init-hook #'global-prettify-symbols-mode)
+;;     (add-hook 'emacs-lisp-mode-hook
+;;               (lambda ()
+;;                 (push '("<=" . ?≤) prettify-symbols-alist)))))
 
 ;; Jump to definition via `ag'/`rg'/`grep'
 (use-package dumb-jump
@@ -103,11 +103,12 @@
   :commands robot-mode
   :mode "\\.robot\\'")
 
-(when (maybe-require-package 'origami)
-  (add-hook 'prog-mode-hook 'origami-mode)
-  (after-load 'origami
-    (define-key origami-mode-map (kbd "C-{") 'origami-recursively-toggle-node)
-    (define-key origami-mode-map (kbd "C-M-{") 'origami-toggle-all-nodes)))
+(add-hook 'prog-mode-hook 'yafolding-mode)
+;; (when (maybe-require-package 'origami)
+;;   (add-hook 'prog-mode-hook 'origami-mode)
+;;   (after-load 'origami
+;;     (define-key origami-mode-map (kbd "C-{") 'origami-recursively-toggle-node)
+;;     (define-key origami-mode-map (kbd "C-M-{") 'origami-toggle-all-nodes)))
 
 (provide 'init-prog)
 

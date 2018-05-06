@@ -75,9 +75,10 @@
  ((string-equal system-type "windows-nt") ; Microsoft Windows
   ;; Setting English Font
   ;; (set-default-font "Consolas-11")
+  ;; (set-default-font "Monaco-10")
   ;; (set-default-font "Ubuntu Mono-12")
-  (set-default-font "Source Code Pro-12")
-  (set-fontset-font "fontset-default" 'chinese-gbk "Microsoft Yahei")
+  (set-default-font "Source Code Pro-11")
+  (set-fontset-font "fontset-default" 'chinese-gbk "宋体")
   (setq face-font-rescale-alist '(("宋体" . 1.2)
                                   ("Microsoft Yahei" . 1.1)))
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
