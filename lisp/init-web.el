@@ -32,6 +32,12 @@
 ;;
 ;;; Code:
 
+;; emmet
+(use-package emmet-mode
+  :init
+  (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+  (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+  )
 ;; CSS mode
 (use-package css-mode
   :ensure nil
