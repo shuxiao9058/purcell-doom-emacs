@@ -97,5 +97,7 @@
 
   ;; bind evil-jump-out-args
   (define-key evil-normal-state-map "K" 'evil-jump-out-args))
-
+(use-package evil-mc
+  :init
+  (evil-mc-mode 1))
 (provide 'init-evil)

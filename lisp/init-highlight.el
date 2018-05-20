@@ -33,28 +33,28 @@
 ;;; Code:
 
 ;; Highlight the current line
-;; (use-package hl-line
-;;   :ensure nil
-;;   :init (add-hook 'after-init-hook #'global-hl-line-mode))
+(use-package hl-line
+  :ensure nil
+  :init (add-hook 'after-init-hook #'global-hl-line-mode))
 
 ;; Highlight symbols
-;; (use-package symbol-overlay
-;;   :diminish symbol-overlay-mode
-;;   :bind (("M-i" . symbol-overlay-put)
-;;          ("M-n" . symbol-overlay-jump-next)
-;;          ("M-p" . symbol-overlay-jump-prev)
-;;          ([C-f3] . symbol-overlay-put)
-;;          ([f3] . symbol-overlay-jump-next)
-;;          ([S-f3] . symbol-overlay-jump-prev)
-;;          ([M-f3] . symbol-overlay-remove-all))
-;;   :init (add-hook 'prog-mode-hook #'symbol-overlay-mode))
+(use-package symbol-overlay
+  :diminish symbol-overlay-mode
+  :bind (("M-i" . symbol-overlay-put)
+         ("M-n" . symbol-overlay-jump-next)
+         ("M-p" . symbol-overlay-jump-prev)
+         ([C-f3] . symbol-overlay-put)
+         ([f3] . symbol-overlay-jump-next)
+         ([S-f3] . symbol-overlay-jump-prev)
+         ([M-f3] . symbol-overlay-remove-all))
+  :init (add-hook 'prog-mode-hook #'symbol-overlay-mode))
 
-(use-package highlight-symbol
-  :bind
-  ([(control f3)] . highlight-symbol)
-  ([f3] . highlight-symbol-next)
-  ([(shift f3)] . highlight-symbol-prev)
-  ([(meta f3)] . highlight-symbol-query-replace))
+;; (use-package highlight-symbol
+;;   :bind
+;;   ([(control f3)] . highlight-symbol)
+;;   ([f3] . highlight-symbol-next)
+;;   ([(shift f3)] . highlight-symbol-prev)
+;;   ([(meta f3)] . highlight-symbol-query-replace))
 
 ;; Highlight matching paren
 (use-package paren
@@ -71,10 +71,10 @@
   :config (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold))
 
 ;; Highlight indentions
-;; (use-package indent-guide
-;;   :diminish indent-guide-mode
-;;   :init (add-hook 'after-init-hook #'indent-guide-global-mode)
-;;   :config (setq indent-guide-delay 0.5))
+(use-package indent-guide
+  :diminish indent-guide-mode
+  :init (add-hook 'after-init-hook #'indent-guide-global-mode)
+  :config (setq indent-guide-delay 0.5))
 
 ;; Colorize color names in buffers
 (use-package rainbow-mode

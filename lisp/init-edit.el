@@ -115,10 +115,14 @@
                              (thing-at-point 'line))))))
 
 ;; Show number of matches in mode-line while searching
+(use-package visual-regexp-steroids
+  :init
+  (use-package visual-regexp)
+  :bind (([remap query-replace-regexp] . vr/query-replace)))
 (use-package anzu
   :diminish anzu-mode
   :bind (([remap query-replace] . anzu-query-replace)
-         ([remap query-replace-regexp] . anzu-query-replace-regexp)
+         ;; ([remap query-replace-regexp] . anzu-query-replace-regexp)
          :map isearch-mode-map
          ([remap isearch-query-replace] . anzu-isearch-query-replace)
          ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
@@ -166,6 +170,11 @@
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
 
+;; ialign
+(use-package ialign
+  :bind
+  (("C-x l" . ialign)))
+
 ;; On-the-fly spell checker
 (use-package flyspell
   :ensure nil
@@ -179,13 +188,13 @@
   )
 
 ;; Multiple cursors
-(use-package multiple-cursors
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-         ("C->" . mc/mark-next-like-this)
-         ("C-<". mc/mark-previous-like-this)
-         ("C-S-L" . mc/mark-all-like-this-dwim)
-         ("s-<mouse-1>" . mc/add-cursor-on-click)
-         ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
+;; (use-package multiple-cursors
+;;   :bind (("C-S-c C-S-c" . mc/edit-lines)
+;;          ("C->" . mc/mark-next-like-this)
+;;          ("C-<". mc/mark-previous-like-this)
+;;          ("C-S-L" . mc/mark-all-like-this-dwim)
+;;          ("s-<mouse-1>" . mc/add-cursor-on-click)
+;;          ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
 
 ;; Move to the beginning/end of line or code
 (use-package mwim

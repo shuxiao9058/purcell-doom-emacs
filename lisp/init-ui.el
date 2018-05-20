@@ -33,7 +33,7 @@
 ;; (setq-default custom-enabled-themes '(modern-solarizedlight))
 ;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-night))
 ;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
-(setq-default custom-enabled-themes '(doom-nova))
+;; (setq-default custom-enabled-themes '(doom-nova))
 (setq-default custom-enabled-themes '(doom-one))
 ;; (setq-default custom-enabled-themes '(zenburn))
 ;; (setq-default custom-enabled-themes '(leuven))
@@ -93,8 +93,8 @@
  ;; case: linux
  ((string-equal system-type "gnu/linux") ; linux
   (when (member "DejaVu Sans Mono" (font-family-list))
-    (add-to-list 'initial-frame-alist '(font . "DejaVu Sans Mono-10"))
-    (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10")))
+    (add-to-list 'initial-frame-alist '(font . "Ubuntu Mono-12"))
+    (add-to-list 'default-frame-alist '(font . "Ubunto Mono-12")))
   (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
   (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)))
 

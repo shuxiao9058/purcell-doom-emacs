@@ -39,7 +39,7 @@
   :config
   (setq magit-completing-read-function 'ivy-completing-read)
 
-  (when sys/win32p
+  (when sys/windowsp
     (setenv "GIT_ASKPASS" "git-gui--askpass"))
   :bind
   ;; Magic
@@ -88,7 +88,7 @@
 (use-package gitignore-mode)
 
 ;; Subversion
-(use-package psvn)
+;; (use-package psvn)
 
 ;; Open github/gitlab/bitbucket page
 (use-package browse-at-remote)
