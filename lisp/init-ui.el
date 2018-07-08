@@ -1,6 +1,5 @@
 (eval-when-compile
-  (require 'init-const)
-  (require 'init-custom))
+  (require 'init-const))
 
 ;; Title
 (setq frame-title-format
@@ -10,33 +9,11 @@
                  "%b"))))
 (setq icon-title-format frame-title-format)
 
-;; Menu/Tool/Scroll bars
-(unless sys/mac-x-p
-  (when (and (fboundp 'menu-bar-mode) menu-bar-mode)
-    (menu-bar-mode -1)))
-(when (and (fboundp 'tool-bar-mode) tool-bar-mode)
-  (tool-bar-mode -1))
-(when (and (fboundp 'scroll-bar-mode) scroll-bar-mode)
-  (scroll-bar-mode -1))
 
-;; color theme
 (setq custom-safe-themes t)
 (require-package 'doom-themes)
-(require-package 'zenburn-theme)
 (require-package 'color-theme-sanityinc-tomorrow)
-;; If you don't customize it, this is the theme you get.
-;; (require 'modern-light)
-;; (require 'modern-solarizeddark)
-;; (require 'modern-solarizedlight)
-;; (setq-default custom-enabled-themes '(modern-light))
-;; (setq-default custom-enabled-themes '(modern-solarizeddark))
-;; (setq-default custom-enabled-themes '(modern-solarizedlight))
-;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-night))
-;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
-;; (setq-default custom-enabled-themes '(doom-nova))
 (setq-default custom-enabled-themes '(doom-one))
-;; (setq-default custom-enabled-themes '(zenburn))
-;; (setq-default custom-enabled-themes '(leuven))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -47,10 +24,6 @@
   (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
 
 (add-hook 'after-init-hook 'reapply-themes)
-
-;;------------------------------------------------------------------------------
-;; Toggle between light and dark
-;;------------------------------------------------------------------------------
 (defun zenburn ()
   "Activate a light color theme."
   (interactive)
@@ -70,68 +43,73 @@
   (reapply-themes))
 
 
-;; set default font in initial window and for any new window
-(cond
- ;; case: windows
- ((string-equal system-type "windows-nt") ; Microsoft Windows
-  ;; Setting English Font
-  ;; (set-default-font "Consolas-11")
-  ;; (set-default-font "Monaco-10")
-  ;; (set-default-font "Source Code Pro-11")
-  ;; (set-fontset-font "fontset-default" 'chinese-gbk "宋体")
-  (set-default-font "Ubuntu Mono-12")
-  (set-fontset-font "fontset-default" 'chinese-gbk "Microsoft Yahei")
-  (setq face-font-rescale-alist '(("宋体" . 1.2)
-                                  ("Microsoft Yahei" . 1.1)))
-  (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
-  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease) )
- ;; case: Max OS X
- ((string-equal system-type "darwin")  ; Mac OS X
-  (when (member "DejaVu Sans Mono" (font-family-list))
-    (add-to-list 'initial-frame-alist '(font . "DejaVu Sans Mono-10"))
-    (add-to-list 'default-frame-alist '(font . "DejaVu Sans Mono-10"))))
- ;; case: linux
- ((string-equal system-type "gnu/linux") ; linux
-  (when (member "DejaVu Sans Mono" (font-family-list))
-    (add-to-list 'initial-frame-alist '(font . "Ubuntu Mono-12"))
-    (add-to-list 'default-frame-alist '(font . "Ubunto Mono-12")))
-  (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
-  (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)))
+;; undo/redo changes to Emacs' window layout
+(defvar winner-dont-bind-my-keys t) ; I'll bind keys myself
+(autoload 'winner-mode "winner" nil t)
+(add-hook 'doom-init-ui-hook #'winner-mode)
 
-;; Line and Column
-(setq-default fill-column 80)
-(setq column-number-mode t)
-(setq line-number-mode t)
+;; highlight matching delimiters
+(setq show-paren-delay 0.1
+      show-paren-highlight-openparen t
+      show-paren-when-point-inside-paren t)
+(add-hook 'doom-init-ui-hook #'show-paren-mode)
 
-;; Show native line numbers if possible, otherwise use linum
-(if (version<= "26.0.50" emacs-version )
-    (global-display-line-numbers-mode)
-  (add-hook 'after-init-hook #'global-linum-mode))
+;; Restore old window configurations
+(use-package winner
+  :ensure nil
+  :init
+  (setq winner-boring-buffers '("*Completions*"
+                                "*Compile-Log*"
+                                "*inferior-lisp*"
+                                "*Fuzzy Completions*"
+                                "*Apropos*"
+                                "*Help*"
+                                "*cvs*"
+                                "*Buffer List*"
+                                "*Ibuffer*"
+                                "*esh command on file*")))
 
-(use-package smooth-scrolling
-  :init (add-hook 'after-init-hook #'smooth-scrolling-mode)
-  :config (setq smooth-scroll-margin 0))
+(setq doom-font (font-spec :family "Source Code Pro" :size 14))
+(setq doom-cn-font (font-spec :family "Microsoft Yahei" :size 16))
+(defun doom|init-ui (&optional frame)
+  "Set the theme and load the font, in that order."
+  (reapply-themes)
+  (condition-case-unless-debug ex
+      (when (display-graphic-p)
+        (when (fontp doom-font)
+          (set-frame-font doom-font nil (if frame (list frame) t))
+          (set-face-attribute 'fixed-pitch frame :font doom-font))
+        ;; Fallback to `doom-unicode-font' for Unicode characters
+		(when (fontp doom-cn-font)
+          (set-fontset-font t 'chinese-gbk doom-cn-font frame))
+        (when (fontp doom-unicode-font)
+          (set-fontset-font t 'unicode doom-unicode-font frame))
+        ;; ...and for variable-pitch-mode:
+        (when (fontp doom-variable-pitch-font)
+          (set-face-attribute 'variable-pitch frame :font doom-variable-pitch-font)))
+    ('error
+     (if (string-prefix-p "Font not available: " (error-message-string ex))
+         (lwarn 'doom-ui :warning
+                "Could not find the '%s' font on your system, falling back to system font"
+                (font-get (caddr ex) :family))
+       (lwarn 'doom-ui :error
+              "Unexpected error while initializing fonts: %s"
+              (error-message-string ex)))))
+  (run-hooks 'doom-init-ui-hook))
+(doom|init-ui)
 
-;; Misc
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq inhibit-startup-screen t)
-(setq visible-bell t)
-(size-indication-mode 1)
-(setq track-eol t)
-(setq line-move-visual nil)
+(require-package 'switch-window)
+(setq-default switch-window-shortcut-style 'alphabet)
+(setq-default switch-window-timeout nil)
+(global-set-key (kbd "C-x o") 'switch-window)
 
-;; Don't open a file in a new frame
-(when (boundp 'ns-pop-up-frames)
-  (setq ns-pop-up-frames nil))
+(use-package windmove
+  :ensure nil
+  :init (add-hook 'after-init-hook #'windmove-default-keybindings))
 
-;; Don't use GTK+ tooltip
-(when (boundp 'x-gtk-use-system-tooltips)
-  (setq x-gtk-use-system-tooltips nil))
-
-;; Toggle fullscreen
-(bind-keys ([(control f11)] . toggle-frame-fullscreen)
-       ([(control super f)] . toggle-frame-fullscreen) ; Compatible with macOS
-       ([(super return)] . toggle-frame-fullscreen)
-       ([(meta shift return)] . toggle-frame-fullscreen))
-
+;; Zoom window like tmux
+(use-package zoom-window
+  :bind ("C-x C-z" . zoom-window-zoom)
+  :init (setq zoom-window-mode-line-color "DarkGreen"))
+  
 (provide 'init-ui)

@@ -1,36 +1,7 @@
 ;;; init-basic.elAuthor: Haibo Wang <nasoundead@163.com>
-;; Version: 0.0.1
-;; URL: https://github.com/nasoundead/.emacs.d
-;; Keywords:
-;; Compatibility:
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;; Commentary:
-;;             Package configurations.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
-;; (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-;; General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; see the file COPYING.  If not, write to
-;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
-;; Floor, Boston, MA 02110-1301, USA.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 ;;; Code:
-(eval-when-compile (require 'init-const))
-(eval-when-compile (require 'init-custom))
+(eval-when-compile (require 'init-const))  
+  
 (defun prepend-to-exec-path (path)
   "prepend the path to the emacs intenral `exec-path' and \"PATH\" env variable.
 Return the updated `exec-path'"
@@ -46,9 +17,6 @@ Return the updated `exec-path'"
   "prepend the PATH to the head of the `load-path', return updated load-path."
   (add-to-list 'load-path path))
 
-;; The value of environment variable 'PATH' is used by emacs when you are running a shell in emacs, similar to when you are using a shell in a terminal.
-;; The exec-path is used by emacs itself to find programs it needs for its features, such as spell checking, file compression, compiling, grep, diff, etc.
-;; Original from http://ergoemacs.org/emacs/emacs_env_var_paths.html
 (when sys/windowsp
   (mapc #'prepend-to-exec-path
         (reverse (list (if sys/win64p
@@ -106,44 +74,17 @@ Return the updated `exec-path'"
 (unless (server-running-p)
   (server-start))
 
-;; History
-;; Emacsag 25 has a proper mode for `save-place'
-(add-hook 'after-init-hook #'save-place-mode)
 
-(use-package recentf
-  :ensure nil
-  :init
-  (setq recentf-max-saved-items 200)
-  (add-hook 'find-file-hook (lambda ()
-                              (unless recentf-mode
-                                (recentf-mode)
-                                (recentf-track-opened-file))))
-  :config
-  (add-to-list 'recentf-exclude (expand-file-name package-user-dir))
-  (add-to-list 'recentf-exclude "bookmarks")
-  (add-to-list 'recentf-exclude "COMMIT_EDITMSG\\'"))
 
-(use-package savehist
-  :ensure nil
-  :init
-  (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
-        history-length 1000
-        savehist-additional-variables '(mark-ring
-                                        global-mark-ring
-                                        search-ring
-                                        regexp-search-ring
-                                        extended-command-history)
-        savehist-autosave-interval 60)
-  (add-hook 'after-init-hook #'savehist-mode))
+;; Show native line numbers if possible, otherwise use linum
+(if (version<= "26.0.50" emacs-version )
+    (global-display-line-numbers-mode)
+  (add-hook 'after-init-hook #'global-linum-mode))
 
+  
 ;; https://www.emacswiki.org/emacs/AutoSave
-(make-directory cache-dir t)
-(setq backup-directory-alist
-      `((".*" . ,cache-dir)))
-(setq auto-save-file-name-transforms
-      `((".*" ,cache-dir t)))
-(setq auto-save-list-file-prefix
-      cache-dir)
+(make-directory doom-cache-dir t)
+
 (defun save-all ()
   "Save all buffers."
   (interactive)
@@ -161,17 +102,21 @@ Return the updated `exec-path'"
   :config
   (setq ido-vertical-show-count 1))
 
-;; use browser depending on url
-(setq
- browse-url-browser-function
- '(
-   ("wikipedia\\.org" . browse-url-firefox)
-   ("github" . browse-url-chromium)
-   ("thefreedictionary\\.com" . eww-browse-url)
-   ("." . browse-url-default-browser)
-   ))
-(setq w32-pass-lwindow-to-system nil)
-(setq w32-lwindow-modifier 'super) ; Left Windows key
+
+(setq kill-ring-max 200)
+
+;; Save clipboard contents into kill-ring before replace them
+(setq save-interprogram-paste-before-kill t)
+
+;; Kill & Mark things easily
+(use-package easy-kill
+  :bind (([remap kill-ring-save] . easy-kill)
+         ([remap mark-sexp] . easy-mark)))
+
+;; Interactively insert items from kill-ring
+(use-package browse-kill-ring
+  :bind ("C-c k" . browse-kill-ring)
+  :init (add-hook 'after-init-hook #'browse-kill-ring-default-keybindings))
 
 (provide 'init-basic)
 ;;; base ends here

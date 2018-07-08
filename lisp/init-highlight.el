@@ -1,35 +1,4 @@
 ;; init-highlight.el --- Initialize highlight configurations.	-*- lexical-binding: t -*-
-;;
-;; Author: Vincent Zhang <seagle0128@gmail.com>
-;; Version: 3.1.0
-;; URL: https://github.com/seagle0128/.emacs.d
-;; Keywords:
-;; Compatibility:
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;; Commentary:
-;;             Highlight configurations.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
-;; (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-;; General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; see the file COPYING.  If not, write to
-;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
-;; Floor, Boston, MA 02110-1301, USA.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 ;;; Code:
 
 ;; Highlight the current line
@@ -38,16 +7,14 @@
   :init (add-hook 'after-init-hook #'global-hl-line-mode))
 
 ;; Highlight symbols
-(use-package symbol-overlay
-  :diminish symbol-overlay-mode
-  :bind (("M-i" . symbol-overlay-put)
-         ("M-n" . symbol-overlay-jump-next)
-         ("M-p" . symbol-overlay-jump-prev)
-         ([C-f3] . symbol-overlay-put)
-         ([f3] . symbol-overlay-jump-next)
-         ([S-f3] . symbol-overlay-jump-prev)
-         ([M-f3] . symbol-overlay-remove-all))
-  :init (add-hook 'prog-mode-hook #'symbol-overlay-mode))
+; (use-package symbol-overlay
+  ; :diminish symbol-overlay-mode
+  ; :bind (("M-i" . symbol-overlay-put)
+         ; ([C-f3] . symbol-overlay-put)
+         ; ([f3] . symbol-overlay-jump-next)
+         ; ([S-f3] . symbol-overlay-jump-prev)
+         ; ([M-f3] . symbol-overlay-remove-all))
+  ; :init (add-hook 'prog-mode-hook #'symbol-overlay-mode))
 
 ;; (use-package highlight-symbol
 ;;   :bind

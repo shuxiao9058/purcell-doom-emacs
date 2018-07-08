@@ -1,35 +1,5 @@
 ;; init-const.el --- Desfine constants.	-*- lexical-binding: t -*-
 ;;
-;; Author: Haibo Wang <nasoundead@163.com>
-;; Version: 0.0.1
-;; URL: https://github.com/nasoundead/.emacs.d
-;; Keywords:
-;; Compatibility:
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;; Commentary:
-;;             Constants.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
-;; (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-;; General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; see the file COPYING.  If not, write to
-;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
-;; Floor, Boston, MA 02110-1301, USA.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 ;;; Code:
 
 (defconst sys/windowsp
@@ -68,8 +38,33 @@
   (string-equal "root" (getenv "USER"))
   "Are you using ROOT user?")
 
-(defconst cache-dir
+(defconst doom-cache-dir
   (expand-file-name ".cache" user-emacs-directory))
+
+;; Hook(s)
+(defvar doom-init-ui-hook nil
+  "List of hooks to run when the theme and font is initialized (or reloaded with
+`doom//reload-theme').")
+
+(defvar doom-font nil
+  "The default font to use. Expects a `font-spec'.")
+  
+(defvar doom-cn-font nil
+  "The default chinese font to use..")
+
+(defvar doom-big-font nil
+  "The default large font to use when `doom-big-font-mode' is enabled. Expects a
+`font-spec'.")
+
+(defvar doom-variable-pitch-font nil
+  "The default font to use for variable-pitch text. Expects a `font-spec'.")
+
+(defvar doom-unicode-font nil
+  "Fallback font for unicode glyphs. Is ignored if :feature unicode is active.
+Expects a `font-spec'.");; color theme
+
+(defvar doom-disabled-packages nil
+	"disabled packages!")
 
 (provide 'init-const)
 

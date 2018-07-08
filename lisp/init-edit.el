@@ -1,51 +1,15 @@
 ;; init-edit.el --- Initialize edit configurations.	-*- lexical-binding: t -*-
-;;
-;; Author: Vincent Zhang <seagle0128@gmail.com>
-;; Version: 3.1.0
-;; URL: https://github.com/seagle0128/.emacs.d
-;; Keywords:
-;; Compatibility:
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;; Commentary:
-;;             Edit configurations.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
-;; (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-;; General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; see the file COPYING.  If not, write to
-;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
-;; Floor, Boston, MA 02110-1301, USA.
-;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Code:
-(eval-when-compile (require 'init-custom))
 (eval-when-compile (require 'init-const))
 
 ;; Miscs
 (setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
 (delete-selection-mode 1)
 (setq-default major-mode 'text-mode)
-(add-hook 'text-mode-hook
-          (lambda ()
-            (turn-on-auto-fill)
-            (diminish 'auto-fill-function)))
-
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
-
 (add-hook 'abbrev-mode-hook (lambda () (diminish 'abbrev-mode)))
 
 ;; Tab and Space
@@ -53,36 +17,57 @@
 (setq-default c-basic-offset   4
               tab-width        4
               indent-tabs-mode nil)
+  
+;; revert buffers for changed files
+(global-auto-revert-mode 1)
+(setq auto-revert-verbose nil)
 
-;; Automatically reload files was modified by external program
-(use-package autorevert
-  :ensure nil
-  :diminish auto-revert-mode
-  :init (add-hook 'after-init-hook #'global-auto-revert-mode))
+;; enabled by default in Emacs 25+. No thanks.
+(electric-indent-mode -1)
 
-;; Click to browse URL or to send to e-mail address
-(use-package goto-addr
+;; savehist / saveplace
+(setq savehist-file (concat doom-cache-dir "savehist")
+      savehist-save-minibuffer-history t
+      savehist-autosave-interval nil ; save on kill only
+      savehist-additional-variables '(kill-ring search-ring regexp-search-ring)
+      save-place-file (concat doom-cache-dir "saveplace"))
+(add-hook 'after-init-hook #'savehist-mode)
+(add-hook 'after-init-hook #'save-place-mode)
+
+ ;; Keep track of recently opened files
+(use-package recentf
+  :init
+  (add-hook 'find-file-hook (lambda ()
+                              (unless recentf-mode
+                                (recentf-mode)
+                                (recentf-track-opened-file))))
+  :config
+  (setq recentf-save-file (concat doom-cache-dir "recentf")
+        recentf-max-menu-items 0
+        recentf-max-saved-items 300
+		recentf-filename-handlers '(file-truename)
+        recentf-exclude
+        (list "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
+              "^/var/folders/.+$"
+              ;; ignore private DOOM temp files (but not all of them)
+              (concat "^" (file-truename doom-cache-dir)))))
+  
+(use-package savehist
   :ensure nil
   :init
-  (add-hook 'text-mode-hook #'goto-address-mode)
-  (add-hook 'prog-mode-hook #'goto-address-prog-mode))
-
-;; Jump to things in Emacs tree-style
-(use-package avy
-  :bind (("C-;" . avy-goto-char)
-         )
-  :init (add-hook 'after-init-hook #'avy-setup-default)
-  :config (setq avy-background t))
-
-;; Quickly follow links
-(use-package ace-link
-  :bind (("M-o" . ace-link-addr))
-  :init (add-hook 'after-init-hook #'ace-link-setup-default))
-
-;; Jump to Chinese characters
-(use-package ace-pinyin
-  :diminish ace-pinyin-mode
-  :init (add-hook 'after-init-hook #'ace-pinyin-global-mode))
+  (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
+        history-length 1000
+        savehist-additional-variables '(mark-ring
+                                        global-mark-ring
+                                        search-ring
+                                        regexp-search-ring
+                                        extended-command-history)
+        savehist-autosave-interval 60)
+  (add-hook 'after-init-hook #'savehist-mode))
+  
+;; History
+;; Emacsag 25 has a proper mode for `save-place'
+(add-hook 'after-init-hook #'save-place-mode)
 
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent
@@ -133,18 +118,6 @@
 ;; An all-in-one comment command to rule them all
 (use-package comment-dwim-2
   :bind ("M-;" . comment-dwim-2))
-
-;; Drag stuff (lines, words, region, etc...) around
-(use-package drag-stuff
-  :diminish drag-stuff-mode
-  :init (add-hook 'after-init-hook #'drag-stuff-global-mode)
-  :config
-  (add-to-list 'drag-stuff-except-modes 'org-mode)
-  (drag-stuff-define-keys))
-(use-package move-dup
-  :bind
-  ("M-S-<up>" . md/duplicate-up)
-  ("M-S-<down>". md/duplicate-down))
 
 ;; A comprehensive visual interface to diff & patch
 (use-package ediff
@@ -201,7 +174,6 @@
   :bind (("C-a" . mwim-beginning-of-code-or-line)
          ("C-e" . mwim-end-of-code-or-line)))
 
-
 ;; Treat undo history as a tree
 (use-package undo-tree
   :diminish undo-tree-mode
@@ -209,7 +181,7 @@
   :config
   (setq
    undo-tree-auto-save-history nil
-   undo-tree-history-directory-alist `(("." . ,(concat cache-dir "/undo/")))))
+   undo-tree-history-directory-alist `(("." . ,(concat doom-cache-dir "/undo/")))))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword

@@ -140,26 +140,7 @@ Call a second time to restore the original window configuration."
     (message "Window %sdedicated to %s"
              (if was-dedicated "no longer " "")
              (buffer-name))))
-
 (global-set-key (kbd "C-c <down>") 'sanityinc/toggle-current-window-dedication)
-
-;; (defun beginning-of-line-or-indentation ()
-;;   "Move to beginning of line, or indentation"
-;;   (interactive)
-;;   (if (bolp)
-;;       (back-to-indentation)
-;;     (beginning-of-line)))
-;; (global-set-key (kbd "C-a") 'beginning-of-line-or-indentation)
-
-;; (defun better-comment-dwim-line (&optional arg)
-;;   "Replacement for the comment-dwim command. If no region is selected and current line is not blank and we are not at the end of the line, then comment current line. Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
-;;   (interactive "*P")
-;;   (comment-normalize-vars)
-;;   (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
-;;       (comment-or-uncomment-region (line-beginning-position) (line-end-position))
-;;     (comment-dwim arg)))
-;; (global-set-key "\M-;" 'better-comment-dwim-line)
-
 
 ;; Dos2Unix/Unix2Dos
 (defun dos2unix ()
@@ -171,15 +152,6 @@ Call a second time to restore the original window configuration."
   "Convert the current buffer to DOS file format."
   (interactive)
   (set-buffer-file-coding-system 'undecided-dos nil))
-
-;; Revert buffer
-(defun revert-current-buffer ()
-  "Revert the current buffer."
-  (interactive)
-  (message "Revert this buffer.")
-  (revert-buffer t t))
-(bind-key "<f5>" 'revert-current-buffer)
-(bind-key "s-r" 'revert-current-buffer)
 
 
 ;; Save a file as utf-8
@@ -197,26 +169,6 @@ Call a second time to restore the original window configuration."
   (if url-proxy-services
       (message "Current proxy is \"%s\"" my-proxy)
     (message "No proxy")))
-
-(defun set-proxy ()
-  "Set http/https proxy."
-  (interactive)
-  (setq url-proxy-services `(("http" . ,my-proxy)
-                             ("https" . ,my-proxy)))
-  (show-proxy))
-
-(defun unset-proxy ()
-  "Unset http/https proxy."
-  (interactive)
-  (setq url-proxy-services nil)
-  (show-proxy))
-
-(defun toggle-proxy ()
-  "Toggle http/https proxy."
-  (interactive)
-  (if url-proxy-services
-      (unset-proxy)
-    (set-proxy)))
 
 (defun open-in-external-app ()
   "Open the current file or dired marked files in external app.
@@ -249,5 +201,132 @@ Version 2016-10-15"
                         (start-process "" nil "xdg-open" $fpath))) $file-list))))))
 
 (global-set-key (kbd "C-c o") 'open-in-external-app)
+
+(defmacro def-package! (name &rest plist)
+  "A thin wrapper around `use-package'."
+  ;; Ignore package if NAME is in `doom-disabled-packages'
+  (when (and (memq name doom-disabled-packages)
+             (not (memq :disabled plist)))
+    (setq plist `(:disabled t ,@plist)))
+  ;; If byte-compiling, ignore this package if it doesn't meet the condition.
+  ;; This avoids false-positive load errors.
+  (unless (and (bound-and-true-p byte-compile-current-file)
+               (or (and (plist-member plist :if)     (not (eval (plist-get plist :if))))
+                   (and (plist-member plist :when)   (not (eval (plist-get plist :when))))
+                   (and (plist-member plist :unless) (eval (plist-get plist :unless)))))
+    `(use-package ,name ,@plist)))
+	
+(defvar doom--transient-counter 0)
+(defmacro add-transient-hook! (hook &rest forms)
+  "Attaches transient forms to a HOOK.
+
+HOOK can be a quoted hook or a sharp-quoted function (which will be advised).
+
+These forms will be evaluated once when that function/hook is first invoked,
+then it detaches itself."
+  (declare (indent 1))
+  (let ((append (eq (car forms) :after))
+        (fn (intern (format "doom-transient-hook-%s" (cl-incf doom--transient-counter)))))
+    `(when ,hook
+       (fset ',fn
+             (lambda (&rest _)
+               ,@forms
+               (cond ((functionp ,hook) (advice-remove ,hook #',fn))
+                     ((symbolp ,hook)   (remove-hook ,hook #',fn)))
+               (unintern ',fn nil)))
+       (cond ((functionp ,hook)
+              (advice-add ,hook ,(if append :after :before) #',fn))
+             ((symbolp ,hook)
+              (add-hook ,hook #',fn ,append))))))
+
+(defmacro add-hook! (&rest args)
+  "A convenience macro for `add-hook'. Takes, in order:
+
+  1. Optional properties :local and/or :append, which will make the hook
+     buffer-local or append to the list of hooks (respectively),
+  2. The hooks: either an unquoted major mode, an unquoted list of major-modes,
+     a quoted hook variable or a quoted list of hook variables. If unquoted, the
+     hooks will be resolved by appending -hook to each symbol.
+  3. A function, list of functions, or body forms to be wrapped in a lambda.
+
+Examples:
+    (add-hook! 'some-mode-hook 'enable-something)
+    (add-hook! some-mode '(enable-something and-another))
+    (add-hook! '(one-mode-hook second-mode-hook) 'enable-something)
+    (add-hook! (one-mode second-mode) 'enable-something)
+    (add-hook! :append (one-mode second-mode) 'enable-something)
+    (add-hook! :local (one-mode second-mode) 'enable-something)
+    (add-hook! (one-mode second-mode) (setq v 5) (setq a 2))
+    (add-hook! :append :local (one-mode second-mode) (setq v 5) (setq a 2))
+
+Body forms can access the hook's arguments through the let-bound variable
+`args'."
+  (declare (indent defun) (debug t))
+  (let ((hook-fn 'add-hook)
+        append-p local-p)
+    (while (keywordp (car args))
+      (pcase (pop args)
+        (:append (setq append-p t))
+        (:local  (setq local-p t))
+        (:remove (setq hook-fn 'remove-hook))))
+    (let ((hooks (doom--resolve-hook-forms (pop args)))
+          (funcs
+           (let ((val (car args)))
+             (if (memq (car-safe val) '(quote function))
+                 (if (cdr-safe (cadr val))
+                     (cadr val)
+                   (list (cadr val)))
+               (list args))))
+          forms)
+      (dolist (fn funcs)
+        (setq fn (if (symbolp fn)
+                     `(function ,fn)
+                   `(lambda (&rest _) ,@args)))
+        (dolist (hook hooks)
+          (push (if (eq hook-fn 'remove-hook)
+                    `(remove-hook ',hook ,fn ,local-p)
+                  `(add-hook ',hook ,fn ,append-p ,local-p))
+                forms)))
+      `(progn ,@(nreverse forms)))))
+
+(defmacro remove-hook! (&rest args)
+  "Convenience macro for `remove-hook'. Takes the same arguments as
+`add-hook!'."
+  `(add-hook! :remove ,@args))
+  
+;;;###autoload
+(defvar doom-memoized-table (make-hash-table :test 'equal :size 10)
+  "A lookup table containing memoized functions. The keys are argument lists,
+and the value is the function's return value.")
+
+;;;###autoload
+(defun doom-memoize (name)
+  "Memoizes an existing function. NAME is a symbol."
+  (let ((func (symbol-function name)))
+    (put name 'function-documentation
+         (concat (documentation func) " (memoized)"))
+    (fset name
+          `(lambda (&rest args)
+             (let ((key (cons ',name args)))
+               (or (gethash key doom-memoized-table)
+                   (puthash key (apply ',func args)
+                            doom-memoized-table)))))))
+
+;;;###autoload
+(defmacro def-memoized! (name arglist &rest body)
+  "Create a memoize'd function. NAME, ARGLIST, DOCSTRING and BODY
+have the same meaning as in `defun'."
+  (declare (indent defun) (doc-string 3))
+  `(,(if (bound-and-true-p byte-compile-current-file)
+         'with-no-warnings
+       'progn)
+     (defun ,name ,arglist ,@body)
+     (doom-memoize ',name)))
+	 
+
+(when (version< emacs-version "26")
+    (with-no-warnings
+      (defalias 'if-let* #'if-let)
+      (defalias 'when-let* #'when-let)))
 
 (provide 'init-funcs)
