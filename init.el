@@ -3,46 +3,73 @@
 ;;; This is my init file
 
 ;;; Code:
-
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
+(require 'package)
+(setq package-enable-at-startup nil
+      package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
+			 ("melpa" . "http://elpa.emacs-china.org/melpa/")
+			 ("org" . "http://elpa.emacs-china.org/org/")
+			 ("sunrise-commander" . "http://elpa.emacs-china.org/sunrise-commander/")
+			 ("user42" . "http://elpa.emacs-china.org/user42/")
+			 ))
 (package-initialize)
-; (require 'core (concat user-emacs-directory "core/core"))
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+(setq use-package-always-defer t)
+(use-package diminish)
+
+(defconst sea-cache-dir
+  (expand-file-name ".cache/" user-emacs-directory)
+  "Cache directory.")
+(defconst IS-MAC
+  (eq system-type 'darwin)
+  "Are we running on a Mac system?")
+(defconst IS-LINUX
+  (eq system-type 'gnu/linux)
+  "Are we running on a Linux system?")
+(defconst IS-WIN
+  (eq system-type 'windows-nt)
+  "Are we running on a Linux system?")
+
 
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
-(require 'init-const)
-(require 'init-package)
 (require 'init-basic)
-(require 'init-evil)
 (require 'init-funcs)
-(require 'init-utils)
-(require 'init-vcs)
-(require 'init-dired)
-(require 'init-restore)
-(require 'init-projectile)
-(require 'init-highlight)
-
-(require 'init-edit)
+(require 'init-evil)
 (require 'init-ui)
-;(require 'init-modeline)
+;(require 'init-keybinds)
 
-(require 'init-company)
-(require 'init-yasnippet)
-(require 'init-ivy)
+					; (require 'init-utils)
+					; (require 'init-vcs)
+					; (require 'init-dired)
+					; (require 'init-restore)
+					; (require 'init-projectile)
+					; (require 'init-highlight)
 
-(require 'init-org)
-(require 'init-eshell)
+					; (require 'init-edit)
 
-(require 'init-flycheck)
-(require 'init-prog)
-(require 'init-emacs-lisp)
-(require 'init-lsp)
-(require 'init-py)
-(require 'init-js)
-(require 'init-web)
+					; (require 'init-company)
+					; (require 'init-yasnippet)
+					; (require 'init-ivy)
 
-(setq custom-file (concat doom-cache-dir "custom.el"))
+					; (require 'init-org)
+					; (require 'init-eshell)
+
+					; (require 'init-flycheck)
+					; (require 'init-prog)
+					; (require 'init-emacs-lisp)
+					; (require 'init-lsp)
+					; (require 'init-py)
+					; (require 'init-js)
+					; (require 'init-web)
+
+;; Start server
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
+(setq custom-file (concat sea-cache-dir "custom.el"))
 (load custom-file t t)

@@ -39,7 +39,7 @@
   "Are you using ROOT user?")
 
 (defconst doom-cache-dir
-  (expand-file-name ".cache" user-emacs-directory))
+  (expand-file-name ".cache/" user-emacs-directory))
 
 ;; Hook(s)
 (defvar doom-init-ui-hook nil
@@ -48,7 +48,7 @@
 
 (defvar doom-font nil
   "The default font to use. Expects a `font-spec'.")
-  
+
 (defvar doom-cn-font nil
   "The default chinese font to use..")
 
@@ -64,7 +64,7 @@
 Expects a `font-spec'.");; color theme
 
 (defvar doom-disabled-packages nil
-	"disabled packages!")
+    "disabled packages!")
 
 (provide 'init-const)
 

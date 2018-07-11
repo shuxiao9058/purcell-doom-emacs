@@ -17,7 +17,7 @@
 (setq-default c-basic-offset   4
               tab-width        4
               indent-tabs-mode nil)
-  
+
 ;; revert buffers for changed files
 (global-auto-revert-mode 1)
 (setq auto-revert-verbose nil)
@@ -45,13 +45,13 @@
   (setq recentf-save-file (concat doom-cache-dir "recentf")
         recentf-max-menu-items 0
         recentf-max-saved-items 300
-		recentf-filename-handlers '(file-truename)
+        recentf-filename-handlers '(file-truename)
         recentf-exclude
         (list "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
               "^/var/folders/.+$"
               ;; ignore private DOOM temp files (but not all of them)
               (concat "^" (file-truename doom-cache-dir)))))
-  
+
 (use-package savehist
   :ensure nil
   :init
@@ -64,7 +64,7 @@
                                         extended-command-history)
         savehist-autosave-interval 60)
   (add-hook 'after-init-hook #'savehist-mode))
-  
+
 ;; History
 ;; Emacsag 25 has a proper mode for `save-place'
 (add-hook 'after-init-hook #'save-place-mode)

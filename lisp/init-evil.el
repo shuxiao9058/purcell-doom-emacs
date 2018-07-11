@@ -14,36 +14,14 @@
   "<SPC>" 'counsel-M-x
   "wd" 'delete-window
   "wm" 'delete-other-windows
-  "w\\" 'split-window-horizontally-instead
-  "w-" 'split-window-vertically-instead
-  "0" '(lambda ()
-         (interactive)
-         (unless (ignore-errors (winum-select-window-0-or-10))
-           (treemacs-select-window)))
-  "1" 'winum-select-window-1
-  "2" 'winum-select-window-2
-  "3" 'winum-select-window-3
-  "4" 'winum-select-window-4
-  "5" 'winum-select-window-5
-  "6" 'winum-select-window-6
-  "7" 'winum-select-window-7
-  "8" 'winum-select-window-8
-  "9" 'winum-select-window-9
+  "ws" 'split-window-horizontally-instead
+  "wv" 'split-window-vertically-instead
   "gs" 'magit-status
-  "gx" 'magit-checkout
-  "gc" 'magic-commit
-  "gp" 'magit-push
-  "gu" 'magit-pull
-  "ge" 'magit-ediff-resolve
-  "gr" 'magit-rebase-interactive
   )
-
-(define-key evil-normal-state-map (kbd "C-k") (lambda ()
-                                                (interactive)
-                                                (evil-scroll-up 1)))
-(define-key evil-normal-state-map (kbd "C-j") (lambda ()
-                                                (interactive)
-                                                (evil-scroll-down 1)))
+(evil-define-key 'visual 'global
+  "j" 'evil-next-visual-line
+  "k" 'evil-previous-visual-line)
+  
 (define-key evil-normal-state-map (kbd "[b") 'previous-buffer)
 (define-key evil-normal-state-map (kbd "]b") 'next-buffer)
 (define-key evil-normal-state-map (kbd "M-.") nil)
@@ -51,14 +29,16 @@
 (use-package evil
   :ensure t
   :config
-  (evil-mode 1)
-  )
+  (evil-mode 1))
 
-(require-package 'key-chord)
+(use-package key-chord
+:init
+:config
 (setq key-chord-two-keys-delay 0.1) ; default 0.1
-(setq key-chord-one-key-delay 0.2) ; default 0.2
+(setq key-chord-one-key-delay 0.2) ; default 0.2)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-(key-chord-mode 1)
+(key-chord-mode 1))
+
 
 (use-package evil-escape
   :ensure t

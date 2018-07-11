@@ -1,33 +1,7 @@
 ;;; init-basic.elAuthor: Haibo Wang <nasoundead@163.com>
 ;;; Code:
-(eval-when-compile (require 'init-const))  
-  
-(defun prepend-to-exec-path (path)
-  "prepend the path to the emacs intenral `exec-path' and \"PATH\" env variable.
-Return the updated `exec-path'"
-  (setenv "PATH" (concat (expand-file-name path)
-                         path-separator
-                         (getenv "PATH")))
-  (setq exec-path
-        (cons (expand-file-name path)
-              exec-path)))
-
-;; Prepend a path to the begin of the `load-path'
-(defun prepend-to-load-path (path)
-  "prepend the PATH to the head of the `load-path', return updated load-path."
-  (add-to-list 'load-path path))
-
-(when sys/windowsp
-  (mapc #'prepend-to-exec-path
-        (reverse (list (if sys/win64p
-                           "C:/Program Files (x86)/Git/bin"
-                         "C:/Program Files/Git/bin")
-                       "~/forwin/dll"
-                       "~/forwin/bin"
-                       ))))
-
 ;; Key Modifiers
-(when sys/windowsp
+(when IS-WIN
   ;; make PC keyboard's Win key or other to type Super or Hyper, for emacs running on Windows.
   (setq w32-pass-lwindow-to-system nil)
   (setq w32-lwindow-modifier 'super) ; Left Windows key
@@ -40,20 +14,20 @@ Return the updated `exec-path'"
   )
 
 ;; coding
+(defun windows-shell-mode-coding ()
+    (set-buffer-file-coding-system 'gbk)
+    (set-buffer-process-coding-system 'gbk 'gbk))
+(defun python-encode-in-org-babel-execute (func body params)
+    (let ((coding-system-for-write 'utf-8))
+      (funcall func body params)))
 (cond
- ((eq system-type 'windows-nt)
+ ((eq system-type 'IS-WIN)
   (set-language-environment "chinese-gbk")
   (prefer-coding-system 'utf-8)
   (set-terminal-coding-system 'gbk)
   (modify-coding-system-alist 'process "*" 'gbk)
-  (defun windows-shell-mode-coding ()
-    (set-buffer-file-coding-system 'gbk)
-    (set-buffer-process-coding-system 'gbk 'gbk))
   (add-hook 'shell-mode-hook #'windows-shell-mode-coding)
   (add-hook 'inferior-python-mode-hook #'windows-shell-mode-coding)
-  (defun python-encode-in-org-babel-execute (func body params)
-    (let ((coding-system-for-write 'utf-8))
-      (funcall func body params)))
   (advice-add #'org-babel-execute:python :around
               #'python-encode-in-org-babel-execute))
  (t
@@ -61,7 +35,7 @@ Return the updated `exec-path'"
   (prefer-coding-system 'utf-8)))
 
 ;; Environment
-(when (or sys/mac-x-p sys/linux-x-p)
+(when (or IS-MAC IS-LINUX)
   (use-package exec-path-from-shell
     :init
     (setq exec-path-from-shell-check-startup-files nil)
@@ -69,32 +43,24 @@ Return the updated `exec-path'"
     (setq exec-path-from-shell-arguments '("-l"))
     (exec-path-from-shell-initialize)))
 
-;; Start server
-(require 'server)
-(unless (server-running-p)
-  (server-start))
-
-
-
 ;; Show native line numbers if possible, otherwise use linum
 (if (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode)
   (add-hook 'after-init-hook #'global-linum-mode))
 
-  
-;; https://www.emacswiki.org/emacs/AutoSave
-(make-directory doom-cache-dir t)
-
-(defun save-all ()
-  "Save all buffers."
-  (interactive)
-  (save-some-buffers t))
-(add-hook 'focus-out-hook 'save-all)
-
 (use-package which-key
   :diminish which-key-mode
   :init
-  (which-key-mode))
+  (which-key-mode)
+  :config
+  (setq which-key-sort-order #'which-key-prefix-then-key-order
+        which-key-sort-uppercase-first nil
+        which-key-add-column-padding 1
+        which-key-max-display-columns nil
+        which-key-min-display-lines 5)
+  ;; embolden local bindings
+  (set-face-attribute 'which-key-local-map-description-face nil :weight 'bold)
+  (which-key-setup-side-window-bottom))
 
 (use-package ido-vertical-mode
   :init
@@ -104,7 +70,6 @@ Return the updated `exec-path'"
 
 
 (setq kill-ring-max 200)
-
 ;; Save clipboard contents into kill-ring before replace them
 (setq save-interprogram-paste-before-kill t)
 
