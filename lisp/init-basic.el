@@ -1,6 +1,7 @@
 ;;; init-basic.elAuthor: Haibo Wang <nasoundead@163.com>
 ;;; Code:
 ;; Key Modifiers
+
 (when IS-WIN
   ;; make PC keyboard's Win key or other to type Super or Hyper, for emacs running on Windows.
   (setq w32-pass-lwindow-to-system nil)

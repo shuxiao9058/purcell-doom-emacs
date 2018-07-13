@@ -5,7 +5,7 @@
 (eval-when-compile (require 'init-const))
 
 ;; Miscs
-(setq delete-by-moving-to-trash t)         ; Deleting files go to OS's trash folder
+(setq delete-by-moving-to-trash t)     ; Deleting files go to OS's trash folder
 (delete-selection-mode 1)
 (setq-default major-mode 'text-mode)
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
@@ -26,11 +26,11 @@
 (electric-indent-mode -1)
 
 ;; savehist / saveplace
-(setq savehist-file (concat doom-cache-dir "savehist")
+(setq savehist-file (concat sea-cache-dir "savehist")
       savehist-save-minibuffer-history t
       savehist-autosave-interval nil ; save on kill only
       savehist-additional-variables '(kill-ring search-ring regexp-search-ring)
-      save-place-file (concat doom-cache-dir "saveplace"))
+      save-place-file (concat sea-cache-dir "saveplace"))
 (add-hook 'after-init-hook #'savehist-mode)
 (add-hook 'after-init-hook #'save-place-mode)
 
@@ -42,15 +42,15 @@
                                 (recentf-mode)
                                 (recentf-track-opened-file))))
   :config
-  (setq recentf-save-file (concat doom-cache-dir "recentf")
+  (setq recentf-save-file (concat sea-cache-dir "recentf")
         recentf-max-menu-items 0
         recentf-max-saved-items 300
         recentf-filename-handlers '(file-truename)
         recentf-exclude
         (list "^/tmp/" "^/ssh:" "\\.?ido\\.last$" "\\.revive$" "/TAGS$"
               "^/var/folders/.+$"
-              ;; ignore private DOOM temp files (but not all of them)
-              (concat "^" (file-truename doom-cache-dir)))))
+              ;; ignore private sea temp files (but not all of them)
+              (concat "^" (file-truename sea-cache-dir)))))
 
 (use-package savehist
   :ensure nil
@@ -181,7 +181,7 @@
   :config
   (setq
    undo-tree-auto-save-history nil
-   undo-tree-history-directory-alist `(("." . ,(concat doom-cache-dir "/undo/")))))
+   undo-tree-history-directory-alist `(("." . ,(concat sea-cache-dir "undo/")))))
 
 ;; Handling capitalized subwords in a nomenclature
 (use-package subword

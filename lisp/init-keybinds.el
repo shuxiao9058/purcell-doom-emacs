@@ -4,11 +4,36 @@
 ;; available keybindings. All built into one powerful macro: `map!'. If evil is
 ;; never loaded, then evil bindings set with `map!' will be ignored.
 (require 'subr-x)
+(eval-and-compile
+  (when (version< emacs-version "26")
+    (with-no-warnings
+      (defalias 'if-let* #'if-let)
+      (defalias 'when-let* #'when-let))))  
+(defun sea-enlist (exp)
+  "Return EXP wrapped in a list, or as-is if already a list."
+  (if (listp exp) exp (list exp)))
+(defmacro λ! (&rest body)
+  "A shortcut for inline interactive lambdas."
+  (declare (doc-string 1))
+  `(lambda () (interactive) ,@body))
+(defmacro after! (feature &rest forms)
+  "A smart wrapper around `with-eval-after-load'. Supresses warnings during
+compilation."
+  (declare (indent defun) (debug t))
+  `(,(if (or (not (bound-and-true-p byte-compile-current-file))
+             (if (symbolp feature)
+                 (require feature nil :no-error)
+               (load feature :no-message :no-error)))
+         #'progn
+       #'with-no-warnings)
+    (with-eval-after-load ',feature ,@forms)))
+
 (defvar sea-leader-key "SPC"
   "The leader prefix key, for global commands.")
 
 (defvar sea-localleader-key "SPC m"
   "The localleader prefix key, for major-mode specific commands.")
+
 
 (defvar sea-evil-state-alist
   '((?n . normal)
@@ -21,12 +46,7 @@
     (?g . global))
   "A list of cons cells that map a letter to a evil state symbol.")
 
-
-;;
-
-
-
-(def-package! hydra
+(use-package hydra
   :init
   ;; In case I later need to wrap defhydra in any special functionality.
   (defalias 'def-hydra! 'defhydra)

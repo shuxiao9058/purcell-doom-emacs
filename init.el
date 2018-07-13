@@ -40,7 +40,8 @@
 (require 'init-funcs)
 (require 'init-evil)
 (require 'init-ui)
-;(require 'init-keybinds)
+(require 'init-edit)
+(require 'init-keybinds)
 
 					; (require 'init-utils)
 					; (require 'init-vcs)
@@ -49,7 +50,7 @@
 					; (require 'init-projectile)
 					; (require 'init-highlight)
 
-					; (require 'init-edit)
+					; 
 
 					; (require 'init-company)
 					; (require 'init-yasnippet)
