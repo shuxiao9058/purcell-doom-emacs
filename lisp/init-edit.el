@@ -2,21 +2,95 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Code:
-(eval-when-compile (require 'init-const))
 
-;; Miscs
-(setq delete-by-moving-to-trash t)     ; Deleting files go to OS's trash folder
+(defvar sea-large-file-size 1
+  "Size (in MB) above which the user will be prompted to open the file literally
+to avoid performance issues. Opening literally means that no major or minor
+modes are active and the buffer is read-only.")
+
+(defvar sea-large-file-modes-list
+  '(archive-mode tar-mode jka-compr git-commit-mode image-mode
+    doc-view-mode doc-view-mode-maybe ebrowse-tree-mode pdf-view-mode)
+  "Major modes that `sea|check-large-file' will ignore.")
+  
+(setq-default
+ vc-follow-symlinks t
+ ;; Save clipboard contents into kill-ring before replacing them
+ save-interprogram-paste-before-kill t
+ ;; Bookmarks
+ bookmark-default-file (concat sea-cache-dir "bookmarks")
+ bookmark-save-flag t
+ ;; Formatting
+ delete-trailing-lines nil
+ fill-column 80
+ sentence-end-double-space nil
+ word-wrap t
+ ;; Scrolling
+ hscroll-margin 1
+ hscroll-step 1
+ scroll-conservatively 1001
+ scroll-margin 0
+ scroll-preserve-screen-position t
+ ;; Whitespace (see `editorconfig')
+ indent-tabs-mode nil
+ require-final-newline t
+ tab-always-indent t
+ tab-width 4
+ tabify-regexp "^\t* [ \t]+" ; for :retab
+ ;; Wrapping
+ truncate-lines t
+ truncate-partial-width-windows 50
+ ;; whitespace-mode
+ whitespace-line-column fill-column
+ whitespace-style
+ '(face indentation tabs tab-mark spaces space-mark newline newline-mark
+   trailing lines-tail)
+ whitespace-display-mappings
+ '((tab-mark ?\t [?› ?\t])
+   (newline-mark ?\n [?¬ ?\n])
+   (space-mark ?\  [?·] [?.])))
+
 (delete-selection-mode 1)
 (setq-default major-mode 'text-mode)
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
 (add-hook 'abbrev-mode-hook (lambda () (diminish 'abbrev-mode)))
 
-;; Tab and Space
-;; Permanently indent with spaces, never with TABs
-(setq-default c-basic-offset   4
-              tab-width        4
-              indent-tabs-mode nil)
+;; ediff
+(setq ediff-diff-options "-w"
+      ediff-split-window-function #'split-window-horizontally
+      ediff-window-setup-function #'ediff-setup-windows-plain)
+	  
+(defun sea|dont-kill-scratch-buffer ()
+  "Don't kill the scratch buffer."
+  (or (not (string= (buffer-name) "*scratch*"))
+      (ignore (bury-buffer))))
+(add-hook 'kill-buffer-query-functions #'sea|dont-kill-scratch-buffer)
+
+;; temporary windows often have q bound to `quit-window', which only buries the
+;; contained buffer. I rarely don't want that buffer killed, so...
+(defun sea*quit-window (orig-fn &optional kill window)
+  (funcall orig-fn (not kill) window))
+(advice-add #'quit-window :around #'sea*quit-window)
+
+(defun sea|check-large-file ()
+  "Check if the buffer's file is large (see `sea-large-file-size'). If so, ask
+for confirmation to open it literally (read-only, disabled undo and in
+fundamental-mode) for performance sake."
+  (let* ((filename (buffer-file-name))
+         (size (nth 7 (file-attributes filename))))
+    (when (and (not (memq major-mode sea-large-file-modes-list))
+               size (> size (* 1024 1024 sea-large-file-size))
+               (y-or-n-p
+                (format (concat "%s is a large file, open literally to "
+                                "avoid performance issues?")
+                        (file-relative-name filename))))
+      (setq buffer-read-only t)
+      (buffer-disable-undo)
+      (fundamental-mode))))
+(add-hook 'find-file-hook #'sea|check-large-file)
+
+(push '("/LICENSE$" . text-mode) auto-mode-alist)
 
 ;; revert buffers for changed files
 (global-auto-revert-mode 1)
@@ -69,36 +143,6 @@
 ;; Emacsag 25 has a proper mode for `save-place'
 (add-hook 'after-init-hook #'save-place-mode)
 
-;; Minor mode to aggressively keep your code always indented
-(use-package aggressive-indent
-  :diminish aggressive-indent-mode
-  :init
-  (add-hook 'after-init-hook #'global-aggressive-indent-mode)
-
-  ;; FIXME: Disable in big files due to the performance issues
-  ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
-  (add-hook 'find-file-hook
-            (lambda ()
-              (if (> (buffer-size) (* 3000 80))
-                  (aggressive-indent-mode -1))))
-  :config
-  ;; Disable in some modes
-  (dolist (mode '(web-mode html-mode css-mode robot-mode python-mode))
-    (push mode aggressive-indent-excluded-modes))
-
-  ;; Be slightly less aggressive in C/C++/C#/Java/Go/Swift
-  (add-to-list
-   'aggressive-indent-dont-indent-if
-   '(and (or (derived-mode-p 'c-mode)
-             (derived-mode-p 'c++-mode)
-             (derived-mode-p 'csharp-mode)
-             (derived-mode-p 'java-mode)
-             (derived-mode-p 'go-mode)
-             (derived-mode-p 'python-mode)
-             (derived-mode-p 'swift-mode))
-         (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
-                             (thing-at-point 'line))))))
-
 ;; Show number of matches in mode-line while searching
 (use-package visual-regexp-steroids
   :init
@@ -134,45 +178,54 @@
   (setq ediff-split-window-function 'split-window-horizontally)
   (setq ediff-merge-split-window-function 'split-window-horizontally))
 
-;; Automatic parenthesis pairing
-(use-package elec-pair
-  :ensure nil
-  :init (add-hook 'after-init-hook #'electric-pair-mode))
 
+(use-package ace-link
+  :commands (ace-link-help ace-link-org))
+
+(use-package avy
+  :commands (avy-goto-char-2 avy-goto-line)
+  :config
+  (setq avy-all-windows nil
+        avy-background t))
+
+(use-package command-log-mode
+  :commands (command-log-mode global-command-log-mode)
+  :config
+  (set! :popup "*command-log*" :size 40 :align 'right :noselect t)
+  (setq command-log-mode-auto-show t
+        command-log-mode-open-log-turns-on-mode t))  
+  
 ;; Increase selected region by semantic units
 (use-package expand-region
-  :bind ("C-=" . er/expand-region))
+  :commands (er/expand-region er/contract-region er/mark-symbol er/mark-word))
 
-;; ialign
-(use-package ialign
-  :bind
-  (("C-x l" . ialign)))
+(use-package pcre2el
+  :commands rxt-quote-pcre)
 
-;; On-the-fly spell checker
-(use-package flyspell
-  :ensure nil
-  :diminish flyspell-mode
-  :init (setq flyspell-issue-message-flag nil))
+(use-package smart-forward
+  :commands (smart-up smart-down smart-backward smart-forward))
 
-;; Hungry deletion
-(use-package hungry-delete
-  :diminish hungry-delete-mode
-  :init (add-hook 'after-init-hook #'global-hungry-delete-mode)
-  )
+(use-package wgrep
+  :commands (wgrep-setup wgrep-change-to-wgrep-mode)
+  :config (setq wgrep-auto-save-buffer t))
 
-;; Multiple cursors
-;; (use-package multiple-cursors
-;;   :bind (("C-S-c C-S-c" . mc/edit-lines)
-;;          ("C->" . mc/mark-next-like-this)
-;;          ("C-<". mc/mark-previous-like-this)
-;;          ("C-S-L" . mc/mark-all-like-this-dwim)
-;;          ("s-<mouse-1>" . mc/add-cursor-on-click)
-;;          ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
+(use-package smartparens
+  :hook (after-init . smartparens-global-mode)
+  :config
+  (require 'smartparens-config)
 
-;; Move to the beginning/end of line or code
-(use-package mwim
-  :bind (("C-a" . mwim-beginning-of-code-or-line)
-         ("C-e" . mwim-end-of-code-or-line)))
+  (setq sp-autowrap-region nil ; let evil-surround handle this
+        sp-highlight-pair-overlay nil
+        sp-cancel-autoskip-on-backward-movement nil
+        sp-show-pair-delay 0
+        sp-max-pair-length 3)
+
+  ;; disable smartparens in evil-mode's replace state (they conflict)
+  (add-hook 'evil-replace-state-entry-hook #'turn-off-smartparens-mode)
+  (add-hook 'evil-replace-state-exit-hook  #'turn-on-smartparens-mode)
+
+  (sp-local-pair '(xml-mode nxml-mode php-mode) "<!--" "-->"
+                 :post-handlers '(("| " "SPC"))))
 
 ;; Treat undo history as a tree
 (use-package undo-tree
@@ -183,11 +236,53 @@
    undo-tree-auto-save-history nil
    undo-tree-history-directory-alist `(("." . ,(concat sea-cache-dir "undo/")))))
 
-;; Handling capitalized subwords in a nomenclature
-(use-package subword
-  :ensure nil
-  :diminish subword-mode
-  :init (add-hook 'prog-mode-hook #'subword-mode))
+;; Handles whitespace (tabs/spaces) settings externally. This way projects can
+;; specify their own formatting rules.
+(use-package editorconfig
+  :config
+  (add-hook 'after-init-hook #'editorconfig-mode)
+
+  ;; editorconfig cannot procure the correct settings for extension-less files.
+  ;; Executable scripts with a shebang line, for example. So why not use Emacs'
+  ;; major mode to drop editorconfig a hint? This is accomplished by temporarily
+  ;; appending an extension to `buffer-file-name' when we talk to editorconfig.
+  (defvar sea-editorconfig-mode-alist
+    '((sh-mode     . "sh")
+      (python-mode . "py")
+      (ruby-mode   . "rb")
+      (perl-mode   . "pl")
+      (php-mode    . "php"))
+    "An alist mapping major modes to extensions. Used by
+`sea*editorconfig-smart-detection' to give editorconfig filetype hints.")
+
+  (defun sea*editorconfig-smart-detection (orig-fn &rest args)
+    "Retrieve the properties for the current file. If it doesn't have an
+extension, try to guess one."
+    (let ((buffer-file-name
+           (if (file-name-extension buffer-file-name)
+               buffer-file-name
+             (format "%s%s" buffer-file-name
+                     (let ((ext (cdr (assq major-mode sea-editorconfig-mode-alist))))
+                       (or (and ext (concat "." ext))
+                           ""))))))
+      (apply orig-fn args)))
+  (advice-add #'editorconfig-call-editorconfig-exec :around #'sea*editorconfig-smart-detection)
+
+  ;; Editorconfig makes indentation too rigid in Lisp modes, so tell
+  ;; editorconfig to ignore indentation. I prefer dynamic indentation support
+  ;; built into Emacs.
+  (dolist (mode '(emacs-lisp-mode lisp-mode))
+    (setq editorconfig-indentation-alist
+      (assq-delete-all mode editorconfig-indentation-alist)))
+
+  (defvar whitespace-style)
+  (defun sea|editorconfig-whitespace-mode-maybe (&rest _)
+    "Show whitespace-mode when file uses TABS (ew)."
+    (when indent-tabs-mode
+      (let ((whitespace-style '(face tabs tab-mark trailing-lines tail)))
+        (whitespace-mode +1))))
+  (add-hook 'editorconfig-custom-hooks #'sea|editorconfig-whitespace-mode-maybe))
+
 
 (provide 'init-edit)
 

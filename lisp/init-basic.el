@@ -83,6 +83,16 @@
 (use-package browse-kill-ring
   :bind ("C-c k" . browse-kill-ring)
   :init (add-hook 'after-init-hook #'browse-kill-ring-default-keybindings))
+  
+(use-package dash
+  :ensure t
+  :defer t)
+(use-package f
+  :ensure t
+  :defer t)
+(use-package s
+  :ensure t
+  :defer t)
 
 (provide 'init-basic)
 ;;; base ends here

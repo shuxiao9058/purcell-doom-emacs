@@ -696,6 +696,8 @@ Example
 
       ;; evil-matchit
       :nv [tab] #'+evil/matchit-or-toggle-fold
+	  [remap evil-jump-item] #'evilmi-jump-items
+	  :textobj "%" #'evilmi-text-object #'evilmi-text-object
 
       ;; evil-magit
       (:after evil-magit
