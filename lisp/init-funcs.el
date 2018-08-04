@@ -1,6 +1,42 @@
 ;; Add your custom functions here
 (eval-when-compile (require 'cl))
+(require 'subr-x)
+(eval-and-compile
+  (when (version< emacs-version "26")
+    (with-no-warnings
+      (defalias 'if-let* #'if-let)
+      (defalias 'when-let* #'when-let))))  
+(defun sea-enlist (exp)
+  "Return EXP wrapped in a list, or as-is if already a list."
+  (if (listp exp) exp (list exp)))
 
+(defmacro after! (feature &rest forms)
+  "A smart wrapper around `with-eval-after-load'. Supresses warnings during
+compilation."
+  (declare (indent defun) (debug t))
+  `(,(if (or (not (bound-and-true-p byte-compile-current-file))
+             (if (symbolp feature)
+                 (require feature nil :no-error)
+               (load feature :no-message :no-error)))
+         #'progn
+       #'with-no-warnings)
+    (with-eval-after-load ',feature ,@forms)))
+(defmacro quiet! (&rest forms)
+  "Run FORMS without making any noise."
+  `(if sea-debug-mode
+       (progn ,@forms)
+     (let ((old-fn (symbol-function 'write-region)))
+       (cl-letf* ((standard-output (lambda (&rest _)))
+                  ((symbol-function 'load-file) (lambda (file) (load file nil t)))
+                  ((symbol-function 'message) (lambda (&rest _)))
+                  ((symbol-function 'write-region)
+                   (lambda (start end filename &optional append visit lockname mustbenew)
+                     (unless visit (setq visit 'no-message))
+                     (funcall old-fn start end filename append visit lockname mustbenew)))
+                  (inhibit-message t)
+                  (save-silently t))
+         ,@forms))))	
+	
 (if (fboundp 'with-eval-after-load)
     (defalias 'after-load 'with-eval-after-load)
   (defmacro after-load (feature &rest body)
@@ -8,6 +44,7 @@
     (declare (indent defun))
     `(eval-after-load ,feature
        '(progn ,@body))))
+	   
 ;;----------------------------------------------------------------------------
 ;; Delete the current file
 ;;----------------------------------------------------------------------------
@@ -392,5 +429,14 @@ with weak native support."
         (t
          (newline nil t)
          (indent-according-to-mode))))
+		 
+;;;###autoload
+(defun sea/+plantuml/install ()
+  "Install plantuml.jar."
+  (interactive)
+  (unless (file-exists-p plantuml-jar-path)
+    (user-error "plantuml.jar already installed"))
+  (url-copy-file "https://kent.dl.sourceforge.net/project/plantuml/plantuml.jar"
+                 plantuml-jar-path))
 
 (provide 'init-funcs)

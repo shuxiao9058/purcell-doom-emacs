@@ -3,30 +3,10 @@
 ;; A centralized keybinds system, integrated with `which-key' to preview
 ;; available keybindings. All built into one powerful macro: `map!'. If evil is
 ;; never loaded, then evil bindings set with `map!' will be ignored.
-(require 'subr-x)
-(eval-and-compile
-  (when (version< emacs-version "26")
-    (with-no-warnings
-      (defalias 'if-let* #'if-let)
-      (defalias 'when-let* #'when-let))))  
-(defun sea-enlist (exp)
-  "Return EXP wrapped in a list, or as-is if already a list."
-  (if (listp exp) exp (list exp)))
 (defmacro λ! (&rest body)
   "A shortcut for inline interactive lambdas."
   (declare (doc-string 1))
   `(lambda () (interactive) ,@body))
-(defmacro after! (feature &rest forms)
-  "A smart wrapper around `with-eval-after-load'. Supresses warnings during
-compilation."
-  (declare (indent defun) (debug t))
-  `(,(if (or (not (bound-and-true-p byte-compile-current-file))
-             (if (symbolp feature)
-                 (require feature nil :no-error)
-               (load feature :no-message :no-error)))
-         #'progn
-       #'with-no-warnings)
-    (with-eval-after-load ',feature ,@forms)))
 
 (defvar sea-leader-key "SPC"
   "The leader prefix key, for global commands.")

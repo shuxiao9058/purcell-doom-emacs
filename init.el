@@ -24,6 +24,9 @@
 (defconst sea-cache-dir
   (expand-file-name ".cache/" user-emacs-directory)
   "Cache directory.")
+(defconst sea-etc-dir
+  (expand-file-name ".etc/" user-emacs-directory)
+  "etc directory.")
 (defconst IS-MAC
   (eq system-type 'darwin)
   "Are we running on a Mac system?")
@@ -33,6 +36,12 @@
 (defconst IS-WIN
   (eq system-type 'windows-nt)
   "Are we running on a Linux system?")
+(defvar sea-debug-mode (or (getenv "DEBUG") init-file-debug)
+  "If non-nil, all sea functions will be verbose. Set DEBUG=1 in the command
+line or use --debug-init to enable this.")
+(defvar sea-project-hook nil
+  "Hook run when a project is enabled. The name of the project's mode and its
+state are passed in.")
 
 
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
@@ -42,6 +51,7 @@
 (require 'init-ui)
 (require 'init-edit)
 (require 'init-keybinds)
+(require 'init-company)
 
 					; (require 'init-utils)
 					; (require 'init-vcs)
@@ -52,7 +62,7 @@
 
 					; 
 
-					; (require 'init-company)
+					; 
 					; (require 'init-yasnippet)
 					; (require 'init-ivy)
 
@@ -71,6 +81,10 @@
 (require 'server)
 (unless (server-running-p)
   (server-start))
+  
+(dolist (dir (list sea-cache-dir sea-etc-dir))
+        (unless (file-directory-p dir)
+          (make-directory dir t)))
 
 (setq custom-file (concat sea-cache-dir "custom.el"))
 (load custom-file t t)
