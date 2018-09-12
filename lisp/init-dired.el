@@ -15,7 +15,7 @@
   :defer t
   :ensure t)
 
-(defun nasoundead/dired-diff ()
+(defun sea/dired-diff ()
   "Ediff marked files in dired or selected files in separate window"
   (interactive)
   (let* ((marked-files (dired-get-marked-files nil nil))
@@ -51,8 +51,8 @@
            (dired-diff))
           (t (error "mark exactly 2 files, at least 1 locally")))))
 (with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "=") 'nasoundead/dired-diff)
-  (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+  (define-key dired-mode-map (kbd "=") 'sea/dired-diff)
+  ;(define-key dired-mode-map (kbd "RET") 'find-alternate-file)
   (define-key dired-mode-map (kbd "~") '(lambda ()(interactive)(find-alternate-file "~/"))))
 
 

@@ -40,6 +40,7 @@
     (use-package company-lsp
       :init (cl-pushnew 'company-lsp company-backends)))
   )
+
 (use-package lsp-ui
   :init
   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
