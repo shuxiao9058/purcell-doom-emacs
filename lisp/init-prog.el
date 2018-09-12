@@ -104,11 +104,6 @@
   :mode "\\.robot\\'")
 
 (add-hook 'prog-mode-hook 'yafolding-mode)
-;; (when (maybe-require-package 'origami)
-;;   (add-hook 'prog-mode-hook 'origami-mode)
-;;   (after-load 'origami
-;;     (define-key origami-mode-map (kbd "C-{") 'origami-recursively-toggle-node)
-;;     (define-key origami-mode-map (kbd "C-M-{") 'origami-toggle-all-nodes)))
 
 (provide 'init-prog)
 

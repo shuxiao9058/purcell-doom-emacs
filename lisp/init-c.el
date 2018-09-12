@@ -48,7 +48,7 @@
   ;; Company mode backend for C/C++ header files
   (with-eval-after-load 'company
     (use-package company-c-headers
-      :init (cl-pushnew (company-backend-with-yas 'company-c-headers) company-backends))))
+      :init (cl-pushnew 'company-c-headers company-backends))))
 
 (provide 'init-c)
 

@@ -39,7 +39,7 @@
   ;; (use-package dropdown-list :commands dropdown-list)
   (setq yas-snippet-dirs
 	'("~/.emacs.d/snippets"                 ;; personal snippets
-	  "~/yasnippet-snippets"	;git clone https://github.com/AndreaCrotti/yasnippet-snippets.git
+	  ;"~/yasnippet-snippets"	;git clone https://github.com/AndreaCrotti/yasnippet-snippets.git
 	  ))
   (setq yas-prompt-functions '(yas-dropdown-prompt
                                yas-maybe-ido-prompt

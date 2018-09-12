@@ -12,11 +12,9 @@
 
 (use-package ob-ipython
   :init
-  (when sys/windowsp
-    (setq ob-ipython-resources-dir "d:/obipy-resources"))
   (with-eval-after-load 'company
     (make-local-variable 'company-backend)
-    (cl-pushnew (company-backend-with-yas 'company-ob-ipython) company-backends)))
+    (cl-pushnew 'company-ob-ipython company-backends)))
 
 ;; active Org-babel languages
 (org-babel-do-load-languages
@@ -29,7 +27,7 @@
    (ipython . t)
    (ruby . t)
    (gnuplot . t)
-   (sh . t)
+   ;(sh . t)
    (org . t)
    (latex . t)))
 (setq org-confirm-babel-evaluate nil)

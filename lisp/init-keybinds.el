@@ -666,7 +666,8 @@ Example
         (:map counsel-ag-map
           [backtab]  #'+ivy/wgrep-occur      ; search/replace on results
           "C-SPC"    #'ivy-call-and-recenter ; preview
-          "M-RET"    (+ivy-do-action! #'+ivy-git-grep-other-window-action)))
+          ;"M-RET"    (+ivy-do-action! #'+ivy-git-grep-other-window-action)
+		  ))
 
       ;; evil-commentary
       :n  "gc"  #'evil-commentary

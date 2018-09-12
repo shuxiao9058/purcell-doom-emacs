@@ -8,8 +8,6 @@
       package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
 			 ("melpa" . "http://elpa.emacs-china.org/melpa/")
 			 ("org" . "http://elpa.emacs-china.org/org/")
-			 ("sunrise-commander" . "http://elpa.emacs-china.org/sunrise-commander/")
-			 ("user42" . "http://elpa.emacs-china.org/user42/")
 			 ))
 (package-initialize)
 ;; Bootstrap `use-package'
@@ -50,32 +48,27 @@ state are passed in.")
 (require 'init-evil)
 (require 'init-ui)
 (require 'init-edit)
+(require 'init-highlight)
 (require 'init-keybinds)
+
+(require 'init-ivy)
 (require 'init-company)
+(require 'init-yasnippet)
+(require 'init-projectile)
+(require 'init-flycheck)
 
-					; (require 'init-utils)
-					; (require 'init-vcs)
-					; (require 'init-dired)
-					; (require 'init-restore)
-					; (require 'init-projectile)
-					; (require 'init-highlight)
-
-					; 
-
-					; 
-					; (require 'init-yasnippet)
-					; (require 'init-ivy)
-
-					; (require 'init-org)
-					; (require 'init-eshell)
-
-					; (require 'init-flycheck)
-					; (require 'init-prog)
-					; (require 'init-emacs-lisp)
-					; (require 'init-lsp)
-					; (require 'init-py)
-					; (require 'init-js)
-					; (require 'init-web)
+(require 'init-utils)
+(require 'init-vcs)
+(require 'init-dired)
+(require 'init-restore)
+(require 'init-org)
+(require 'init-eshell)
+(require 'init-prog)
+(require 'init-emacs-lisp)
+(require 'init-lsp)
+(require 'init-py)
+(require 'init-js)
+(require 'init-web)
 
 ;; Start server
 (require 'server)

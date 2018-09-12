@@ -112,7 +112,7 @@
           nil))
 
   (with-eval-after-load 'company
-    (cl-pushnew (company-backend-with-yas 'company-tide) company-backends)))
+    (cl-pushnew 'company-tide company-backends)))
 
 ;; Major mode for editing web templates
 (use-package web-mode
@@ -126,9 +126,9 @@
   (with-eval-after-load 'company
     (use-package company-web
       :init
-      (cl-pushnew (company-backend-with-yas 'company-web-html) company-backends)
-      (cl-pushnew (company-backend-with-yas 'company-web-jade) company-backends)
-      (cl-pushnew (company-backend-with-yas 'company-web-slim) company-backends))))
+      (cl-pushnew 'company-web-html company-backends)
+      (cl-pushnew 'company-web-jade company-backends)
+      (cl-pushnew 'company-web-slim company-backends))))
 
 ;; Live browser JavaScript, CSS, and HTML interaction
 (use-package skewer-mode

@@ -38,7 +38,7 @@
   :init
   (with-eval-after-load 'company
     (use-package company-lsp
-      :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends)))
+      :init (cl-pushnew 'company-lsp company-backends)))
   )
 (use-package lsp-ui
   :init
