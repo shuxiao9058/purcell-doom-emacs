@@ -95,22 +95,6 @@
     :bind (:map flyspell-mode-map
                 ("C-;" . flyspell-correct-previous-word-generic)))
 
-  ;; More friendly display transformer for Ivy
-  (use-package ivy-rich
-    :init
-    (setq ivy-virtual-abbreviate 'full
-          ivy-rich-switch-buffer-align-virtual-buffer nil)
-    (setq ivy-rich-abbreviate-paths t)
-
-    (ivy-set-display-transformer 'ivy-switch-buffer
-                                 'ivy-rich-switch-buffer-transformer)
-
-    (with-eval-after-load 'counsel-projectile
-      (ivy-set-display-transformer 'counsel-projectile
-                                   'ivy-rich-switch-buffer-transformer)
-      (ivy-set-display-transformer 'counsel-projectile-switch-to-buffer
-                                   'ivy-rich-switch-buffer-transformer)))
-
   ;; Support pinyin in Ivy
   ;; Input prefix ':' to match pinyin
   ;; Refer to  https://github.com/abo-abo/swiper/issues/919
