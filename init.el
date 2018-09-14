@@ -4,24 +4,49 @@
 
 ;;; Code:
 
+(unless after-init-time
+  (setq gc-cons-threshold 402653184
+        gc-cons-percentage 1.0))
+		
+(defun sea-finalize ()
+  "The main starup function."
+  (dolist (hook '(sea-init-hook))
+    (run-hook-with-args hook))
+	
+  (sea-load-autoload)
+  (setq gc-cons-threshold 16777216
+        gc-cons-percentage 0.15))
+		
+(add-hook 'emacs-startup-hook #'sea-finalize t)
+
+(defconst sea-autoload-dir
+  (expand-file-name "autoload/" user-emacs-directory)
+  "autoload directory.")
+  
 (defconst sea-local-dir
   (expand-file-name ".local/" user-emacs-directory)
   "local directory.")
+  
 (defconst sea-cache-dir
   (expand-file-name "cache/" sea-local-dir)
   "Cache directory.")
+  
 (defconst sea-etc-dir
   (expand-file-name "etc/" sea-local-dir)
   "etc directory.")
+  
 (defconst IS-MAC
   (eq system-type 'darwin)
   "Are we running on a Mac system?")
+  
 (defconst IS-LINUX
   (eq system-type 'gnu/linux)
   "Are we running on a Linux system?")
+  
 (defconst IS-WIN
   (eq system-type 'windows-nt)
   "Are we running on a Linux system?")
+  
 (defvar sea-debug-mode (or (getenv "DEBUG") init-file-debug)
   "If non-nil, all sea functions will be verbose. Set DEBUG=1 in the command
 line or use --debug-init to enable this.")
