@@ -1,8 +1,6 @@
 ;; init-projectile.el --- Initialize projectile configurations.	-*- lexical-binding: t -*-
 ;;; Code:
 
-(eval-when-compile (require 'init-const))
-
 ;; Manage and navigate projects
 (use-package projectile
   :bind (("s-t" . projectile-find-file))
@@ -12,7 +10,7 @@
         '(:eval (format "[%s]" (projectile-project-name))))
 
   (setq projectile-known-projects-file
-        (expand-file-name "projectile-bookmarks.eld" doom-cache-dir))
+        (expand-file-name "projectile-bookmarks.eld" sea-cache-dir))
 
   (setq projectile-completion-system 'ivy)
 
@@ -26,7 +24,7 @@
 
   ;; Faster indexing on Windows
   ;; `ripgrep' is the fastest
-  (when sys/win32p
+  (when IS-WIN
     (when (executable-find "rg")
       (setq projectile-generic-command "rg -0 --files --color=never --hidden")
       (setq projectile-indexing-method 'alien)

@@ -1,12 +1,12 @@
 ;; init-restore.el --- Initialize restore configurations.	-*- lexical-binding: t -*-
 ;;; Code:
 ;; save a list of open files in ~/.emacs.d/.emacs.desktop
-(setq desktop-path (list doom-cache-dir)
+(setq desktop-path (list sea-cache-dir)
       desktop-auto-save-timeout 600)
 (desktop-save-mode 1)
 
 (use-package session)
-(setq session-save-file (expand-file-name ".session" doom-cache-dir))
+(setq session-save-file (expand-file-name ".session" sea-cache-dir))
 (setq session-name-disable-regexp "\\(?:\\`'/tmp\\|\\.git/[A-Z_]+\\'\\)")
 (setq session-save-file-coding-system 'utf-8)
 (add-hook 'after-init-hook 'session-initialize)

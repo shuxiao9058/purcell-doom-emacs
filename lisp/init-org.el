@@ -1,7 +1,6 @@
 ;;; init-org.el
 ;;; Code:
 
-(eval-when-compile (require 'init-const))
 (use-package org
   :config
   (setq org-directory "~/org-files"

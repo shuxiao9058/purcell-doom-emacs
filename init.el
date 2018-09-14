@@ -3,27 +3,15 @@
 ;;; This is my init file
 
 ;;; Code:
-(require 'package)
-(setq package-enable-at-startup nil
-      package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
-			 ("melpa" . "http://elpa.emacs-china.org/melpa/")
-			 ("org" . "http://elpa.emacs-china.org/org/")
-			 ))
-(package-initialize)
-;; Bootstrap `use-package'
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(require 'use-package)
-(setq use-package-always-ensure t)
-(setq use-package-always-defer t)
-(use-package diminish)
 
+(defconst sea-local-dir
+  (expand-file-name ".local/" user-emacs-directory)
+  "local directory.")
 (defconst sea-cache-dir
-  (expand-file-name ".cache/" user-emacs-directory)
+  (expand-file-name "cache/" sea-local-dir)
   "Cache directory.")
 (defconst sea-etc-dir
-  (expand-file-name ".etc/" user-emacs-directory)
+  (expand-file-name "etc/" sea-local-dir)
   "etc directory.")
 (defconst IS-MAC
   (eq system-type 'darwin)
@@ -43,6 +31,7 @@ state are passed in.")
 
 
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
+(require 'init-package)
 (require 'init-basic)
 (require 'init-funcs)
 (require 'init-evil)
@@ -75,7 +64,7 @@ state are passed in.")
 (unless (server-running-p)
   (server-start))
   
-(dolist (dir (list sea-cache-dir sea-etc-dir))
+(dolist (dir (list sea-local-dir sea-cache-dir sea-etc-dir))
         (unless (file-directory-p dir)
           (make-directory dir t)))
 

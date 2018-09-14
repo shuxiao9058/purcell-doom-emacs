@@ -1,9 +1,6 @@
 ;; init-utils.el --- Initialize ultilities.	-*- lexical-binding: t -*-
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const))
-
 
 ;; Context-sensitive external browse URL or Internet search
 (use-package browse-url-dwim

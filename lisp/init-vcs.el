@@ -1,8 +1,6 @@
 ;; init-vcs.el --- Initialize version control system configurations.	-*- lexical-binding: t -*-
 ;;; Code:
 
-(eval-when-compile (require 'init-const))
-
 ;; Git
 (use-package magit
   :config

@@ -77,7 +77,7 @@
   ;; Enhance M-x
   (use-package smex
     :init
-    (setq-default smex-save-file (expand-file-name ".smex-items" doom-cache-dir)))
+    (setq-default smex-save-file (expand-file-name ".smex-items" sea-cache-dir)))
 
   ;; Additional key bindings for Ivy
   (use-package ivy-hydra
