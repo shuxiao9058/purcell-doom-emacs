@@ -26,7 +26,7 @@
   
 (defun sea-load-autoload ()
   "Load `sea-autoload-file'."
-  (if (file-exit-p sea-autoload-file)
+  (if (file-exists-p sea-autoload-file)
 		(load sea-autoload-file)
 	(progn
 		(sea/generate-autoload-file)
