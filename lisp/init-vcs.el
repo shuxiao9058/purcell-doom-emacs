@@ -6,8 +6,6 @@
   :config
   (setq magit-completing-read-function 'ivy-completing-read)
 
-  (when sys/windowsp
-    (setenv "GIT_ASKPASS" "git-gui--askpass"))
   :bind
   ;; Magic
   ("C-x g s" . magit-status))

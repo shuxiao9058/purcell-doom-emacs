@@ -21,6 +21,7 @@
 (use-package diminish)
 
 
+
 (defvar sea-autoload-file (concat sea-local-dir "autoloads.el")
   "The path of autoload file which has all the autoload functions.")
   
@@ -45,6 +46,8 @@
 				 (t "Scanned %s"))
 		   (file-relative-name file user-emacs-directory)))
 			))
+			
+
 
 (provide 'init-package)
 

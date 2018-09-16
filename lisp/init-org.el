@@ -45,9 +45,7 @@
 
 (use-package plantuml-mode
   :init
-  (setq plantuml-jar-path
-        (expand-file-name
-         "~/forwin/bin/plantuml.jar"))
+  (setq plantuml-jar-path (expand-file-name sea-etc-dir "plantuml.jar"))
   ;; Enable plantuml-mode for PlantUML files
   (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
   ;; Integration with org-mode
@@ -79,7 +77,7 @@
       (when (file-exists-p zip-temp)
         (delete-file zip-temp)))))
 		
-(after-load 'ob-ditaa
+(after! ob-ditaa
   (unless (and (boundp 'org-ditaa-jar-path)
                (file-exists-p org-ditaa-jar-path))
     (let ((jar-name "ditaa0_9.jar")
@@ -88,10 +86,10 @@
       (unless (file-exists-p org-ditaa-jar-path)
         (sanityinc/grab-ditaa url jar-name)))))
 
-(after-load 'ob-plantuml
+(after! ob-plantuml
   (let ((jar-name "plantuml.jar")
         (url "http://jaist.dl.sourceforge.net/project/plantuml/plantuml.jar"))
-    (setq org-plantuml-jar-path (expand-file-name jar-name (file-name-directory user-init-file)))
+    (setq org-plantuml-jar-path (expand-file-name jar-name sea-etc-dir))
     (unless (file-exists-p org-plantuml-jar-path)
       (url-copy-file url org-plantuml-jar-path))))
 

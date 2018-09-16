@@ -34,6 +34,13 @@
 (defconst sea-etc-dir
   (expand-file-name "etc/" sea-local-dir)
   "etc directory.")
+ 
+(defconst sea-core-dir
+  (expand-file-name "lisp/" user-emacs-directory)
+  "core directory.")
+ 
+(defconst EMACS26+ (> emacs-major-version 25))
+(defconst EMACS27+ (> emacs-major-version 26))
   
 (defconst IS-MAC
   (eq system-type 'darwin)
@@ -55,9 +62,10 @@ line or use --debug-init to enable this.")
 state are passed in.")
 
 
-(add-to-list 'load-path (concat user-emacs-directory "lisp"))
+(add-to-list 'load-path sea-core-dir)
 (require 'init-package)
 (require 'init-basic)
+(require 'init-lib)
 (require 'init-funcs)
 (require 'init-evil)
 (require 'init-ui)
