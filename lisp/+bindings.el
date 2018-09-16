@@ -389,6 +389,8 @@
         :map ivy-minibuffer-map
         "C-SPC" #'ivy-call-and-recenter  ; preview file
         "C-l"   #'ivy-alt-done
+		"C-k"   #'ivy-previous-line
+        "C-j"   #'ivy-next-line
         "M-z"   #'undo
         "M-v"   #'yank
         "C-v"   #'yank)

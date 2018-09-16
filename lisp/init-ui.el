@@ -1,9 +1,10 @@
 ;;; init-ui.el -*- lexical-binding: t; -*-
 (defvar sea-init-ui-hook nil
   "ui hook")
-(defvar sea-font (font-spec :family "Source Code Pro" :size 14)
+(defvar sea-font (font-spec :family "Source Code Pro" :size 15)
   "en font")
-(defvar sea-cn-font (font-spec :family "Microsoft Yahei" :size 16)
+;(font-spec :family "Microsoft Yahei" :size 16)
+(defvar sea-cn-font nil
   "cn font")
 (defvar sea-unicode-font nil
   "unicode font")
@@ -80,6 +81,7 @@
 
 (setq sea-font (font-spec :family "Source Code Pro" :size 14))
 (setq sea-cn-font (font-spec :family "Microsoft Yahei" :size 16))
+
 (defun sea/init-ui (&optional frame)
   "Set the theme and load the font, in that order."
   (reapply-themes)
@@ -108,6 +110,8 @@
   
 (add-hook 'after-init-hook #'sea/init-ui)
 
+(use-package unicode-fonts)
+
 (use-package switch-window
 :config
 (setq-default switch-window-shortcut-style 'alphabet)
@@ -126,6 +130,7 @@
     (when (display-graphic-p)
       (apply orig-fn args)))
   :config
+  (setq inhibit-compacting-font-caches t)
   ;; all-the-icons doesn't work in the terminal, so we "disable" it.
   (dolist (fn '(all-the-icons-octicon all-the-icons-material
                 all-the-icons-faicon all-the-icons-fileicon
@@ -140,7 +145,10 @@
              neotree-find
              neo-global--with-buffer
              neo-global--window-exists-p)
+  :init
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
   :config
+  
   (setq neo-create-file-auto-open nil
         neo-auto-indent-point nil
         neo-autorefresh nil
@@ -183,5 +191,10 @@
     (skip-chars-forward " \t\r"))
   (advice-add #'neotree-next-line :after #'+neotree*indent-cursor)
   (advice-add #'neotree-previous-line :after #'+neotree*indent-cursor))
+  
+; (use-package powerline
+  ; :init
+  ; (powerline-default-theme))
+
   
 (provide 'init-ui)

@@ -11,7 +11,8 @@
 (defun sea-finalize ()
   "The main starup function."
   (dolist (hook '(sea-init-hook))
-    (run-hook-with-args hook))
+    (run-hook-with-args hook)
+  (run-hook-wrapped 'sea-post-init-hook #'sea-try-run-hook))
 	
   (sea-load-autoload)
   (setq gc-cons-threshold 16777216
@@ -60,6 +61,32 @@ line or use --debug-init to enable this.")
 (defvar sea-project-hook nil
   "Hook run when a project is enabled. The name of the project's mode and its
 state are passed in.")
+(defvar sea-init-hook nil
+  "Hooks run after all init.el files are loaded, including your private and all
+module init.el files, but before their config.el files are loaded.")
+
+(defvar sea-post-init-hook nil
+  "A list of hooks run when sea is fully initialized. Fires near the end of
+`emacs-startup-hook', as late as possible. Guaranteed to run after everything
+else (except for `window-setup-hook').")
+
+(defvar sea-reload-hook nil
+  "A list of hooks to run when `sea/reload' is called.")
+  
+(defun sea-try-run-hook (hook)
+  "Run HOOK (a hook function), but handle errors better, to make debugging
+issues easier.
+Meant to be used with `run-hook-wrapped'."
+  (let ((gc-cons-threshold sea-gc-cons-upper-limit))
+    (when sea-debug-mode
+      (message "Running sea hook: %s" hook))
+    (condition-case e
+        (funcall hook)
+      ((debug error)
+       (signal 'sea-hook-error (list hook e))))
+    ;; return nil so `run-hook-wrapped' won't short circuit
+    nil))
+
 
 
 (add-to-list 'load-path sea-core-dir)
@@ -69,6 +96,7 @@ state are passed in.")
 (require 'init-funcs)
 (require 'init-evil)
 (require 'init-ui)
+(require 'init-modeline)
 (require 'init-edit)
 (require 'init-highlight)
 (require 'init-keybinds)
