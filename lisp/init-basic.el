@@ -15,25 +15,34 @@
   )
 
 ;; coding
-(defun windows-shell-mode-coding ()
-    (set-buffer-file-coding-system 'gbk)
-    (set-buffer-process-coding-system 'gbk 'gbk))
-(defun python-encode-in-org-babel-execute (func body params)
-    (let ((coding-system-for-write 'utf-8))
-      (funcall func body params)))
-(cond
- ((eq system-type 'IS-WIN)
-  (set-language-environment "chinese-gbk")
-  (prefer-coding-system 'utf-8)
-  (set-terminal-coding-system 'gbk)
-  (modify-coding-system-alist 'process "*" 'gbk)
-  (add-hook 'shell-mode-hook #'windows-shell-mode-coding)
-  (add-hook 'inferior-python-mode-hook #'windows-shell-mode-coding)
-  (advice-add #'org-babel-execute:python :around
-              #'python-encode-in-org-babel-execute))
- (t
-  (set-language-environment "UTF-8")
-  (prefer-coding-system 'utf-8)))
+; (defun windows-shell-mode-coding ()
+    ; (set-buffer-file-coding-system 'gbk)
+    ; (set-buffer-process-coding-system 'gbk 'gbk))
+; (defun python-encode-in-org-babel-execute (func body params)
+    ; (let ((coding-system-for-write 'utf-8))
+      ; (funcall func body params)))
+; (cond
+ ; ((eq system-type 'IS-WIN)
+  ; (set-language-environment "chinese-gbk")
+  ; (prefer-coding-system 'utf-8)
+  ; (set-terminal-coding-system 'gbk)
+  ; (modify-coding-system-alist 'process "*" 'gbk)
+  ; (add-hook 'shell-mode-hook #'windows-shell-mode-coding)
+  ; (add-hook 'inferior-python-mode-hook #'windows-shell-mode-coding)
+  ; (advice-add #'org-babel-execute:python :around
+              ; #'python-encode-in-org-babel-execute))
+ ; (t
+  ; (set-language-environment "UTF-8")
+  ; (prefer-coding-system 'utf-8)))
+  
+(when (fboundp 'set-charset-priority)
+  (set-charset-priority 'unicode))     ; pretty
+(prefer-coding-system        'utf-8)   ; pretty
+(set-terminal-coding-system  'utf-8)   ; pretty
+(set-keyboard-coding-system  'utf-8)   ; pretty
+(set-selection-coding-system 'utf-8)   ; perdy
+(setq locale-coding-system   'utf-8)   ; please
+(setq-default buffer-file-coding-system 'utf-8) ; with sugar on top
 
 ;; Environment
 (when (or IS-MAC IS-LINUX)

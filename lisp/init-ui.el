@@ -3,9 +3,6 @@
   "ui hook")
 (defvar sea-font (font-spec :family "Source Code Pro" :size 15)
   "en font")
-;(font-spec :family "Microsoft Yahei" :size 16)
-(defvar sea-cn-font nil
-  "cn font")
 (defvar sea-unicode-font nil
   "unicode font")
 (defvar sea-variable-pitch-font nil
@@ -79,8 +76,8 @@
                                 "*Ibuffer*"
                                 "*esh command on file*")))
 
-(setq sea-font (font-spec :family "Source Code Pro" :size 14))
-(setq sea-cn-font (font-spec :family "Microsoft Yahei" :size 16))
+;(setq sea-font (font-spec :family "Source Code Pro" :size 14))
+;(setq sea-cn-font (font-spec :family "Microsoft Yahei" :size 16))
 
 (defun sea/init-ui (&optional frame)
   "Set the theme and load the font, in that order."
@@ -91,8 +88,6 @@
           (set-frame-font sea-font nil (if frame (list frame) t))
           (set-face-attribute 'fixed-pitch frame :font sea-font))
         ;; Fallback to `sea-unicode-font' for Unicode characters
-		(when (fontp sea-cn-font)
-          (set-fontset-font t 'chinese-gbk sea-cn-font frame))
         (when (fontp sea-unicode-font)
           (set-fontset-font t 'unicode sea-unicode-font frame))
         ;; ...and for variable-pitch-mode:
@@ -110,7 +105,7 @@
   
 (add-hook 'after-init-hook #'sea/init-ui)
 
-(use-package unicode-fonts)
+
 
 (use-package switch-window
 :config
@@ -122,6 +117,10 @@
   :ensure nil
   :init (add-hook 'sea-init-ui-hook #'windmove-default-keybindings))
 
+(use-package unicode-fonts
+  :init
+  (unicode-fonts-setup))
+(require 'font-lock+)
 (use-package all-the-icons
   :commands (all-the-icons-octicon all-the-icons-faicon all-the-icons-fileicon
              all-the-icons-wicon all-the-icons-material all-the-icons-alltheicon)

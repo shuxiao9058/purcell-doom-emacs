@@ -4,10 +4,13 @@
 ;;; Code:
 
 (defun custom-modeline-mode-icon ()
-  (format " %s"
-    (propertize icon
-                'help-echo (format "Major-mode: `%s`" major-mode)
-                'face `(:height 1.2 :family ,(all-the-icons-icon-family-for-buffer)))))
+  (let ((icon (all-the-icons--icon-info-for-buffer)))
+      (unless (symbolp icon) ;; This implies it's the major mode
+        (propertize icon
+                    'help-echo (format "Major-mode: `%s`" major-mode)
+                    'display '(raise 0.0)
+                    'face `(:height 1.0 :family ,(all-the-icons-icon-family-for-buffer) :inherit)))))
+
 
 (defun custom-modeline-region-info ()
   (when mark-active
@@ -19,16 +22,17 @@
                    'display '(raise -0.0))
        (propertize (format " (%s, %s)" words chars)
                    'face `(:height 0.9))))))
-				   
+
+
 (defun -custom-modeline-github-vc ()
   (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
     (concat
-     (propertize (format " %s" (all-the-icons-alltheicon "git")) 'face `(:height 1.2) 'display '(raise -0.1))
-     " · "
+     ;; (propertize (all-the-icons-alltheicon "git") 'face '(:height 1.1 :inherit) 'display '(raise 0.1))
+     ;; (propertize " · ")
      (propertize (format "%s" (all-the-icons-octicon "git-branch"))
-                 'face `(:height 1.3 :family ,(all-the-icons-octicon-family))
-                 'display '(raise -0.1))
-     (propertize (format " %s" branch) 'face `(:height 0.9)))))
+                 'face `(:family ,(all-the-icons-octicon-family) :height 1.0 :inherit)
+                 'display '(raise 0.2))
+     (propertize (format " %s" branch) 'face `(:height 0.9 :inherit) 'display '(raise 0.2)))))
 
 (defun -custom-modeline-svn-vc ()
   (let ((revision (cadr (split-string vc-mode "-"))))
@@ -42,7 +46,7 @@
       ((string-match "Git[:-]" vc-mode) (-custom-modeline-github-vc))
       ((string-match "SVN-" vc-mode) (-custom-modeline-svn-vc))
       (t (format "%s" vc-mode)))))
-	  
+
 (defun custom-modeline-flycheck-status ()
   (let* ((text (pcase flycheck-last-status-change
                 (`finished (if flycheck-current-errors
@@ -61,13 +65,13 @@
                  'mouse-face '(:box 1)
                  'local-map (make-mode-line-mouse-map
                              'mouse-1 (lambda () (interactive) (flycheck-list-errors))))))
-(setq-default mode-line-format '("%e" (:eval 
+(setq-default mode-line-format '("%e" (:eval
   (concat
-    ; (custom-modeline-mode-icon)
+    (custom-modeline-mode-icon)
     (custom-modeline-icon-vc)
     (custom-modeline-region-info)
     (custom-modeline-flycheck-status)))))
-	
+
 (provide 'init-modeline)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
