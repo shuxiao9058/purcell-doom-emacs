@@ -7,21 +7,21 @@
   :init (add-hook 'after-init-hook #'global-hl-line-mode))
 
 ;; Highlight symbols
-; (use-package symbol-overlay
-  ; :diminish symbol-overlay-mode
-  ; :bind (("M-i" . symbol-overlay-put)
-         ; ([C-f3] . symbol-overlay-put)
-         ; ([f3] . symbol-overlay-jump-next)
-         ; ([S-f3] . symbol-overlay-jump-prev)
-         ; ([M-f3] . symbol-overlay-remove-all))
-  ; :init (add-hook 'prog-mode-hook #'symbol-overlay-mode))
+(use-package symbol-overlay
+  :diminish symbol-overlay-mode
+  :bind (("M-i" . symbol-overlay-put)
+         ([C-f3] . symbol-overlay-put)
+         ([f3] . symbol-overlay-jump-next)
+         ([S-f3] . symbol-overlay-jump-prev)
+         ([M-f3] . symbol-overlay-remove-all))
+  :init (add-hook 'prog-mode-hook #'symbol-overlay-mode))
 
-;; (use-package highlight-symbol
-;;   :bind
-;;   ([(control f3)] . highlight-symbol)
-;;   ([f3] . highlight-symbol-next)
-;;   ([(shift f3)] . highlight-symbol-prev)
-;;   ([(meta f3)] . highlight-symbol-query-replace))
+(use-package highlight-symbol
+  :bind
+  ([(control f3)] . highlight-symbol)
+  ([f3] . highlight-symbol-next)
+  ([(shift f3)] . highlight-symbol-prev)
+  ([(meta f3)] . highlight-symbol-query-replace))
 
 ;; Highlight matching paren
 (use-package paren
