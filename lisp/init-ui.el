@@ -117,10 +117,11 @@
   :ensure nil
   :init (add-hook 'sea-init-ui-hook #'windmove-default-keybindings))
 
-(use-package unicode-fonts
-  :init
-  (unicode-fonts-setup))
-(require 'font-lock+)
+; (use-package unicode-fonts
+  ; :init
+  ; (unicode-fonts-setup))
+; (require 'font-lock+)
+
 (use-package all-the-icons
   :commands (all-the-icons-octicon all-the-icons-faicon all-the-icons-fileicon
              all-the-icons-wicon all-the-icons-material all-the-icons-alltheicon)
