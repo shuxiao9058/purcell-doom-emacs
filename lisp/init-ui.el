@@ -18,9 +18,17 @@
 
 
 (setq custom-safe-themes t)
-(use-package doom-themes)
+(use-package doom-themes
+  :config
+  ;; more Atom-esque file icons for neotree
+  (add-hook 'sea-init-ui-hook #'doom-themes-neotree-config)
+  (setq doom-neotree-enable-variable-pitch t
+        doom-neotree-file-icons 'simple
+        doom-neotree-line-spacing 2))
 (use-package color-theme-sanityinc-tomorrow)
 (setq-default custom-enabled-themes '(doom-one))
+;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
+;; (setq-default custom-enabled-themes '(doom-nord-light))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -102,7 +110,7 @@
               "Unexpected error while initializing fonts: %s"
               (error-message-string ex)))))
   (run-hooks 'sea-init-ui-hook))
-  
+
 (add-hook 'after-init-hook #'sea/init-ui)
 
 
@@ -136,7 +144,7 @@
                 all-the-icons-faicon all-the-icons-fileicon
                 all-the-icons-wicon all-the-icons-alltheicon))
     (advice-add fn :around #'sea*disable-all-the-icons-in-tty)))
-	
+
 (use-package neotree
   :commands (neotree-show
              neotree-hide
@@ -148,7 +156,7 @@
   :init
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
   :config
-  
+
   (setq neo-create-file-auto-open nil
         neo-auto-indent-point nil
         neo-autorefresh nil
@@ -191,10 +199,6 @@
     (skip-chars-forward " \t\r"))
   (advice-add #'neotree-next-line :after #'+neotree*indent-cursor)
   (advice-add #'neotree-previous-line :after #'+neotree*indent-cursor))
-  
-; (use-package powerline
-  ; :init
-  ; (powerline-default-theme))
 
-  
+
 (provide 'init-ui)

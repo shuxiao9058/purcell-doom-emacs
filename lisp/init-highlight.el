@@ -2,9 +2,9 @@
 ;;; Code:
 
 ;; Highlight the current line
-(use-package hl-line
-  :ensure nil
-  :init (add-hook 'after-init-hook #'global-hl-line-mode))
+; (use-package hl-line
+  ; :ensure nil
+  ; :init (add-hook 'after-init-hook #'global-hl-line-mode))
 
 ;; Highlight symbols
 (use-package symbol-overlay
@@ -15,13 +15,6 @@
          ([S-f3] . symbol-overlay-jump-prev)
          ([M-f3] . symbol-overlay-remove-all))
   :init (add-hook 'prog-mode-hook #'symbol-overlay-mode))
-
-;; (use-package highlight-symbol
-;;   :bind
-;;   ([(control f3)] . highlight-symbol)
-;;   ([f3] . highlight-symbol-next)
-;;   ([(shift f3)] . highlight-symbol-prev)
-;;   ([(meta f3)] . highlight-symbol-query-replace))
 
 ;; Highlight matching paren
 (use-package paren

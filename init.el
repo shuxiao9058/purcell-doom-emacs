@@ -96,7 +96,7 @@ Meant to be used with `run-hook-wrapped'."
 (require 'init-funcs)
 (require 'init-evil)
 (require 'init-ui)
-(require 'init-modeline)
+;(require 'init-modeline)
 (require 'init-edit)
 (require 'init-highlight)
 (require 'init-keybinds)

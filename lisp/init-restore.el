@@ -4,6 +4,7 @@
 (setq desktop-path (list sea-cache-dir)
       desktop-auto-save-timeout 600)
 (desktop-save-mode 1)
+(setq make-backup-files nil)
 
 (use-package session)
 (setq session-save-file (expand-file-name ".session" sea-cache-dir))

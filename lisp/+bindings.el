@@ -30,8 +30,8 @@
       :n "M-+"   (λ! (text-scale-set 0))
       :n "M-="   #'text-scale-increase
       :n "M--"   #'text-scale-decrease
-	  
-	  :en "C-h"   #'evil-window-left
+
+      :en "C-h"   #'evil-window-left
       :en "C-j"   #'evil-window-down
       :en "C-k"   #'evil-window-up
       :en "C-l"   #'evil-window-right
@@ -102,8 +102,8 @@
       ;; repeat in visual mode (FIXME buggy)
       :v  "."  #'evil-repeat
       ;; don't leave visual mode after shifting
-      :v  "<"  #'+evil/visual-dedent  ; vnoremap < <gv
-      :v  ">"  #'+evil/visual-indent  ; vnoremap > >gv
+      :v  "<"  #'+evil/visual-dedent    ; vnoremap < <gv
+      :v  ">"  #'+evil/visual-indent    ; vnoremap > >gv
 
       :nv "C-a"   #'evil-numbers/inc-at-pt
       :nv "C-S-a" #'evil-numbers/dec-at-pt
@@ -153,7 +153,7 @@
           [escape]  #'company-search-abort))
 
       ;; counsel
-      
+
       (:after counsel
         (:map counsel-ag-map
           [backtab]  #'+ivy/wgrep-occur      ; search/replace on results
@@ -161,7 +161,7 @@
           "M-RET"    (+ivy-do-action! #'+ivy-git-grep-other-window-action)))
 
       ;; easymotion
-      :m "gs" #'+evil/easymotion  ; lazy-load `evil-easymotion'
+      :m "gs" #'+evil/easymotion        ; lazy-load `evil-easymotion'
       (:after evil-easymotion
         :map evilem-map
         "a" (evilem-create #'evil-forward-arg)
@@ -195,7 +195,7 @@
         :textobj "k" #'evil-indent-plus-i-indent-up      #'evil-indent-plus-a-indent-up
         :textobj "j" #'evil-indent-plus-i-indent-up-down #'evil-indent-plus-a-indent-up-down
 
-        (:map evil-window-map ; prefix "C-w"
+        (:map evil-window-map           ; prefix "C-w"
           ;; Navigation
           "C-h"     #'evil-window-left
           "C-j"     #'evil-window-down
@@ -215,7 +215,7 @@
           "o"       #'sea/window-enlargen
           ;; Delete window
           "c"       #'+workspace/close-window-or-workspace
-          "C-C"     #'ace-delete-window))
+          "m"     #'ace-delete-window))
 
       ;; evil-commentary
       :n  "gc"  #'evil-commentary
@@ -387,9 +387,9 @@
       ;; ivy
       (:after ivy
         :map ivy-minibuffer-map
-        "C-SPC" #'ivy-call-and-recenter  ; preview file
+        "C-SPC" #'ivy-call-and-recenter ; preview file
         "C-l"   #'ivy-alt-done
-		"C-k"   #'ivy-previous-line
+        "C-k"   #'ivy-previous-line
         "C-j"   #'ivy-next-line
         "M-z"   #'undo
         "M-v"   #'yank
@@ -467,7 +467,7 @@
 
 
       ;; --- Built-in plugins -----------------------------
-      
+
       (:after comint
         ;; TAB auto-completion in term buffers
         :map comint-mode-map [tab] #'company-complete)
@@ -502,7 +502,7 @@
       :desc "Blink cursor line"       :n "DEL" #'+nav-flash/blink-cursor
       :desc "Jump to bookmark"        :n "RET" #'bookmark-jump
 
-      
+
       :desc "Switch workspace buffer" :n "," #'persp-switch-to-buffer
       :desc "Switch buffer"           :n "<" #'switch-to-buffer
 
@@ -532,11 +532,11 @@
         :desc "Spelling correction"   :n  "S" #'flyspell-correct-word-generic)
 
       (:desc "search" :prefix "/"
-        
+
         :desc "Buffer"                 :nv "b" #'swiper
         :desc "Project"                :nv "p" #'+ivy/project-search
         :desc "Directory"              :nv "d" #'+ivy/project-search-from-cwd
-        
+
         :desc "Symbols"                :nv "i" #'imenu
         :desc "Symbols across buffers" :nv "I" #'imenu-anywhere
         :desc "Online providers"       :nv "o" #'+lookup/online-select)
@@ -569,7 +569,7 @@
 
       (:desc "buffer" :prefix "b"
         :desc "New empty buffer"        :n "n" #'evil-buffer-new
-        
+
         :desc "Switch workspace buffer" :n "b" #'persp-switch-to-buffer
         :desc "Switch buffer"           :n "B" #'switch-to-buffer
 
@@ -666,7 +666,7 @@
         :desc "What minor modes"      :n  ";" #'doom/describe-active-minor-mode)
 
       (:desc "insert" :prefix "i"
-        
+
         :desc "From kill-ring"        :nv "y" #'counsel-yank-pop
         :desc "From evil registers"   :nv "r" #'counsel-evil-registers
         :desc "From snippet"          :nv "s" #'yas-insert-snippet)
@@ -683,10 +683,10 @@
         :desc "REPL"                  :n  "r" #'+eval/open-repl
                                       :v  "r" #'+eval:repl
         :desc "Dired"                 :n  "-" #'dired-jump
-        
+
         :desc "Project sidebar"              :n  "p" #'+neotree/open
         :desc "Find file in project sidebar" :n  "P" #'+neotree/find-this-file
-        
+
         :desc "Imenu sidebar"         :nv "i" #'imenu-list-smart-toggle
         :desc "Terminal"              :n  "t" #'+term/open
         :desc "Terminal in popup"     :n  "T" #'+term/open-popup-in-project
@@ -711,7 +711,7 @@
         :desc "Restart & restore Doom" :n "r" #'+workspace/restart-emacs-then-restore
         :desc "Restart Doom"           :n "R" #'restart-emacs)
 
-      
+
       (:desc "snippets" :prefix "s"
         :desc "New snippet"           :n  "n" #'yas-new-snippet
         :desc "Insert snippet"        :nv "i" #'yas-insert-snippet
