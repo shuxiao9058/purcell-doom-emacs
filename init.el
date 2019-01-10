@@ -7,54 +7,54 @@
 (unless after-init-time
   (setq gc-cons-threshold 402653184
         gc-cons-percentage 1.0))
-		
+
 (defun sea-finalize ()
   "The main starup function."
   (dolist (hook '(sea-init-hook))
     (run-hook-with-args hook)
   (run-hook-wrapped 'sea-post-init-hook #'sea-try-run-hook))
-	
+
   (sea-load-autoload)
   (setq gc-cons-threshold 16777216
         gc-cons-percentage 0.15))
-		
+
 (add-hook 'emacs-startup-hook #'sea-finalize t)
 
 (defconst sea-autoload-dir
   (expand-file-name "autoload/" user-emacs-directory)
   "autoload directory.")
-  
+
 (defconst sea-local-dir
   (expand-file-name ".local/" user-emacs-directory)
   "local directory.")
-  
+
 (defconst sea-cache-dir
   (expand-file-name "cache/" sea-local-dir)
   "Cache directory.")
-  
+
 (defconst sea-etc-dir
   (expand-file-name "etc/" sea-local-dir)
   "etc directory.")
- 
+
 (defconst sea-core-dir
   (expand-file-name "lisp/" user-emacs-directory)
   "core directory.")
- 
+
 (defconst EMACS26+ (> emacs-major-version 25))
 (defconst EMACS27+ (> emacs-major-version 26))
-  
+
 (defconst IS-MAC
   (eq system-type 'darwin)
   "Are we running on a Mac system?")
-  
+
 (defconst IS-LINUX
   (eq system-type 'gnu/linux)
   "Are we running on a Linux system?")
-  
+
 (defconst IS-WIN
   (eq system-type 'windows-nt)
   "Are we running on a Linux system?")
-  
+
 (defvar sea-debug-mode (or (getenv "DEBUG") init-file-debug)
   "If non-nil, all sea functions will be verbose. Set DEBUG=1 in the command
 line or use --debug-init to enable this.")
@@ -72,7 +72,7 @@ else (except for `window-setup-hook').")
 
 (defvar sea-reload-hook nil
   "A list of hooks to run when `sea/reload' is called.")
-  
+
 (defun sea-try-run-hook (hook)
   "Run HOOK (a hook function), but handle errors better, to make debugging
 issues easier.
@@ -96,7 +96,7 @@ Meant to be used with `run-hook-wrapped'."
 (require 'init-funcs)
 (require 'init-evil)
 (require 'init-ui)
-;(require 'init-modeline)
+(require 'init-modeline)
 (require 'init-edit)
 (require 'init-highlight)
 (require 'init-keybinds)
@@ -105,6 +105,7 @@ Meant to be used with `run-hook-wrapped'."
 (require 'init-company)
 (require 'init-yasnippet)
 (require 'init-projectile)
+(require 'init-workspace)
 (require 'init-flycheck)
 
 (require 'init-utils)
@@ -124,7 +125,7 @@ Meant to be used with `run-hook-wrapped'."
 (require 'server)
 (unless (server-running-p)
   (server-start))
-  
+
 (dolist (dir (list sea-local-dir sea-cache-dir sea-etc-dir))
         (unless (file-directory-p dir)
           (make-directory dir t)))

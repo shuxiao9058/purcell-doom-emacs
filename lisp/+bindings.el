@@ -31,10 +31,10 @@
       :n "M-="   #'text-scale-increase
       :n "M--"   #'text-scale-decrease
 
-      :en "C-h"   #'evil-window-left
-      :en "C-j"   #'evil-window-down
-      :en "C-k"   #'evil-window-up
-      :en "C-l"   #'evil-window-right
+      :enm "C-h"   #'evil-window-left
+      :enm "C-j"   #'evil-window-down
+      :enm "C-k"   #'evil-window-up
+      :enm "C-l"   #'evil-window-right
 
       ;; Simple window/frame navigation/manipulation
       :n "C-`"   #'+popup/toggle

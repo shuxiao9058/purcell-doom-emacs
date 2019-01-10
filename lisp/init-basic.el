@@ -35,14 +35,6 @@
   (set-language-environment "UTF-8")
   (prefer-coding-system 'utf-8)))
 
-;; (when (fboundp 'set-charset-priority)
-;;   (set-charset-priority 'unicode))     ; pretty
-;; (prefer-coding-system        'utf-8)   ; pretty
-;; (set-terminal-coding-system  'utf-8)   ; pretty
-;; (set-keyboard-coding-system  'utf-8)   ; pretty
-;; (set-selection-coding-system 'utf-8)   ; perdy
-;; (setq locale-coding-system   'utf-8)   ; please
-;; (setq-default buffer-file-coding-system 'utf-8) ; with sugar on top
 
 ;; Environment
 (when (or IS-MAC IS-LINUX)
@@ -102,6 +94,10 @@
 (use-package s
   :ensure t
   :defer t)
+(use-package eldoc-eval)
+(use-package shrink-path
+  :commands (shrink-path-prompt shrink-path-file-mixed))
+
 
 (provide 'init-basic)
 ;;; base ends here

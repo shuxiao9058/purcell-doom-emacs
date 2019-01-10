@@ -33,6 +33,8 @@
 		(sea/generate-autoload-file)
 		(load sea-autoload-file))))
 
+
+
 (defun sea/generate-autoload-file ()
   "Extract autload file from each star to `sea-autoload-file'."
   (interactive)  

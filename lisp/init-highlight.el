@@ -7,14 +7,14 @@
   ; :init (add-hook 'after-init-hook #'global-hl-line-mode))
 
 ;; Highlight symbols
-(use-package symbol-overlay
-  :diminish symbol-overlay-mode
-  :bind (("M-i" . symbol-overlay-put)
-         ([C-f3] . symbol-overlay-put)
-         ([f3] . symbol-overlay-jump-next)
-         ([S-f3] . symbol-overlay-jump-prev)
-         ([M-f3] . symbol-overlay-remove-all))
-  :init (add-hook 'prog-mode-hook #'symbol-overlay-mode))
+; (use-package symbol-overlay
+  ; :diminish symbol-overlay-mode
+  ; :bind (("M-i" . symbol-overlay-put)
+         ; ([C-f3] . symbol-overlay-put)
+         ; ([f3] . symbol-overlay-jump-next)
+         ; ([S-f3] . symbol-overlay-jump-prev)
+         ; ([M-f3] . symbol-overlay-remove-all))
+  ; :init (add-hook 'prog-mode-hook #'symbol-overlay-mode))
 
 ;; Highlight matching paren
 (use-package paren
@@ -117,6 +117,12 @@
       "Restore previous whitespace mode when deleting autocomplete box."
       (if my-prev-whitespace-mode
           (whitespace-mode 1)))))
+
+(use-package whitespace-cleanup-mode
+  :diminish whitespace-cleanup-mode
+  :config
+  (add-hook 'prog-mode-hook 'whitespace-cleanup-mode)
+  )
 
 (provide 'init-highlight)
 

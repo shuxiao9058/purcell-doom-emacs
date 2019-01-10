@@ -1,11 +1,11 @@
 ;;; init-ui.el -*- lexical-binding: t; -*-
 (defvar sea-init-ui-hook nil
   "ui hook")
-(defvar sea-font (font-spec :family "Source Code Pro" :size 15)
+(defvar sea-font (font-spec :family "Source Code Pro" :size 13)
   "en font")
-(defvar sea-unicode-font nil
+(defvar sea-unicode-font (font-spec :family "DejaVu Sans Mono")
   "unicode font")
-(defvar sea-variable-pitch-font nil
+(defvar sea-variable-pitch-font (font-spec :family "Source Code Pro" :size 19)
   "variable-pitch font")
 
 ;; Title
@@ -26,9 +26,9 @@
         doom-neotree-file-icons 'simple
         doom-neotree-line-spacing 2))
 (use-package color-theme-sanityinc-tomorrow)
-(setq-default custom-enabled-themes '(doom-one))
+;; (setq-default custom-enabled-themes '(doom-one))
 ;; (setq-default custom-enabled-themes '(sanityinc-tomorrow-bright))
-;; (setq-default custom-enabled-themes '(doom-nord-light))
+(setq-default custom-enabled-themes '(doom-nord-light))
 
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
@@ -113,7 +113,7 @@
 
 (add-hook 'after-init-hook #'sea/init-ui)
 
-
+(require 'autoloads sea-autoload-file t)
 
 (use-package switch-window
 :config

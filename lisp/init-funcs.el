@@ -5,7 +5,7 @@
   (when (version< emacs-version "26")
     (with-no-warnings
       (defalias 'if-let* #'if-let)
-      (defalias 'when-let* #'when-let))))  
+      (defalias 'when-let* #'when-let))))
 (defun sea-enlist (exp)
   "Return EXP wrapped in a list, or as-is if already a list."
   (if (listp exp) exp (list exp)))
@@ -59,7 +59,7 @@ VALUES doesn't get evaluated if the KEYWORD setting doesn't exist."
         (apply fn values)
       (when (or sea-debug-mode after-init-time)
         (message "No setting found for %s" keyword)
-        nil))))	   
+        nil))))
 
 
 (provide 'init-funcs)
