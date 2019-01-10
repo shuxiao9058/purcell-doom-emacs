@@ -48,13 +48,15 @@
 (defun light ()
   "Activate a light color theme."
   (interactive)
-  (setq custom-enabled-themes '(sanityinc-tomorrow-day))
+  ;(setq custom-enabled-themes '(sanityinc-tomorrow-day))
+  (setq custom-enabled-themes '(doom-nord-light))
   (reapply-themes))
 
 (defun dark ()
   "Activate a dark color theme."
   (interactive)
-  (setq custom-enabled-themes '(sanityinc-tomorrow-bright))
+  ;(setq custom-enabled-themes '(sanityinc-tomorrow-bright))
+  (setq custom-enabled-themes '(doom-nord))
   (reapply-themes))
 
 

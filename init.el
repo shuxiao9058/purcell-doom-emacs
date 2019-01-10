@@ -27,6 +27,10 @@
 (defconst sea-local-dir
   (expand-file-name ".local/" user-emacs-directory)
   "local directory.")
+  
+(defconst sea-private-dir
+  (expand-file-name "./" user-emacs-directory)
+  "private directory.")
 
 (defconst sea-cache-dir
   (expand-file-name "cache/" sea-local-dir)

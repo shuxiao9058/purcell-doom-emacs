@@ -213,6 +213,9 @@
           "C-u"     #'winner-undo
           "C-r"     #'winner-redo
           "o"       #'sea/window-enlargen
+		  ;; split
+		  "s"       #'sea/split-window-horizontally-instead
+		  "v"       #'sea/split-window-vertically-instead
           ;; Delete window
           "c"       #'+workspace/close-window-or-workspace
           "m"     #'ace-delete-window))
