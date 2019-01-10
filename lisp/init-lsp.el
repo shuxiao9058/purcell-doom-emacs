@@ -32,43 +32,8 @@
 ;;
 ;;; Code:
 
-;; Emacs client for the Language Server Protocol
-;; https://github.com/emacs-lsp/lsp-mode
-(use-package lsp-mode
-  :init
-  (with-eval-after-load 'company
-    (use-package company-lsp
-      :init (cl-pushnew 'company-lsp company-backends)))
-  )
-
-(use-package lsp-ui
-  :init
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-  (with-eval-after-load 'flycheck
-    (require 'lsp-ui-flycheck))
-  :config
-  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
-  )
-;; Go support for lsp-mode using Sourcegraph's Go Language Server
-;; Install: go get github.com/sourcegraph/go-langserver
-(use-package lsp-go
-  :commands lsp-go-enable
-  :init (add-hook 'go-mode-hook #'lsp-go-enable))
-
-;; Python support for lsp-mode using pyls.
-;; Install: pip install python-language-server
-(use-package lsp-python
-  :commands lsp-python-enable
-  :init (add-hook 'python-mode-hook #'lsp-python-enable))
-
-;; Java support for lsp-mode using the Eclipse JDT Language Server.
-;; Install:
-;; wget http://download.eclipse.org/jdtls/snapshots/jdt-language-server-latest.tar.gz
-;; tar jdt-language-server-latest.tar.gz -C ~/.emacs.d/eclipse.jdt.ls/server/
-(use-package lsp-java
-  :commands lsp-java-enable
-  :init (add-hook 'java-mode-hook #'lsp-java-enable))
+(use-package eglot
+     :hook (prog-mode . eglot-ensure))
 
 (provide 'init-lsp)
 
