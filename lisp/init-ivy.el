@@ -11,7 +11,7 @@ immediately runs it on the current candidate (ending the ivy session)."
      (ivy-set-action ,action)
      (setq ivy-exit 'done)
      (exit-minibuffer)))
-	 
+
 (use-package ivy
   :defer 1
   :config
@@ -48,7 +48,7 @@ immediately runs it on the current candidate (ending the ivy session)."
   ;; Show more buffer information in switch-buffer commands
   (after! ivy-rich
     (dolist (cmd '(ivy-switch-buffer +ivy/switch-workspace-buffer
-                   counsel-projectile-switch-to-buffer))
+                                     counsel-projectile-switch-to-buffer))
       (ivy-set-display-transformer cmd '+ivy-buffer-transformer)))
 
   (use-package ivy-hydra
@@ -159,13 +159,13 @@ immediately runs it on the current candidate (ending the ivy session)."
 
 
 ;; Used by `counsel-M-x'
-(setq amx-save-file (concat sea-cache-dir "amx-items"))
-
+(use-package amx
+  :config (setq amx-save-file (concat sea-cache-dir "amx-items")))
 
 ;;
 ;; Evil key fixes
 
-(map! 
+(map!
       :after ivy
       :map ivy-occur-mode-map
       :n [mouse-1]  #'ivy-occur-click
@@ -207,7 +207,7 @@ immediately runs it on the current candidate (ending the ivy session)."
       :n "gc"       #'ivy-occur-toggle-calling
       ;; quit
       :n "q"        #'quit-window)
-	 
+
 (provide 'init-ivy)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
