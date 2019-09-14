@@ -6,38 +6,6 @@
 ;;
 ;; Modeline
 ;;
-;; Auto updating version control information
-;; (setq auto-revert-check-vc-info t)
-;; (setq-default mode-line-format (list
-;; ;; ⚿ for locked buffer. ⛯ for modified buffer. ⛆ is the normal one.
-;;   '((:eval
-;;      (cond
-;;       (buffer-read-only
-;;        (propertize " ⚿ " 'face '(:foreground "red" :weight 'bold)))
-;;       ((buffer-modified-p)
-;;        (propertize " ⛯ " 'face '(:foreground "orange")))
-;;       ((not (buffer-modified-p))
-;;        (propertize " ⛆ " 'face '(:foreground "gray85"))))))
-;;   ;; Use all-the-icons to display the icon of current major mode
-;;   '(:eval (propertize (all-the-icons-icon-for-mode major-mode
-;;           :height (/ all-the-icons-scale-factor 1.4)
-;;           :v-adjust -0.03)))
-;;   ;; Show the file name with full path
-;;   " %f "
-;;   ;; Show the current position of the cursor in buffer
-;;   'mode-line-position
-;;   ;; Show the current major mode name
-;;   "[" 'mode-name "] "
-;;   ;; Check if the buffer is in any version control system, if yes, show the branch
-;;   '(:eval
-;;     (if vc-mode
-;;         (let* ((noback (replace-regexp-in-string
-;;                            (format "^ %s" (vc-backend buffer-file-name)) " " vc-mode))
-;;                (face (cond ((string-match "^ -" noback) 'mode-line-vc)
-;;                            ((string-match "^ [:@]" noback) 'mode-line-vc-edit)
-;;                            ((string-match "^ [!\\?]" noback) 'mode-line-vc-modified))))
-;;           (format "[git:%s]" (substring noback 2)))))))(provide 'init-modeline)
-
 
 (setq-default mode-line-format
               (list
@@ -56,15 +24,18 @@
                                                                 :v-adjust -0.03)))
 
                ;; the buffer name; the file name as a tool tip
-               '(:eval (propertize " %b "
-                                   'face
-                                   (let ((face (buffer-modified-p)))
-                                     (if face 'font-lock-warning-face
-                                       'font-lock-type-face))
-                                   'help-echo (buffer-file-name)))
-
+               '(:eval (buffer-file-name-truncate t))
+               ;; '(:eval (propertize " %b "
+               ;;                     'face
+               ;;                     (let ((face (buffer-modified-p)))
+               ;;                       (if face 'font-lock-warning-face
+               ;;                         'font-lock-type-face))
+               ;;                     'help-echo (buffer-file-name)))
+               " "
                '(:eval (propertize (substring vc-mode 5)
                                    'face 'font-lock-comment-face))
+
+               '(:eval (custom-modeline-flycheck-status))
 
 
                ;; line and column
@@ -79,9 +50,6 @@
                "/"
                (propertize "%I" 'face 'font-lock-constant-face) ;; size
                "] "
-
-               (flycheck-mode flycheck-mode-line)
-
 
                ;; spaces to align right
                '(:eval (propertize
@@ -119,6 +87,47 @@
                ;;minor-mode-alist
                ))
 
+(defun buffer-file-name-truncate (&optional truncate-tail)
+  "Propertized `buffer-file-name' that truncates every dir along path.
+If TRUNCATE-TAIL is t also truncate the parent directory of the file."
+  (let ((dirs (shrink-path-prompt (file-name-directory buffer-file-truename))))
+    (if (null dirs)
+        (propertize "%b"
+                    'face (if (buffer-modified-p) 'font-lock-warning-face 'font-lock-type-face)
+                    'help-echo (buffer-file-name))
+      (let ((modified-faces (if (buffer-modified-p) 'font-lock-warning-face)))
+        (let ((dirname (car dirs))
+              (basename (cdr dirs))
+              (dir-faces (or modified-faces 'font-lock-type-face))
+              (file-faces (or modified-faces 'font-lock-type-face)))
+          (concat (propertize (concat dirname
+                                      (if truncate-tail (substring basename 0 1) basename)
+                                      "/")
+                              'face (if dir-faces `(:inherit ,dir-faces)))
+                  (propertize (file-name-nondirectory buffer-file-name)
+                              'face (if file-faces `(:inherit ,file-faces))
+                              'help-echo (buffer-file-name))))))))
+
+(defun custom-modeline-flycheck-status ()
+  "Custom status for flycheck with icons."
+  (let* ((text (pcase flycheck-last-status-change
+                 (`finished (if flycheck-current-errors
+                                (let ((count (let-alist (flycheck-count-errors flycheck-current-errors)
+                                               (+ (or .warning 0) (or .error 0)))))
+                                  (format "%s %s" (insert-icon 'all-the-icons-faicon "bug") count))
+                              (format "%s" (insert-icon 'all-the-icons-faicon "check"))))
+                 (`running  (format "%s Running" (insert-icon 'all-the-icons-faicon "spinner" -0.15)))
+                 (`no-checker  (format "%s No Checker" (insert-icon 'all-the-icons-material "warning" -0.15)))
+                 (`not-checked "")
+                 (`errored     (format "%s Error" (insert-icon 'all-the-icons-material "warning" -0.15)))
+                 (`interrupted (format "%s Interrupted" (insert-icon 'all-the-icons-faicon "stop" -0.15)))
+                 (`suspicious  ""))))
+    (propertize text
+                'help-echo "Show Flycheck Errors"
+                'mouse-face '(:box 1)
+                'local-map (make-mode-line-mouse-map
+                            'mouse-1 (lambda () (interactive) (flycheck-list-errors))))))
+
 
 ;; (set-face-attribute 'mode-line           nil :background "light blue")
 ;; (set-face-attribute 'mode-line-buffer-id nil :background "blue" :foreground "white")
@@ -142,18 +151,18 @@
 ;;         (line-number-mode ("%l" (column-number-mode ":%c")))))
 
 
-(defun shorten-directory (dir max-length)
-  "Show up to `max-length' characters of a directory name `dir'."
-  (let ((path (reverse (split-string (abbreviate-file-name dir) "/")))
-        (output ""))
-    (when (and path (equal "" (car path)))
-      (setq path (cdr path)))
-    (while (and path (< (length output) (- max-length 4)))
-      (setq output (concat (car path) "/" output))
-      (setq path (cdr path)))
-    (when path
-      (setq output (concat ".../" output)))
-    output))
+;; (defun shorten-directory (dir max-length)
+;;   "Show up to `max-length' characters of a directory name `dir'."
+;;   (let ((path (reverse (split-string (abbreviate-file-name dir) "/")))
+;;         (output ""))
+;;     (when (and path (equal "" (car path)))
+;;       (setq path (cdr path)))
+;;     (while (and path (< (length output) (- max-length 4)))
+;;       (setq output (concat (car path) "/" output))
+;;       (setq path (cdr path)))
+;;     (when path
+;;       (setq output (concat ".../" output)))
+;;     output))
 
 ;; (defvar mode-line-directory
 ;;   '(:propertize

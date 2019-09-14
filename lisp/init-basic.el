@@ -46,11 +46,25 @@
     (exec-path-from-shell-initialize)))
 
 ;; Show native line numbers if possible, otherwise use linum
-(if (version<= "26.0.50" emacs-version )
-    (global-display-line-numbers-mode)
-  (add-hook 'after-init-hook #'global-linum-mode))
-  ;; Linum enhancement
-(setq linum-format "  %3d ")
+(if (fboundp 'display-line-numbers-mode)
+    (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+  (use-package linum-off
+    :demand
+    :defines linum-format
+    :hook (after-init . global-linum-mode)
+    :config
+    (setq linum-format "%4d ")
+    ;; Highlight current line number
+    (use-package hlinum
+      :defines linum-highlight-in-all-buffersp
+      :hook (global-linum-mode . hlinum-activate)
+      :init
+      (setq linum-highlight-in-all-buffersp t)
+      (custom-set-faces
+       `(linum-highlight-face
+         ((t (:inherit 'default :background ,(face-background 'default) :foreground ,(face-foreground 'default)))))))))
+
+
 
 (defadvice term (before force-bash)
   (interactive (list "/usr/local/bin/fish")))
