@@ -32,8 +32,8 @@
 ;;
 ;;; Code:
 
-(use-package eglot
-     :hook (prog-mode . eglot-ensure))
+;; (use-package eglot
+;;      :hook (prog-mode . eglot-ensure))
 
 (provide 'init-lsp)
 

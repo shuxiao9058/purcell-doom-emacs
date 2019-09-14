@@ -49,6 +49,20 @@
 (if (version<= "26.0.50" emacs-version )
     (global-display-line-numbers-mode)
   (add-hook 'after-init-hook #'global-linum-mode))
+  ;; Linum enhancement
+(setq linum-format "  %3d ")
+
+(defadvice term (before force-bash)
+  (interactive (list "/usr/local/bin/fish")))
+(ad-activate 'term)
+(add-hook 'term-mode-hook #'hide-mode-line-mode)
+(add-hook 'term-mode-hook (lambda ()
+                            (linum-mode -1)
+                            (setq left-fringe-width 0)
+                            (setq right-fringe-width 0)
+                            (local-unset-key (kbd "C-r"))))
+
+(use-package hide-mode-line)
 
 (use-package which-key
   :diminish which-key-mode

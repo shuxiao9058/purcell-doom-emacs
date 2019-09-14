@@ -27,7 +27,7 @@
 (defconst sea-local-dir
   (expand-file-name ".local/" user-emacs-directory)
   "local directory.")
-  
+
 (defconst sea-private-dir
   (expand-file-name "./" user-emacs-directory)
   "private directory.")
@@ -43,6 +43,10 @@
 (defconst sea-core-dir
   (expand-file-name "lisp/" user-emacs-directory)
   "core directory.")
+
+(defconst sea-site-lisp-dir
+  (expand-file-name "site-lisp/" user-emacs-directory)
+  "site-lisp directory.")
 
 (defconst EMACS26+ (> emacs-major-version 25))
 (defconst EMACS27+ (> emacs-major-version 26))
@@ -81,7 +85,7 @@ else (except for `window-setup-hook').")
   "Run HOOK (a hook function), but handle errors better, to make debugging
 issues easier.
 Meant to be used with `run-hook-wrapped'."
-  (let ((gc-cons-threshold sea-gc-cons-upper-limit))
+  (let ((gc-cons-threshold 20000000))
     (when sea-debug-mode
       (message "Running sea hook: %s" hook))
     (condition-case e
@@ -94,6 +98,7 @@ Meant to be used with `run-hook-wrapped'."
 
 
 (add-to-list 'load-path sea-core-dir)
+(add-to-list 'load-path sea-site-lisp-dir)
 (require 'init-package)
 (require 'init-basic)
 (require 'init-lib)
@@ -111,6 +116,7 @@ Meant to be used with `run-hook-wrapped'."
 (require 'init-projectile)
 (require 'init-workspace)
 (require 'init-flycheck)
+(require 'init-treemacs)
 
 (require 'init-utils)
 (require 'init-vcs)

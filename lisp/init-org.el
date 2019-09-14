@@ -2,9 +2,6 @@
 ;;; Code:
 
 (use-package org
-  :config
-  (setq org-directory "~/org-files"
-        org-default-notes-file (concat org-directory "/todo.org"))
   :bind
   ("C-c l" . org-store-link)
   ("C-c a" . org-agenda))
@@ -20,32 +17,29 @@
  'org-babel-load-languages
  '(
    (plantuml . t)
-   (ditaa , t)
-   (dot . t)
    (emacs-lisp . t)
    (ipython . t)
-   (ruby . t)
-   (gnuplot . t)
-   ;(sh . t)
    (org . t)
    (latex . t)))
 (setq org-confirm-babel-evaluate nil)
 (setq org-src-fontify-natively t)
-; (setq org-plantuml-jar-path
-      ; (expand-file-name "~/forwin/bin/plantuml.jar"))
-; (setq org-ditaa-jar-path (format "%s%s" ""
-                                 ; (expand-file-name "~/forwin/bin/ditaa.jar")) )
 
-(add-hook 'org-babel-after-execute-hook 'naso/display-inline-images 'append)
+(add-hook 'org-babel-after-execute-hook 'display-inline-images 'append)
 (add-hook 'org-mode-hook '(lambda ()(setq truncate-lines t)) 'append)
-(defun naso/display-inline-images ()
+(defun display-inline-images ()
   (condition-case nil
       (org-display-inline-images)
     (error nil)))
 
+(defvar plantuml-jar-path (expand-file-name "plantuml.jar" sea-etc-dir)
+  "plantuml dir")
+(defun sea/plantuml-install()
+  (let ((url "http://jaist.dl.sourceforge.net/project/plantuml/plantuml.jar"))
+    (unless (file-exists-p plantuml-jar-path)
+      (url-copy-file url plantuml-jar-path))))
+(add-hook 'org-mode-hook '(lambda () (eval-after-load 'ob-plantuml (sea/plantuml-install))))
 (use-package plantuml-mode
   :init
-  (setq plantuml-jar-path (expand-file-name sea-etc-dir "plantuml.jar"))
   ;; Enable plantuml-mode for PlantUML files
   (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
   ;; Integration with org-mode
@@ -58,40 +52,141 @@
         org-agenda-files (append org-agenda-files (org-projectile:todo-files))))
 
 (use-package org-bullets
-  :config
+  :init
+  (setq org-bullets-bullet-list '( "⦿" "○"  "✿" "◆"))
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
-;; TODO: fail gracefully
-(defun sanityinc/grab-ditaa (url jar-name)
-  "Download URL and extract JAR-NAME as `org-ditaa-jar-path'."
-  ;; TODO: handle errors
-  (message "Grabbing " jar-name " for org.")
-  (let ((zip-temp (make-temp-name "emacs-ditaa")))
-    (unwind-protect
-        (progn
-          (when (executable-find "unzip")
-            (url-copy-file url zip-temp)
-            (shell-command (concat "unzip -p " (shell-quote-argument zip-temp)
-                                   " " (shell-quote-argument jar-name) " > "
-                                   (shell-quote-argument org-ditaa-jar-path)))))
-      (when (file-exists-p zip-temp)
-        (delete-file zip-temp)))))
-		
-; (after! ob-ditaa
-  ; (unless (and (boundp 'org-ditaa-jar-path)
-               ; (file-exists-p org-ditaa-jar-path))
-    ; (let ((jar-name "ditaa0_9.jar")
-          ; (url "http://jaist.dl.sourceforge.net/project/ditaa/ditaa/0.9/ditaa0_9.zip"))
-      ; (setq org-ditaa-jar-path (expand-file-name jar-name (file-name-directory user-init-file)))
-      ; (unless (file-exists-p org-ditaa-jar-path)
-        ; (sanityinc/grab-ditaa url jar-name)))))
+(defun enhance-ui-for-orgmode ()
+  "Enhance UI for orgmode."
+  (toggle-truncate-lines)
+  ;; Beautify Org Checkbox Symbol
+  (push '("[ ]" . "☐") prettify-symbols-alist)
+  (push '("[X]" . "☑" ) prettify-symbols-alist)
+  (push '("[-]" . "❍" ) prettify-symbols-alist)
+  (push '("#+BEGIN_SRC" . "⌜" ) prettify-symbols-alist)
+  (push '("#+END_SRC" . "⌞" ) prettify-symbols-alist)
+  (push '("TODO" . "☐" ) prettify-symbols-alist)
+  (push '("WORK" . "⚑" ) prettify-symbols-alist)
+  (push '("DONE" . "☑" ) prettify-symbols-alist)
+  (prettify-symbols-mode)
+  (defface org-checkbox-done-text
+    '((t (:foreground "#71696A" :strike-through t)))
+    "Face for the text part of a checked org-mode checkbox.")
 
-; (after! ob-plantuml
-  ; (let ((jar-name "plantuml.jar")
-        ; (url "http://jaist.dl.sourceforge.net/project/plantuml/plantuml.jar"))
-    ; (setq org-plantuml-jar-path (expand-file-name jar-name sea-etc-dir))
-    ; (unless (file-exists-p org-plantuml-jar-path)
-      ; (url-copy-file url org-plantuml-jar-path))))
+  (font-lock-add-keywords
+   'org-mode
+   `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)"
+      1 'org-checkbox-done-text prepend))
+   'append)
+  (setq-default
+   org-eldoc-breadcrumb-separator " → "
+   org-enforce-todo-dependencies t
+   org-entities-user
+   '(("flat"  "\\flat" nil "" "" "266D" "♭")
+     ("sharp" "\\sharp" nil "" "" "266F" "♯"))
+   org-fontify-done-headline t
+   org-fontify-quote-and-verse-blocks t
+   org-fontify-whole-heading-line t
+   org-footnote-auto-label 'plain
+   org-hide-leading-stars t
+   org-hide-leading-stars-before-indent-mode t
+   org-image-actual-width nil
+   org-list-description-max-indent 4
+   org-priority-faces
+   '((?a . error)
+     (?b . warning)
+     (?c . success))
+   org-refile-targets
+   '((nil :maxlevel . 3)
+     (org-agenda-files :maxlevel . 3))
+   org-startup-indented t
+   org-todo-keywords
+   '((sequence "TODO(t)" "PROJ(p)" "|" "DONE(d)")
+     (sequence "[ ](T)" "[-](P)" "[?](M)" "|" "[X](D)")
+     (sequence "NEXT(n)" "WAIT(w)" "HOLD(h)" "|" "ABRT(c)"))
+   org-todo-keyword-faces
+   '(("[-]" :inherit (font-lock-constant-face bold))
+     ("[?]" :inherit (warning bold))
+     ("PROJ" :inherit (bold default))
+     ("HOLD" :inherit (warning bold))
+     ("ABRT" :inherit (error bold)))
+   org-use-sub-superscripts '{}
+
+   ;; Scale up LaTeX previews a bit (default is too small)
+   org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+  )
+(add-hook 'org-mode-hook 'enhance-ui-for-orgmode)
+
+;; Block Template
+(use-package hydra :ensure t
+  :config
+  ;; Define the templates
+  (setq org-structure-template-alist
+        '(("s" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>")
+          ("e" "#+begin_example\n?\n#+end_example" "<example>\n?\n</example>")
+          ("q" "#+begin_quote\n?\n#+end_quote" "<quote>\n?\n</quote>")
+          ("v" "#+begin_verse\n?\n#+end_verse" "<verse>\n?\n/verse>")
+          ("c" "#+begin_center\n?\n#+end_center" "<center>\n?\n/center>")
+          ("l" "#+begin_export latex\n?\n#+end_export" "<literal style=\"latex\">\n?\n</literal>")
+          ("L" "#+latex: " "<literal style=\"latex\">?</literal>")
+          ("h" "#+begin_export html\n?\n#+end_exrt" "<literal style=\"html\">\n?\n</literal>")
+          ("H" "#+html: " "<literal style=\"html\">?</literal>")
+          ("a" "#+begin_export ascii\n?\n#+end_export")
+          ("A" "#+ascii: ")
+          ("i" "#+index: ?" "#+index: ?")
+          ("I" "#+include: %file ?" "<include file=%file markup=\"?\">")))
+
+  ;; Shortcuts
+  (defun hot-expand (str &optional mod)
+    "Expand org template."
+    (let (text)
+      (when (region-active-p)
+        (setq text (buffer-substring (region-beginning) (region-end)))
+        (delete-region (region-beginning) (region-end)))
+      (insert str)
+      (org-try-structure-completion)
+      (when mod (insert mod) (forward-line))
+      (when text (insert text))))
+
+  (defhydra hydra-org-template (:color blue :hint nil)
+    "
+     Org template
+
+ block               src block         structure
+--------------------------------------------------------------------------------------
+_c_: center        _s_: src         _L_: LATEX:
+_q_: quote         _e_: emacs lisp  _i_: index:
+_E_: example       _p_: python      _I_: INCLUDE:
+_v_: verse         _u_: Plantuml    _H_: HTML:
+_a_: ascii         _h_: html        _A_: ASCII:
+_l_: latex
+"
+    ("s" (hot-expand "<s"))
+    ("E" (hot-expand "<e"))
+    ("q" (hot-expand "<q"))
+    ("v" (hot-expand "<v"))
+    ("c" (hot-expand "<c"))
+    ("l" (hot-expand "<l"))
+    ("h" (hot-expand "<h"))
+    ("a" (hot-expand "<a"))
+    ("L" (hot-expand "<L"))
+    ("i" (hot-expand "<i"))
+    ("e" (hot-expand "<s" "emacs-lisp"))
+    ("p" (hot-expand "<s" "ipython :session :exports both :results raw drawer"))
+    ("S" (hot-expand "<s" "sh"))
+    ("u" (hot-expand "<s" "plantuml :file CHANGE.svg :cache yes :cmdline -charset utf-8"))
+    ("I" (hot-expand "<I"))
+    ("H" (hot-expand "<H"))
+    ("A" (hot-expand "<A"))
+    ("<" self-insert-command "ins")
+    ("ESC" nil "quit"))
+
+  (define-key org-mode-map "<"
+    (lambda () (interactive)
+      (if (or (region-active-p) (looking-back "^"))
+          (hydra-org-template/body)
+        (self-insert-command 1))))
+  )
 
 
 (provide 'init-org)

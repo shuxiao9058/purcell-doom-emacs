@@ -37,57 +37,28 @@
       :enm "C-l"   #'evil-window-right
 
       ;; Simple window/frame navigation/manipulation
-      :n "C-`"   #'+popup/toggle
-      :n "C-~"   #'+popup/raise
-      :n "M-t"   #'+workspace/new
-      :n "M-T"   #'+workspace/display
       :n "M-w"   #'delete-window
       :n "M-W"   #'delete-frame
       :n "C-M-f" #'toggle-frame-fullscreen
       :n "M-n"   #'evil-buffer-new
       :n "M-N"   #'make-frame
-      :n "M-1"   (λ! (+workspace/switch-to 0))
-      :n "M-2"   (λ! (+workspace/switch-to 1))
-      :n "M-3"   (λ! (+workspace/switch-to 2))
-      :n "M-4"   (λ! (+workspace/switch-to 3))
-      :n "M-5"   (λ! (+workspace/switch-to 4))
-      :n "M-6"   (λ! (+workspace/switch-to 5))
-      :n "M-7"   (λ! (+workspace/switch-to 6))
-      :n "M-8"   (λ! (+workspace/switch-to 7))
-      :n "M-9"   (λ! (+workspace/switch-to 8))
-      :n "M-0"   #'+workspace/switch-to-last
 
       ;; Other sensible, textmate-esque global bindings
-      :n "M-r"   #'+eval/buffer
-      :n "M-R"   #'+eval/region-and-replace
       :n "M-b"   #'+default/compile
       :n "M-a"   #'mark-whole-buffer
       :n "M-c"   #'evil-yank
       :n "M-q"   (if (daemonp) #'delete-frame #'evil-quit-all)
       :n "M-f" #'swiper
       :n  "M-s"   #'save-buffer
-      :m  "A-j"   #'+default:multi-next-line
-      :m  "A-k"   #'+default:multi-previous-line
-      :nv "C-SPC" #'+evil:fold-toggle
       :gnvimr "M-v" #'clipboard-yank
 
-      "C-x p"     #'+popup/other
-      (:when IS-MAC
-        "M-`"     #'other-frame)
-
-
       ;; --- Personal vim-esque bindings ------------------
-      :nv "K"  #'+lookup/documentation
       :n  "zx" #'kill-this-buffer
       :n  "ZX" #'bury-buffer
       :m  "]a" #'evil-forward-arg
       :m  "[a" #'evil-backward-arg
       :n  "]b" #'next-buffer
       :n  "[b" #'previous-buffer
-      :n  "]w" #'+workspace/switch-right
-      :n  "[w" #'+workspace/switch-left
-      :m  "gt" #'+workspace/switch-right
-      :m  "gT" #'+workspace/switch-left
       :m  "gd" #'+lookup/definition
       :m  "gD" #'+lookup/references
       :n  "gf" #'+lookup/file
@@ -104,9 +75,6 @@
       ;; don't leave visual mode after shifting
       :v  "<"  #'+evil/visual-dedent    ; vnoremap < <gv
       :v  ">"  #'+evil/visual-indent    ; vnoremap > >gv
-
-      :nv "C-a"   #'evil-numbers/inc-at-pt
-      :nv "C-S-a" #'evil-numbers/dec-at-pt
 
 
       ;; --- Plugin bindings ------------------------------
@@ -212,10 +180,9 @@
           "u"       #'winner-undo
           "C-u"     #'winner-undo
           "C-r"     #'winner-redo
-          "o"       #'sea/window-enlargen
-		  ;; split
-		  "s"       #'sea/split-window-horizontally-instead
-		  "v"       #'sea/split-window-vertically-instead
+          ;; split
+          "s"       #'sea/split-window-horizontally-instead
+          "v"       #'sea/split-window-vertically-instead
           ;; Delete window
           "c"       #'+workspace/close-window-or-workspace
           "m"     #'ace-delete-window))
@@ -225,9 +192,6 @@
 
       ;; evil-exchange
       :n  "gx"  #'evil-exchange
-
-      ;; evil-matchit
-      :nv [tab] #'+evil/matchit-or-toggle-fold
 
       ;; evil-magit
       (:after evil-magit
@@ -339,50 +303,6 @@
         :n "s"   #'gist-star
         :n "S"   #'gist-unstar
         :n "y"   #'gist-print-current-url)
-
-      ;; helm
-      (:after helm
-        (:map helm-map
-          [left]     #'left-char
-          [right]    #'right-char
-          "C-S-n"    #'helm-next-source
-          "C-S-p"    #'helm-previous-source
-          "C-j"      #'helm-next-line
-          "C-k"      #'helm-previous-line
-          "C-S-j"    #'helm-next-source
-          "C-S-k"    #'helm-previous-source
-          "C-f"      #'helm-next-page
-          "C-S-f"    #'helm-previous-page
-          "C-u"      #'helm-delete-minibuffer-contents
-          "C-w"      #'backward-kill-word
-          "C-r"      #'evil-paste-from-register ; Evil registers in helm! Glorious!
-          "C-s"      #'helm-minibuffer-history
-          "C-b"      #'backward-word
-          ;; Swap TAB and C-z
-          [tab]      #'helm-execute-persistent-action
-          "C-z"      #'helm-select-action)
-        (:after helm-files
-          :map (helm-find-files-map helm-read-file-map)
-          [M-return] #'helm-ff-run-switch-other-window
-          "C-w"      #'helm-find-files-up-one-level)
-        (:after helm-ag
-          :map helm-ag-map
-          [backtab]  #'helm-ag-edit
-          [left] nil
-          [right] nil)
-        (:after helm-locate
-          :map helm-generic-files-map
-          [M-return] #'helm-ff-run-switch-other-window)
-        (:after helm-buffers
-          :map helm-buffer-map
-          [M-return] #'helm-buffer-switch-other-window)
-        (:after helm-regexp
-          :map helm-moccur-map
-          [M-return] #'helm-moccur-run-goto-line-ow)
-        (:after helm-grep
-          :map helm-grep-map
-          [M-return] #'helm-grep-run-other-window-action))
-
       ;; hl-todo
       :m  "]t" #'hl-todo-next
       :m  "[t" #'hl-todo-previous
@@ -398,32 +318,6 @@
         "M-v"   #'yank
         "C-v"   #'yank)
 
-      ;; neotree
-      (:after neotree
-        :map neotree-mode-map
-        :n "g"         nil
-        :n [tab]       #'neotree-quick-look
-        :n "RET"       #'neotree-enter
-        :n [backspace] #'evil-window-prev
-        :n "c"         #'neotree-create-node
-        :n "r"         #'neotree-rename-node
-        :n "d"         #'neotree-delete-node
-        :n "j"         #'neotree-next-line
-        :n "k"         #'neotree-previous-line
-        :n "n"         #'neotree-next-line
-        :n "p"         #'neotree-previous-line
-        :n "h"         #'+neotree/collapse-or-up
-        :n "l"         #'+neotree/expand-or-open
-        :n "J"         #'neotree-select-next-sibling-node
-        :n "K"         #'neotree-select-previous-sibling-node
-        :n "H"         #'neotree-select-up-node
-        :n "L"         #'neotree-select-down-node
-        :n "G"         #'evil-goto-line
-        :n "gg"        #'evil-goto-first-line
-        :n "v"         #'neotree-enter-vertical-split
-        :n "s"         #'neotree-enter-horizontal-split
-        :n "q"         #'neotree-hide
-        :n "R"         #'neotree-refresh)
 
       ;; realgud
       (:after realgud
@@ -544,46 +438,19 @@
         :desc "Symbols across buffers" :nv "I" #'imenu-anywhere
         :desc "Online providers"       :nv "o" #'+lookup/online-select)
 
-      (:desc "workspace" :prefix "TAB"
-        :desc "Display tab bar"          :n [tab] #'+workspace/display
-        :desc "New workspace"            :n "n"   #'+workspace/new
-        :desc "Load workspace from file" :n "l"   #'+workspace/load
-        :desc "Load a past session"      :n "L"   #'+workspace/load-session
-        :desc "Save workspace to file"   :n "s"   #'+workspace/save
-        :desc "Autosave current session" :n "S"   #'+workspace/save-session
-        :desc "Switch workspace"         :n "."   #'+workspace/switch-to
-        :desc "Kill all buffers"         :n "x"   #'doom/kill-all-buffers
-        :desc "Delete session"           :n "X"   #'+workspace/kill-session
-        :desc "Delete this workspace"    :n "d"   #'+workspace/delete
-        :desc "Rename workspace"         :n "r"   #'+workspace/rename
-        :desc "Restore last session"     :n "R"   #'+workspace/load-last-session
-        :desc "Next workspace"           :n "]"   #'+workspace/switch-right
-        :desc "Previous workspace"       :n "["   #'+workspace/switch-left
-        :desc "Switch to 1st workspace"  :n "1"   (λ! (+workspace/switch-to 0))
-        :desc "Switch to 2nd workspace"  :n "2"   (λ! (+workspace/switch-to 1))
-        :desc "Switch to 3rd workspace"  :n "3"   (λ! (+workspace/switch-to 2))
-        :desc "Switch to 4th workspace"  :n "4"   (λ! (+workspace/switch-to 3))
-        :desc "Switch to 5th workspace"  :n "5"   (λ! (+workspace/switch-to 4))
-        :desc "Switch to 6th workspace"  :n "6"   (λ! (+workspace/switch-to 5))
-        :desc "Switch to 7th workspace"  :n "7"   (λ! (+workspace/switch-to 6))
-        :desc "Switch to 8th workspace"  :n "8"   (λ! (+workspace/switch-to 7))
-        :desc "Switch to 9th workspace"  :n "9"   (λ! (+workspace/switch-to 8))
-        :desc "Switch to last workspace" :n "0"   #'+workspace/switch-to-last)
-
       (:desc "buffer" :prefix "b"
         :desc "New empty buffer"        :n "n" #'evil-buffer-new
 
-        :desc "Switch workspace buffer" :n "b" #'persp-switch-to-buffer
+        :desc "Switch workspace buffer" :n "b" #'ivy-switch-buffer
         :desc "Switch buffer"           :n "B" #'switch-to-buffer
 
         :desc "Kill buffer"             :n "k" #'kill-this-buffer
-        :desc "Kill other buffers"      :n "o" #'doom/kill-other-buffers
+        :desc "Kill other buffers"      :n "o" #'kill-other-buffers
         :desc "Save buffer"             :n "s" #'save-buffer
-        :desc "Pop scratch buffer"      :n "x" #'doom/open-scratch-buffer
         :desc "Bury buffer"             :n "z" #'bury-buffer
         :desc "Next buffer"             :n "]" #'next-buffer
         :desc "Previous buffer"         :n "[" #'previous-buffer
-        :desc "Sudo edit this file"     :n "S" #'doom/sudo-this-file)
+        )
 
       (:desc "code" :prefix "c"
         :desc "List errors"               :n  "x" #'flycheck-list-errors
@@ -758,9 +625,6 @@
   "\C-a" #'sea/backward-to-bol-or-indent
   "\C-e" #'sea/forward-to-last-non-comment-or-eol
   "\C-u" #'sea/backward-kill-to-bol-and-indent
-  ;; textmate-esque newline insertion
-  [M-return]   #'evil-open-below
-  [S-M-return] #'evil-open-above
   ;; Emacsien motions for insert mode
   "\M-b" #'backward-word
   "\M-f" #'forward-word

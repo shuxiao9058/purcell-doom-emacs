@@ -12,7 +12,7 @@ modes are active and the buffer is read-only.")
   '(archive-mode tar-mode jka-compr git-commit-mode image-mode
     doc-view-mode doc-view-mode-maybe ebrowse-tree-mode pdf-view-mode)
   "Major modes that `sea|check-large-file' will ignore.")
-  
+
 (setq-default
  vc-follow-symlinks t
  ;; Save clipboard contents into kill-ring before replacing them
@@ -60,7 +60,7 @@ modes are active and the buffer is read-only.")
 (setq ediff-diff-options "-w"
       ediff-split-window-function #'split-window-horizontally
       ediff-window-setup-function #'ediff-setup-windows-plain)
-	  
+
 (defun sea|dont-kill-scratch-buffer ()
   "Don't kill the scratch buffer."
   (or (not (string= (buffer-name) "*scratch*"))
@@ -178,6 +178,12 @@ fundamental-mode) for performance sake."
   (setq ediff-split-window-function 'split-window-horizontally)
   (setq ediff-merge-split-window-function 'split-window-horizontally))
 
+(use-package rg)
+
+(use-package aggressive-indent
+  :init
+  (dolist (hook '(emacs-lisp-mode-hook css-mode-hook))
+    (add-hook hook #'aggressive-indent-mode)))
 
 (use-package ace-link
   :commands (ace-link-help ace-link-org))
@@ -191,10 +197,13 @@ fundamental-mode) for performance sake."
 (use-package command-log-mode
   :commands (command-log-mode global-command-log-mode)
   :config
-  (set! :popup "*command-log*" :size 40 :align 'right :noselect t)
+  (set-popup-rule! "*command-log*"
+    :size 40
+    :align 'right
+    :noselect t)
   (setq command-log-mode-auto-show t
-        command-log-mode-open-log-turns-on-mode t))  
-  
+        command-log-mode-open-log-turns-on-mode t))
+
 ;; Increase selected region by semantic units
 (use-package expand-region
   :commands (er/expand-region er/contract-region er/mark-symbol er/mark-word))
@@ -208,24 +217,6 @@ fundamental-mode) for performance sake."
 (use-package wgrep
   :commands (wgrep-setup wgrep-change-to-wgrep-mode)
   :config (setq wgrep-auto-save-buffer t))
-
-(use-package smartparens
-  :hook (after-init . smartparens-global-mode)
-  :config
-  (require 'smartparens-config)
-
-  (setq sp-autowrap-region nil ; let evil-surround handle this
-        sp-highlight-pair-overlay nil
-        sp-cancel-autoskip-on-backward-movement nil
-        sp-show-pair-delay 0
-        sp-max-pair-length 3)
-
-  ;; disable smartparens in evil-mode's replace state (they conflict)
-  (add-hook 'evil-replace-state-entry-hook #'turn-off-smartparens-mode)
-  (add-hook 'evil-replace-state-exit-hook  #'turn-on-smartparens-mode)
-
-  (sp-local-pair '(xml-mode nxml-mode php-mode) "<!--" "-->"
-                 :post-handlers '(("| " "SPC"))))
 
 ;; Treat undo history as a tree
 (use-package undo-tree
