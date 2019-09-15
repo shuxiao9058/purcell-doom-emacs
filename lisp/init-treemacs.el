@@ -2,17 +2,29 @@
 (use-package treemacs
   :ensure t
   :config
-  (treemacs-follow-mode t)
-  (setq treemacs-width 35
-        treemacs-display-in-side-window t
-        treemacs-indentation-string (propertize " " 'face 'font-lock-comment-face)
-        treemacs-indentation 1)
-  (add-hook 'treemacs-mode-hook #'hide-mode-line-mode)
-  (add-hook 'treemacs-mode-hook (lambda ()
-                                  (linum-mode -1)
-                                  (fringe-mode 0)
-                                  (setq buffer-face-mode-face `(:background "#211C1C"))
-                                  (buffer-face-mode 1)))
+  (setq treemacs-follow-after-init t
+        treemacs-is-never-other-window t
+        treemacs-sorting 'alphabetic-case-insensitive-desc
+        treemacs-persist-file (concat sea-cache-dir "treemacs-persist")
+        treemacs-last-error-persist-file (concat sea-cache-dir "treemacs-last-error-persist"))
+  (after! treemacs-persistence
+    ;; This variable is defined with defconst, so we must wait to change it until
+    ;; it has loaded.
+    (setq treemacs--last-error-persist-file
+          (concat sea-cache-dir
+                  "treemacs-persist-at-last-error")))
+  (after! treemacs
+    (set-popup-rule! "^ \\*Treemacs"
+                     :side treemacs-position
+                     :size treemacs-width
+                     :quit nil
+                     :ttl 0)
+
+    ;; Don't follow the cursor
+    (treemacs-follow-mode -1)
+
+    (after! ace-window
+      (delq! 'treemacs-mode aw-ignored-buffers)))
   ;; Improve treemacs icons
   (with-eval-after-load 'treemacs
     (with-eval-after-load 'all-the-icons
@@ -57,10 +69,18 @@
               (ht-set! treemacs-icons-hash (s-replace-regexp ".\\?" "" key) value))))))))
 
 (use-package treemacs-projectile
-  :ensure t)
+  :ensure t
+  :after treemacs)
 
-(use-package treemacs-evil)
-(use-package treemacs-magit)
+(use-package treemacs-evil
+  :after treemacs
+  :config
+  (define-key! evil-treemacs-state-map
+    [return] #'treemacs-RET-action
+    [tab]    #'treemacs-TAB-action
+    "TAB"    #'treemacs-TAB-action))
+(use-package treemacs-magit
+  :after treemacs magit)
 
 (provide 'init-treemacs)
 ;;; init-treemacs.el ends here

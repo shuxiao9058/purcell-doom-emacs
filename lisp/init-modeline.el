@@ -35,8 +35,6 @@
                '(:eval (propertize (substring vc-mode 5)
                                    'face 'font-lock-comment-face))
 
-               '(:eval (custom-modeline-flycheck-status))
-
 
                ;; line and column
                " ("

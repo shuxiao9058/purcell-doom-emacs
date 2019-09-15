@@ -113,6 +113,7 @@ Meant to be used with `run-hook-wrapped'."
 (require 'init-modeline)
 (require 'init-edit)
 (require 'init-highlight)
+(require 'init-lookup)
 (require 'init-keybinds)
 
 (require 'init-ivy)

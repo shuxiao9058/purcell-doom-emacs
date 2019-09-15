@@ -16,6 +16,7 @@
 (use-package zenburn-theme)
 (use-package srcery-theme)
 (use-package darktooth-theme)
+(use-package doom-themes)
 ;; (setq-default custom-enabled-themes '(srcery))
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()

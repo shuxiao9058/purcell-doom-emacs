@@ -358,7 +358,10 @@
           :ig [tab] yas-maybe-expand
           :v  [tab] #'yas-insert-snippet))
 
-
+      ;; treemacs
+      (:after treemacs
+        "<f9>"   #'+treemacs/toggle
+        "<C-f9>" #'+treemacs/find-file)
       ;; --- Major mode bindings --------------------------
       (:after markdown-mode
         (:map markdown-mode-map

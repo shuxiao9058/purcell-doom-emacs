@@ -55,9 +55,8 @@
             ("Github"            . "https://github.com/search?ref=simplesearch&q=%s")
             ("Youtube"           . "https://youtube.com/results?aq=f&oq=&search_query=%s")
             ("Wolfram alpha"     . "https://wolframalpha.com/input/?i=%s")
-            ("Wikipedia"         . "https://wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"))
-          (when (featurep! :lang rust)
-            '(("Rust Docs" . "https://doc.rust-lang.org/edition-guide/?search=%s"))))
+            ("Wikipedia"         . "https://wikipedia.org/search-redirect.php?language=en&go=Go&search=%s")
+			("Rust Docs"         . "https://doc.rust-lang.org/edition-guide/?search=%s")))
   "An alist that maps online resources to their search url or a function that
 produces an url. Used by `+lookup/online'.")
 
@@ -150,34 +149,6 @@ this list.")
     (set-popup-rule! "^\\*xref\\*$" :ignore t))
   )
 
-;;
-;;; Dash docset integration
-
-(use-package dash-docs
-  :init
-  (add-hook '+lookup-documentation-functions #'+lookup-dash-docsets-backend-fn)
-  :config
-  (setq dash-docs-enable-debugging doom-debug-mode
-        dash-docs-docsets-path (concat doom-etc-dir "docsets/")
-        dash-docs-min-length 2
-        dash-docs-browser-func #'eww)
-
-  ;; Before `gnutls' is loaded, `gnutls-algorithm-priority' is treated as a
-  ;; lexical variable, which breaks `+lookup*fix-gnutls-error'
-  (defvar gnutls-algorithm-priority)
-  (defadvice! +lookup--fix-gnutls-error-a (orig-fn url)
-    "Fixes integer-or-marker-p errors emitted from Emacs' url library,
-particularly, the `url-retrieve-synchronously' call in
-`dash-docs-read-json-from-url'. This is part of a systemic issue with Emacs 26's
-networking library (fixed in Emacs 27+, apparently).
-
-See https://github.com/magit/ghub/issues/81"
-    :around #'dash-docs-read-json-from-url
-    (let ((gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
-      (funcall orig-fn url)))
-
-
-  (use-package! counsel-dash))
 
 
 (provide 'init-lookup)
