@@ -80,3 +80,22 @@ If ARG (universal argument), runs `compile' from the current directory."
 
 ;;;###autoload
 (defalias '+default/newline #'newline)
+
+;;;###autoload
+(defun +default/newline-above ()
+  "Insert an indented new line before the current one."
+  (interactive)
+  (if (featurep 'evil)
+      (call-interactively 'evil-open-above)
+    (beginning-of-line)
+    (save-excursion (newline))
+    (indent-according-to-mode)))
+
+;;;###autoload
+(defun +default/newline-below ()
+  "Insert an indented new line after the current one."
+  (interactive)
+  (if (featurep 'evil)
+      (call-interactively 'evil-open-below)
+    (end-of-line)
+    (newline-and-indent)))

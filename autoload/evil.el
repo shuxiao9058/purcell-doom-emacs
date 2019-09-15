@@ -7,7 +7,7 @@
   (declare (indent defun))
   (after! evil
     (if (listp modes)
-        (dolist (mode (doom-enlist modes))
+        (dolist (mode (sea-enlist modes))
           (evil-set-initial-state mode state))
       (evil-set-initial-state modes state))))
 
@@ -83,7 +83,7 @@ evil-window-move-* (e.g. `evil-window-move-far-left')"
                               ('down 'below)
                               (_ direction))))
         (with-selected-window that-window
-          (switch-to-buffer (doom-fallback-buffer)))
+          (switch-to-buffer (sea-fallback-buffer)))
         (setq that-buffer (window-buffer that-window)))
       (with-selected-window this-window
         (switch-to-buffer that-buffer))
@@ -143,17 +143,17 @@ integration."
 
 ;;;###autoload (autoload '+evil:retab "feature/evil/autoload/evil" nil t)
 (evil-define-operator +evil:retab (&optional beg end)
-  "Wrapper around `doom/retab'."
+  "Wrapper around `sea/retab'."
   :motion nil :move-point nil :type line
   (interactive "<r>")
-  (doom/retab beg end))
+  (sea/retab beg end))
 
 ;;;###autoload (autoload '+evil:narrow-buffer "feature/evil/autoload/evil" nil t)
 (evil-define-command +evil:narrow-buffer (beg end &optional bang)
-  "Wrapper around `doom/clone-and-narrow-buffer'."
+  "Wrapper around `sea/clone-and-narrow-buffer'."
   :move-point nil
   (interactive "<r><!>")
-  (doom/clone-and-narrow-buffer beg end bang))
+  (sea/clone-and-narrow-buffer beg end bang))
 
 
 ;; --- custom arg handlers ----------------
@@ -258,3 +258,74 @@ the first match on each line)."
         (goto-char beg)
         (call-interactively #'wgrep-mark-deletion))
       beg (1- end) nil))))
+
+
+
+;; completion/ivy/autoload/evil.el -*- lexical-binding: t; -*-
+;;;###if (featurep! :editor evil)
+
+;;;###autoload (autoload '+ivy:swiper "completion/ivy/autoload/evil" nil t)
+(evil-define-command +ivy:swiper (&optional search)
+  "Invoke `swiper' with SEARCH, otherwise with the symbol at point."
+  (interactive "<a>")
+  (swiper search))
+
+;;;###autoload (autoload '+ivy:todo "completion/ivy/autoload/evil" nil t)
+(evil-define-command +ivy:todo (&optional bang)
+  "An ex wrapper around `+ivy/tasks'."
+  (interactive "<!>")
+  (+ivy/tasks bang))
+
+
+;;
+;; Project searching
+
+;;;###autoload (autoload '+ivy:pt "completion/ivy/autoload/evil" nil t)
+(evil-define-command +ivy:pt (all-files-p query)
+  "Ex interface for `+ivy/pt'"
+  (interactive "<!><a>")
+  (+ivy/pt all-files-p query))
+
+;;;###autoload (autoload '+ivy:grep "completion/ivy/autoload/evil" nil t)
+(evil-define-command +ivy:grep (all-files-p query)
+  "Ex interface for `+ivy/grep'"
+  (interactive "<!><a>")
+  (+ivy/grep all-files-p query))
+
+;;;###autoload (autoload '+ivy:ag "completion/ivy/autoload/evil" nil t)
+(evil-define-command +ivy:ag (all-files-p query)
+  "Ex interface for `+ivy/ag'"
+  (interactive "<!><a>")
+  (+ivy/ag all-files-p query))
+
+;;;###autoload (autoload '+ivy:rg "completion/ivy/autoload/evil" nil t)
+(evil-define-command +ivy:rg (all-files-p query)
+  "Ex interface for `+ivy/rg'"
+  (interactive "<!><a>")
+  (+ivy/rg all-files-p query))
+
+
+;;;###autoload (autoload '+ivy:pt-from-cwd "completion/ivy/autoload/evil" nil t)
+(evil-define-command +ivy:pt-from-cwd (query &optional recurse-p)
+  "Ex interface for `+ivy/pt-from-cwd'."
+  (interactive "<a><!>")
+  (+ivy/pt-from-cwd (not recurse-p) query))
+
+;;;###autoload (autoload '+ivy:grep-from-cwd "completion/ivy/autoload/evil" nil t)
+(evil-define-command +ivy:grep-from-cwd (query &optional recurse-p)
+  "Ex interface for `+ivy/grep-from-cwd'."
+  (interactive "<a><!>")
+  (+ivy/grep-from-cwd (not recurse-p) query))
+
+;;;###autoload (autoload '+ivy:ag-from-cwd "completion/ivy/autoload/evil" nil t)
+(evil-define-command +ivy:ag-from-cwd (query &optional recurse-p)
+  "Ex interface for `+ivy/ag-from-cwd'."
+  (interactive "<a><!>")
+  (+ivy/ag-from-cwd (not recurse-p) query))
+
+;;;###autoload (autoload '+ivy:rg-from-cwd "completion/ivy/autoload/evil" nil t)
+(evil-define-command +ivy:rg-from-cwd (query &optional recurse-p)
+  "Ex interface for `+ivy/rg-from-cwd'."
+  (interactive "<a><!>")
+  (+ivy/rg-from-cwd (not recurse-p) query))
+

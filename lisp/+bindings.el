@@ -10,13 +10,18 @@
 (map! [remap evil-jump-to-tag] #'projectile-find-tag
       [remap find-tag]         #'projectile-find-tag
 
+      :gi "C-a" #'sea/backward-to-bol-or-indent
+      :gi "C-e" #'sea/forward-to-last-non-comment-or-eol
+      :gni [C-return]    #'+default/newline-below
+      :gni [C-S-return]  #'+default/newline-above
+
       ;; Ensure there are no conflicts
       :nmvo sea-leader-key nil
       :nmvo sea-localleader-key nil
 
       ;; Swap RET/C-j in insert mode
       :i [remap newline] #'newline-and-indent
-      :i "C-j" #'+default/newline
+      :i "C-S-j"           #'+default/newline
 
       ;; --- Global keybindings ---------------------------
       ;; Make M-x available everywhere
@@ -48,8 +53,8 @@
       :n "M-a"   #'mark-whole-buffer
       :n "M-c"   #'evil-yank
       :n "M-q"   (if (daemonp) #'delete-frame #'evil-quit-all)
-      :n "M-f" #'swiper
-      :n  "M-s"   #'save-buffer
+      :n "M-f"   #'swiper
+      :n "M-s"   #'save-buffer
       :gnvimr "M-v" #'clipboard-yank
 
       ;; --- Personal vim-esque bindings ------------------
@@ -370,11 +375,11 @@
         :map comint-mode-map [tab] #'company-complete)
 
       (:map* (help-mode-map helpful-mode-map)
-        :n "o"  #'ace-link-help
-        :n "q"  #'quit-window
-        :n "Q"  #'ivy-resume
-        :n "]l" #'forward-button
-        :n "[l" #'backward-button)
+             :n "o"  #'ace-link-help
+             :n "q"  #'quit-window
+             :n "Q"  #'ivy-resume
+             :n "]l" #'forward-button
+             :n "[l" #'backward-button)
 
       (:after vc-annotate
         :map vc-annotate-mode-map
@@ -387,14 +392,14 @@
 (map! :leader
       :desc "Ex command"              :nv ";"  #'evil-ex
       :desc "M-x"                     :nv ":"  #'execute-extended-command
-      :desc "Pop up scratch buffer"   :nv "x"  #'doom/open-scratch-buffer
+      :desc "Pop up scratch buffer"   :nv "x"  #'sea/open-scratch-buffer
       :desc "Org Capture"             :nv "X"  #'org-capture
 
       ;; Most commonly used
       :desc "Find file in project"    :n "SPC" #'projectile-find-file
       :desc "Browse files"            :n "."   #'find-file
       :desc "Toggle last popup"       :n "~"   #'+popup/toggle
-      :desc "Resume last search"    :n "'"   #'ivy-resume
+      :desc "Resume last search"      :n "'"   #'ivy-resume
 
       :desc "Blink cursor line"       :n "DEL" #'+nav-flash/blink-cursor
       :desc "Jump to bookmark"        :n "RET" #'bookmark-jump
@@ -455,19 +460,19 @@
       (:desc "code" :prefix "c"
         :desc "List errors"               :n  "x" #'flycheck-list-errors
         :desc "Evaluate buffer/region"    :n  "e" #'+eval/buffer
-                                          :v  "e" #'+eval/region
+        :v  "e" #'+eval/region
         :desc "Evaluate & replace region" :nv "E" #'+eval:replace-region
         :desc "Format buffer/region"      :n  "f" #'+format/buffer
-                                          :v  "f" #'+format/region
+        :v  "f" #'+format/region
         :desc "Build tasks"               :nv "b" #'+eval/build
         :desc "Jump to definition"        :n  "d" #'+lookup/definition
         :desc "Jump to references"        :n  "D" #'+lookup/references
         :desc "Open REPL"                 :n  "r" #'+eval/open-repl
-                                          :v  "r" #'+eval:repl)
+        :v  "r" #'+eval:repl)
 
       (:desc "file" :prefix "f"
-        :desc "Find file"                 :n "." #'find-file
-        :desc "Sudo find file"            :n ">" #'doom/sudo-find-file
+        :desc "Find file"                 :n "f" #'find-file
+        :desc "Sudo find file"            :n ">" #'sea/sudo-find-file
         :desc "Find file in project"      :n "/" #'projectile-find-file
         :desc "Find file from here"       :n "?" #'counsel-file-jump
         :desc "Find other file"           :n "a" #'projectile-find-other-file
@@ -480,7 +485,7 @@
         :desc "Yank filename"             :n "y" #'+default/yank-buffer-filename
         :desc "Find file in private config" :n "p" #'+default/find-in-config
         :desc "Browse private config"       :n "P" #'+default/browse-config
-        :desc "Delete this file"            :n "X" #'doom/delete-this-file)
+        :desc "Delete this file"            :n "X" #'sea/delete-this-file)
 
       (:desc "git" :prefix "g"
         :desc "Magit blame"           :n  "b" #'magit-blame
@@ -510,30 +515,17 @@
       (:desc "help" :prefix "h"
         :n "h" help-map
         :desc "Apropos"               :n  "a" #'apropos
-        :desc "Open Bug Report"       :n  "b" #'doom/open-bug-report
         :desc "Describe char"         :n  "c" #'describe-char
-        :desc "Describe DOOM module"  :n  "d" #'doom/describe-module
-        :desc "Open Doom manual"      :n  "D" #'doom/open-manual
-        :desc "Open vanilla sandbox"  :n  "E" #'doom/open-vanilla-sandbox
         :desc "Describe function"     :n  "f" #'describe-function
         :desc "Describe face"         :n  "F" #'describe-face
         :desc "Info"                  :n  "i" #'info-lookup-symbol
         :desc "Describe key"          :n  "k" #'describe-key
-        :desc "Find documentation"    :n  "K" #'+lookup/documentation
         :desc "Find library"          :n  "l" #'find-library
-        :desc "Command log"           :n  "L" #'clm/toggle-command-log-buffer
         :desc "View *Messages*"       :n  "m" #'view-echo-area-messages
         :desc "Describe mode"         :n  "M" #'describe-mode
-        :desc "Toggle profiler"       :n  "p" #'doom/toggle-profiler
-        :desc "Reload theme"          :n  "r" #'doom/reload-theme
-        :desc "Reload private config" :n  "R" #'doom/reload
-        :desc "Describe DOOM setting" :n  "s" #'doom/describe-setters
         :desc "Describe variable"     :n  "v" #'describe-variable
-        :desc "Print Doom version"    :n  "V" #'doom/version
         :desc "Man pages"             :n  "w" #'+default/man-or-woman
-        :desc "Describe at point"     :n  "." #'helpful-at-point
-        :desc "What face"             :n  "'" #'doom/what-face
-        :desc "What minor modes"      :n  ";" #'doom/describe-active-minor-mode)
+        )
 
       (:desc "insert" :prefix "i"
 
@@ -551,11 +543,10 @@
         :desc "Default browser"       :n  "b" #'browse-url-of-file
         :desc "Debugger"              :n  "d" #'+debug/open
         :desc "REPL"                  :n  "r" #'+eval/open-repl
-                                      :v  "r" #'+eval:repl
+        :v  "r" #'+eval:repl
         :desc "Dired"                 :n  "-" #'dired-jump
 
-        :desc "Project sidebar"              :n  "p" #'+neotree/open
-        :desc "Find file in project sidebar" :n  "P" #'+neotree/find-this-file
+        :desc "Project sidebar"       :n  "p" #'treemacs
 
         :desc "Imenu sidebar"         :nv "i" #'imenu-list-smart-toggle
         :desc "Terminal"              :n  "t" #'+term/open
@@ -646,3 +637,9 @@
 (setq evil-collection-key-blacklist
       (list "C-j" "C-k" "gd" "gf" "K" "[" "]" "gz"
             sea-leader-key sea-localleader-key))
+
+(evil-ex-define-cmd "mc"           #'+multiple-cursors:evil-mc)
+(evil-ex-define-cmd "iedit"        #'evil-multiedit-ex-match)
+(evil-ex-define-cmd "git"         #'magit-status)         ; open magit status window
+(evil-ex-define-cmd "rg"        #'+ivy:rg)
+(evil-ex-define-cmd "rgc[wd]"   #'+ivy:rg-from-cwd)

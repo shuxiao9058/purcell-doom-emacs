@@ -124,6 +124,13 @@ This is used by `associate!', `file-exists-p!' and `project-file-exists-p!'."
 
 (defalias 'lambda! 'λ!)
 
+(defmacro pushnew! (place &rest values)
+  "Push VALUES sequentially into PLACE, if they aren't already present.
+This is a variadic `cl-pushnew'."
+  (let ((var (make-symbol "result")))
+    `(dolist (,var (list ,@values) (with-no-warnings ,place))
+       (cl-pushnew ,var ,place :test #'equal))))
+
 (defmacro defer-until! (condition &rest body)
   "Run BODY when CONDITION is true (checks on `after-load-functions'). Meant to
 serve as a predicated alternative to `after!'."

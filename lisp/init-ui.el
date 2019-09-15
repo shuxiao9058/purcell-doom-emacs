@@ -16,7 +16,7 @@
 (use-package zenburn-theme)
 (use-package srcery-theme)
 (use-package darktooth-theme)
-(setq-default custom-enabled-themes '(srcery))
+;; (setq-default custom-enabled-themes '(srcery))
 ;; Ensure that themes will be applied even if they have not been customized
 (defun reapply-themes ()
   "Forcibly load the themes listed in `custom-enabled-themes'."
@@ -45,7 +45,7 @@
   (reapply-themes))
 
 
-;; highlight matching delimiters
+                                        ;!; highlight matching delimiters
 (setq show-paren-delay 0.1
       show-paren-highlight-openparen t
       show-paren-when-point-inside-paren t)

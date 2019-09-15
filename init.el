@@ -20,6 +20,11 @@
 
 (add-hook 'emacs-startup-hook #'sea-finalize t)
 
+;;; Directories/files
+(defvar sea-emacs-dir
+  (eval-when-compile (file-truename user-emacs-directory))
+  "The path to the currently loaded .emacs.d directory. Must end with a slash.")
+
 (defconst sea-autoload-dir
   (expand-file-name "autoload/" user-emacs-directory)
   "autoload directory.")
