@@ -2,7 +2,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Code:
-
+(defvar +ivy-project-search-engines '(rg))
 (defmacro +ivy-do-action! (action)
   "Returns an interactive lambda that sets the current ivy action and
 immediately runs it on the current candidate (ending the ivy session)."
