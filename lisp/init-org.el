@@ -69,54 +69,54 @@
   (push '("WORK" . "⚑" ) prettify-symbols-alist)
   (push '("DONE" . "☑" ) prettify-symbols-alist)
   (prettify-symbols-mode)
-  (defface org-checkbox-done-text
-    '((t (:foreground "#71696A" :strike-through t)))
-    "Face for the text part of a checked org-mode checkbox.")
-
-  (font-lock-add-keywords
-   'org-mode
-   `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)"
-      1 'org-checkbox-done-text prepend))
-   'append)
-  (setq-default
-   org-eldoc-breadcrumb-separator " → "
-   org-enforce-todo-dependencies t
-   org-entities-user
-   '(("flat"  "\\flat" nil "" "" "266D" "♭")
-     ("sharp" "\\sharp" nil "" "" "266F" "♯"))
-   org-fontify-done-headline t
-   org-fontify-quote-and-verse-blocks t
-   org-fontify-whole-heading-line t
-   org-footnote-auto-label 'plain
-   org-hide-leading-stars t
-   org-hide-leading-stars-before-indent-mode t
-   org-image-actual-width nil
-   org-list-description-max-indent 4
-   org-priority-faces
-   '((?a . error)
-     (?b . warning)
-     (?c . success))
-   org-refile-targets
-   '((nil :maxlevel . 3)
-     (org-agenda-files :maxlevel . 3))
-   org-startup-indented t
-   org-todo-keywords
-   '((sequence "TODO(t)" "PROJ(p)" "|" "DONE(d)")
-     (sequence "[ ](T)" "[-](P)" "[?](M)" "|" "[X](D)")
-     (sequence "NEXT(n)" "WAIT(w)" "HOLD(h)" "|" "ABRT(c)"))
-   org-todo-keyword-faces
-   '(("[-]" :inherit (font-lock-constant-face bold))
-     ("[?]" :inherit (warning bold))
-     ("PROJ" :inherit (bold default))
-     ("HOLD" :inherit (warning bold))
-     ("ABRT" :inherit (error bold)))
-   org-use-sub-superscripts '{}
-
-   ;; Scale up LaTeX previews a bit (default is too small)
-   org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
   )
 (add-hook 'org-mode-hook 'enhance-ui-for-orgmode)
 
+(defface org-checkbox-done-text
+  '((t (:foreground "#71696A" :strike-through t)))
+  "Face for the text part of a checked org-mode checkbox.")
+
+(font-lock-add-keywords
+ 'org-mode
+ `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)"
+    1 'org-checkbox-done-text prepend))
+ 'append)
+(setq-default
+ org-eldoc-breadcrumb-separator " → "
+ org-enforce-todo-dependencies t
+ org-entities-user
+ '(("flat"  "\\flat" nil "" "" "266D" "♭")
+   ("sharp" "\\sharp" nil "" "" "266F" "♯"))
+ org-fontify-done-headline t
+ org-fontify-quote-and-verse-blocks t
+ org-fontify-whole-heading-line t
+ org-footnote-auto-label 'plain
+ org-hide-leading-stars t
+ org-hide-leading-stars-before-indent-mode t
+ org-image-actual-width nil
+ org-list-description-max-indent 4
+ org-priority-faces
+ '((?a . error)
+   (?b . warning)
+   (?c . success))
+ org-refile-targets
+ '((nil :maxlevel . 3)
+   (org-agenda-files :maxlevel . 3))
+ org-startup-indented t
+ org-todo-keywords
+ '((sequence "TODO(t)" "PROJ(p)" "|" "DONE(d)")
+   (sequence "[ ](T)" "[-](P)" "[?](M)" "|" "[X](D)")
+   (sequence "NEXT(n)" "WAIT(w)" "HOLD(h)" "|" "ABRT(c)"))
+ org-todo-keyword-faces
+ '(("[-]" :inherit (font-lock-constant-face bold))
+   ("[?]" :inherit (warning bold))
+   ("PROJ" :inherit (bold default))
+   ("HOLD" :inherit (warning bold))
+   ("ABRT" :inherit (error bold)))
+ org-use-sub-superscripts '{}
+
+ ;; Scale up LaTeX previews a bit (default is too small)
+ org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 ;; Block Template
 (use-package hydra :ensure t
   :config

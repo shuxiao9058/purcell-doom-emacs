@@ -92,7 +92,8 @@
    '(org-table ((t (:family "Ubuntu Mono"))))
    )
 
-  (require 'font-lock+)
+  ;; (require 'font-lock+)
+  (use-package unicode-fonts)
   (reapply-themes)
   (run-hooks 'sea-init-ui-hook))
 
