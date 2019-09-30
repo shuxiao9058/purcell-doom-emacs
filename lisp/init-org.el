@@ -188,5 +188,6 @@ _l_: latex
         (self-insert-command 1))))
   )
 
+(use-package deft)
 
 (provide 'init-org)
